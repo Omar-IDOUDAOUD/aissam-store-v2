@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "919767452177",
+    "project_id": "aissam-store-v2",
+    "storage_bucket": "aissam-store-v2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919767452177:android:cf4a328f0c11f26bf1ffb0",
+        "android_client_info": {
+          "package_name": "com.example.aissam_store_v2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRM6iWpxNuiuoaIDTDSJJGnrTpK8b3-wo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

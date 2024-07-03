@@ -12,7 +12,7 @@ class AuthController extends StateNotifier<AuthState> {
   AuthController(): super(AuthState.initial());
 
   void signUp(String email, String password, String username) async {
-    final usecase = SignUpUsecase();
+    final usecase = SignUp();
     state = AuthState.loading();
     final res = await usecase.call(
         SignUpParams(email: email, password: password, username: username));
@@ -26,7 +26,7 @@ class AuthController extends StateNotifier<AuthState> {
     );
   }
   void signIn(String email, String password ) async {
-    final usecase = SignInUsecase();
+    final usecase = SignIn();
     state = AuthState.loading();
     final res = await usecase.call(
         SignInParams(email: email, password: password ));
@@ -41,7 +41,7 @@ class AuthController extends StateNotifier<AuthState> {
   }
 
   void logOut() async {
-    final usecase = LogoutUsecase();
+    final usecase = Logout();
     state = AuthState.loading(); 
     await usecase.call(NoParams()); 
     state = AuthState.sucess();

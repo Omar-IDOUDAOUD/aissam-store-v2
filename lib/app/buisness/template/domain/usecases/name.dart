@@ -10,7 +10,7 @@ class NameParams {
   NameParams({ required this.id});
 }
 
-class Name implements UseCase<NameEntity, NameParams> {
+class Name implements FutureUseCase<NameEntity, NameParams> {
   final NameRepository repository;
 
   Name(this.repository);

@@ -80,6 +80,7 @@ abstract class FirebaseAuthExceptions {
           errorMessage: "The email address is not valid."),
     ],
   );
+  
   static const AuthException weakPassword = AuthException(
     code: 'weak-password',
     fields: [
@@ -130,6 +131,7 @@ abstract class FirebaseAuthExceptions {
     code: 'unknown-error',
     message: "An unknown error has occurred.",
   );
+  
 
   static AuthException unExceptedError(code, [message]) => AuthException(
         code: code,

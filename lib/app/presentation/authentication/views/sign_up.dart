@@ -17,7 +17,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   late final TextEditingController _passwordController =
       TextEditingController(text: 'qsdqusdsldknf');
   late final TextEditingController _usernameController =
-      TextEditingController();
+      TextEditingController(text: 'hello');
 
 
   @override

@@ -45,23 +45,21 @@ class AuthDataSourceImpl implements AuthDataSource {
     } on AuthException {
       rethrow;
     } on FirebaseAuthException catch (e) {
-      print("TEST1: $e"); 
       throw FirebaseAuthExceptions.find(e.code, e.message); 
     } catch (e) {
-      print("TEST2: $e"); 
       throw FirebaseAuthExceptions.unknownError; 
     }
     final user = credentials.user!;
     return AuthUser(
-        id: user.uid, email: user.email!, username: user.displayName);
+        id: user.uid, email: user.email!, fullname: user.displayName!);
   }
 
   @override
   Future<AuthUser> signUp(
-      String email, String password, String username) async {
+      String email, String password, String fullname) async {
     late final UserCredential credentials;
     try {
-      _validatFields(email, password, username);
+      _validatFields(email, password, fullname);
       credentials = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
     } on AuthException {
@@ -71,18 +69,18 @@ class AuthDataSourceImpl implements AuthDataSource {
     } catch (e) {
       throw FirebaseAuthExceptions.unknownError; 
     }
-    credentials.user!.updateDisplayName(username);
+    credentials.user!.updateDisplayName(fullname);
     final user = credentials.user!;
     return AuthUser(
-        id: user.uid, email: user.email!, username: user.displayName);
+        id: user.uid, email: user.email!, fullname: fullname);
   }
 
   @override
   Stream<AuthUser?> get stateChanges =>
-      _firebaseAuth.authStateChanges().map<AuthUser>(
-            (event) => AuthUser(
-                id: event!.uid,
+      _firebaseAuth.authStateChanges().map<AuthUser?>(
+            (event) =>event == null ? null :  AuthUser(
+                id: event.uid,
                 email: event.email!,
-                username: event.displayName),
+                fullname: event.displayName!),
           );
 }

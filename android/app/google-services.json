@@ -12,7 +12,20 @@
           "package_name": "com.example.aissam_store_v2"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "919767452177-0ujum9q6ccii3n5d6obpvpiu7u013cd0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aissam_store_v2",
+            "certificate_hash": "2fff5a25341b107e6a588df386dd19cdd85d8cc1"
+          }
+        },
+        {
+          "client_id": "919767452177-qr498au0fv825u8rggplge2nvd0n3ho3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBRM6iWpxNuiuoaIDTDSJJGnrTpK8b3-wo"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "919767452177-qr498au0fv825u8rggplge2nvd0n3ho3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "919767452177-b09eq0ngq1gaour1smvd4g50bihn5hk9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.aissamStoreV2"
+              }
+            }
+          ]
         }
       }
     }

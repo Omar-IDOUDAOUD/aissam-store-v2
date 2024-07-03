@@ -1,19 +1,22 @@
-class AuthException implements Exception {
-  const AuthException({required this.code, this.message, this.fields});
+import 'package:aissam_store_v2/app/core/errors/exceptions.dart';
+
+class AuthException extends Exception2 {
+  const AuthException({required this.code, this.message, this.causes})
+      : super(msg: message ?? code);
 
   final String code;
   final String? message;
-  final List<AuthFieldError>? fields;
+  final List<AuthErrorCause>? causes;
 }
 
-class AuthFieldError {
-  final AuthCredentialFields field;
+class AuthErrorCause {
+  final AuthErrorSources source;
   final String? errorMessage;
 
-  const AuthFieldError({required this.field, this.errorMessage});
+  const AuthErrorCause({required this.source, this.errorMessage});
 }
 
-enum AuthCredentialFields { emailField, passwordField, fullNameField }
+enum AuthErrorSources { emailField, passwordField, fullNameField , networkConnection }
 
 abstract class FirebaseAuthExceptions {
   static AuthException find(String code, [message]) {
@@ -37,17 +40,17 @@ abstract class FirebaseAuthExceptions {
 
   static const AuthException missingEmail = AuthException(
     code: 'missing-email',
-    fields: [
-      AuthFieldError(
-          field: AuthCredentialFields.emailField, errorMessage: "Missing email")
+    causes: [
+      AuthErrorCause(
+          source: AuthErrorSources.emailField, errorMessage: "Missing email")
     ],
   );
 
   static const AuthException missingPassword = AuthException(
     code: 'missing-password',
-    fields: [
-      AuthFieldError(
-        field: AuthCredentialFields.passwordField,
+    causes: [
+      AuthErrorCause(
+        source: AuthErrorSources.passwordField,
         errorMessage: "Missing password",
       )
     ],
@@ -55,18 +58,18 @@ abstract class FirebaseAuthExceptions {
 
   static const AuthException missingFullName = AuthException(
     code: 'missing-fullname',
-    fields: [
-      AuthFieldError(
-          field: AuthCredentialFields.fullNameField,
+    causes: [
+      AuthErrorCause(
+          source: AuthErrorSources.fullNameField,
           errorMessage: "Missing full name"),
     ],
   );
 
   static const AuthException emailAlreadyInUse = AuthException(
     code: 'email-already-in-use',
-    fields: [
-      AuthFieldError(
-          field: AuthCredentialFields.emailField,
+    causes: [
+      AuthErrorCause(
+          source: AuthErrorSources.emailField,
           errorMessage:
               "The email address is already in use by another account")
     ],
@@ -74,57 +77,62 @@ abstract class FirebaseAuthExceptions {
 
   static const AuthException invalidEmail = AuthException(
     code: 'invalid-email',
-    fields: [
-      AuthFieldError(
-          field: AuthCredentialFields.emailField,
+    causes: [
+      AuthErrorCause(
+          source: AuthErrorSources.emailField,
           errorMessage: "The email address is not valid."),
     ],
   );
+
   static const AuthException weakPassword = AuthException(
     code: 'weak-password',
-    fields: [
-      AuthFieldError(
-          field: AuthCredentialFields.passwordField,
+    causes: [
+      AuthErrorCause(
+          source: AuthErrorSources.passwordField,
           errorMessage: "The password is too weak.")
     ],
   );
   static const AuthException userNotFound = AuthException(
     code: 'user-not-found',
-    fields: [
-      AuthFieldError(
-          field: AuthCredentialFields.emailField,
+    causes: [
+      AuthErrorCause(
+          source: AuthErrorSources.emailField,
           errorMessage: "No user found for that email.")
     ],
   );
   static const AuthException invalidCredential = AuthException(
     code: 'invalid-credential',
     message: "Email or password is not correct",
-    fields: [
-      AuthFieldError(field: AuthCredentialFields.emailField),
-      AuthFieldError(field: AuthCredentialFields.passwordField)
+    causes: [
+      AuthErrorCause(source: AuthErrorSources.emailField),
+      AuthErrorCause(source: AuthErrorSources.passwordField)
     ],
   );
   static const AuthException wrongPassword = AuthException(
     code: 'wrong-password',
-    fields: [
-      AuthFieldError(
-          field: AuthCredentialFields.passwordField,
+    causes: [
+      AuthErrorCause(
+          source: AuthErrorSources.passwordField,
           errorMessage: "Wrong password provided for that user.")
     ],
   );
   static const AuthException userDisabled = AuthException(
     code: 'user-disabled',
-    fields: [
-      AuthFieldError(
-          field: AuthCredentialFields.emailField,
+    causes: [
+      AuthErrorCause(
+          source: AuthErrorSources.emailField,
           errorMessage:
               "The user account has been disabled by an administrator.")
     ],
   );
   static const AuthException networkRequestFailed = AuthException(
     code: 'network-request-failed',
-    message:
-        "A network error (such as timeout, interrupted connection or unreachable host) has occurred.",
+    causes: [
+      AuthErrorCause(
+        source: AuthErrorSources.networkConnection,
+        errorMessage: 'no internet connection' , 
+      ),
+    ],
   );
   static const AuthException unknownError = AuthException(
     code: 'unknown-error',

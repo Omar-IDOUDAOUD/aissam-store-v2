@@ -1,4 +1,5 @@
 import 'package:aissam_store_v2/app/buisness/authentication/core/error/exceptions.dart';
+import 'package:aissam_store_v2/app/buisness/authentication/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/presentation/authentication/views/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,7 +18,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   late final TextEditingController _passwordController =
       TextEditingController(text: 'qsdqusdsldknf');
   late final TextEditingController _usernameController =
-      TextEditingController();
+      TextEditingController(text: 'hello');
 
 
   @override
@@ -37,9 +38,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(authProvider); 
-    final emailError = state.checkFieldErrored(AuthCredentialFields.emailField) ;
-    final passwordError = state.checkFieldErrored(AuthCredentialFields.passwordField);
-    final usernameError = state.checkFieldErrored(AuthCredentialFields.fullNameField) ;
+    final emailError = state.checkFieldErrored(AuthErrorSources.emailField) ;
+    final passwordError = state.checkFieldErrored(AuthErrorSources.passwordField);
+    final usernameError = state.checkFieldErrored(AuthErrorSources.fullNameField) ;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -87,6 +88,15 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
               child: const Text('Sing In'),
               onPressed: () => Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (_) => const SignInPage())),
+            ),
+             MaterialButton(
+              color: Colors.blueAccent,
+              child: const Text('Sing with google'),
+              onPressed: () async {
+                final res = await SignInGoogle().call(); 
+                print('result'); 
+                res.fold((fail)=>print(fail), (res)=>print(res)); 
+              },
             ),
           ],
         ),

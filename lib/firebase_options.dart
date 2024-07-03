@@ -63,6 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '919767452177',
     projectId: 'aissam-store-v2',
     storageBucket: 'aissam-store-v2.appspot.com',
+    androidClientId: '919767452177-vpitk2c1riquvmn0rgc6osk9tv2g1tnj.apps.googleusercontent.com',
+    iosClientId: '919767452177-b09eq0ngq1gaour1smvd4g50bihn5hk9.apps.googleusercontent.com',
     iosBundleId: 'com.example.aissamStoreV2',
   );
 
@@ -72,6 +74,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '919767452177',
     projectId: 'aissam-store-v2',
     storageBucket: 'aissam-store-v2.appspot.com',
+    androidClientId: '919767452177-vpitk2c1riquvmn0rgc6osk9tv2g1tnj.apps.googleusercontent.com',
+    iosClientId: '919767452177-b09eq0ngq1gaour1smvd4g50bihn5hk9.apps.googleusercontent.com',
     iosBundleId: 'com.example.aissamStoreV2',
   );
 
@@ -83,4 +87,5 @@ class DefaultFirebaseOptions {
     authDomain: 'aissam-store-v2.firebaseapp.com',
     storageBucket: 'aissam-store-v2.appspot.com',
   );
+
 }

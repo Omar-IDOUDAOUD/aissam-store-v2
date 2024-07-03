@@ -4,22 +4,22 @@ import 'package:equatable/equatable.dart';
 
 class AuthState extends Equatable {
   final bool isLoading;
-  final List<AuthFieldError> errorFields;
+  final List<AuthErrorCause> errorFields;
   final String? errorMessage;
   final String? errorCode;
 
   AuthState(
       {required this.isLoading,
       this.errorMessage,
-      List<AuthFieldError>? errorFields,
+      List<AuthErrorCause>? errorFields,
       this.errorCode})
       : errorFields = errorFields ?? [];
 
   bool get success => errorMessage != null && !isLoading;
 
-  AuthFieldError? checkFieldErrored(AuthCredentialFields field) {
+  AuthErrorCause? checkFieldErrored(AuthErrorSources field) {
     return errorFields
-        .where((errorField) => errorField.field == field)
+        .where((errorField) => errorField.source == field)
         .firstOrNull;
   }
 
@@ -29,7 +29,7 @@ class AuthState extends Equatable {
   factory AuthState.error(AuthenticationFailure failure) => AuthState(
         isLoading: false,
         errorFields: failure.errorFields,
-        errorMessage: failure.errorMessage,
+        errorMessage: failure.message,
         errorCode: failure.code,
       );
 

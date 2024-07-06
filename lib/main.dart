@@ -1,16 +1,16 @@
  
+import 'package:aissam_store_v2/app/presentation/splash/splash.dart';
+import 'package:aissam_store_v2/app/presentation/test.dart';
 import 'package:aissam_store_v2/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'app/presentation/authentication/views/sign_up.dart';
+
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
-  await initServiceLocator(); 
-
-
+  await initServiceLocator();
   runApp(const ProviderScope(child:  AissamStoreV2()));
-
 }
 
 class AissamStoreV2 extends StatelessWidget {
@@ -18,6 +18,8 @@ class AissamStoreV2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp();
+    return const MaterialApp(
+      home: SplashPage(),
+    );
   }
 }

@@ -12,23 +12,27 @@ import 'package:aissam_store_v2/firebase_options.dart';
 
 final sl = GetIt.I;
 
-Future<void> initServiceLocator() async{
+Future<void> initServiceLocator() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  _initDataSources(); 
-  _initRepositories(); 
-  _initServices(); 
+  _initDataSources();
+  _initRepositories();
+  _initServices();
 }
 
-void _initServices() {}
+void _initServices() {
+  //
+}
 
 void _initDataSources() {
-  sl.registerLazySingleton<AuthDataSource>(() => AuthDataSourceImpl(FirebaseAuth.instance));
-  sl.registerLazySingleton<UserDataSource>(() => UserDataSourceImpl(FirebaseFirestore.instance));
+  sl.registerLazySingleton<AuthDataSource>(
+      () => AuthDataSourceImpl(FirebaseAuth.instance));
+  sl.registerLazySingleton<UserDataSource>(
+      () => UserDataSourceImpl(FirebaseFirestore.instance));
 }
 
 void _initRepositories() {
-  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl( sl()));
+  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
   sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(sl()));
 }

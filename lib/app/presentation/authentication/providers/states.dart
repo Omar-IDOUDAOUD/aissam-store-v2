@@ -29,7 +29,7 @@ class AuthState extends Equatable {
   factory AuthState.error(AuthenticationFailure failure) => AuthState(
         isLoading: false,
         errorFields: failure.errorFields,
-        errorMessage: failure.errorMessage,
+        errorMessage: failure.message,
         errorCode: failure.code,
       );
 

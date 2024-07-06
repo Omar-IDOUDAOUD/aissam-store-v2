@@ -2,11 +2,12 @@
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
-  /// represents the user id given from auth
   final String id;
   final String email;
   final String fullName;
+  final bool? emailIsVerified;
   final String? phoneNumber; 
+  final String? photoUrl; 
   final String? currency;
   final String? language;
 
@@ -14,6 +15,8 @@ class User extends Equatable {
     required this.id,
     required this.email,
     required this.fullName,
+    this.emailIsVerified, 
+    this.photoUrl, 
     this.phoneNumber, 
     this.currency,
     this.language,

@@ -1,5 +1,7 @@
-class AuthException implements Exception {
-  const AuthException({required this.code, this.message, this.fields});
+import 'package:aissam_store_v2/app/core/errors/exceptions.dart';
+
+class AuthException extends Exception2 {
+  const AuthException({required this.code, this.message, this.fields}) : super(msg: message ?? code );
 
   final String code;
   final String? message;

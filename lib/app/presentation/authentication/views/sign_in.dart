@@ -1,4 +1,5 @@
 import 'package:aissam_store_v2/app/buisness/authentication/core/error/exceptions.dart';
+import 'package:aissam_store_v2/app/buisness/authentication/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/presentation/authentication/views/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -77,6 +78,13 @@ class _SignUpPageState extends ConsumerState<SignInPage> {
               onPressed: () {
                 Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (_) => const SignUpPage()));
+              },
+            ),
+              MaterialButton(
+              color: Colors.blueAccent,
+              child: const Text('Sing with google'),
+              onPressed: () {
+                SignInGoogle().call(); 
               },
             ),
           ],

@@ -1,33 +1,35 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 
 import 'package:aissam_store_v2/app/buisness/authentication/core/error/exceptions.dart';
-import 'package:firebase_auth/firebase_auth.dart' hide User;
-import 'package:aissam_store_v2/app/buisness/authentication/domain/entities/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+
+import 'package:google_sign_in/google_sign_in.dart';
 
 abstract class AuthDataSource {
-  Future<AuthUser> signUp(String email, String password, String username);
-  Future<AuthUser> signIn(String email, String password);
+  Future<User> signUp(String email, String password, String username);
+  Future<User> signIn(String email, String password);
+  Future<User> signInGoogle();
   Future logOut();
-  Stream<AuthUser?> get stateChanges;
+  Stream<User?> get stateChanges;
+  User? get currentUser;
 }
 
 class AuthDataSourceImpl implements AuthDataSource {
-  final FirebaseAuth _firebaseAuth;
+  final FirebaseAuth _firebaseAuth; 
 
   AuthDataSourceImpl(this._firebaseAuth);
 
   void _validatFields(String email, String pass, [String? fullName]) {
-     AuthException? error;
+    AuthException? error;
     if (email.isEmpty) error = FirebaseAuthExceptions.missingEmail;
 
-    if (fullName?.isEmpty ?? false) error = FirebaseAuthExceptions.missingFullName;
+    if (fullName?.isEmpty ?? false)
+      error = FirebaseAuthExceptions.missingFullName;
 
     if (pass.isEmpty) error = FirebaseAuthExceptions.missingPassword;
 
-    
-
-    if (error != null)
-      throw error; 
+    if (error != null) throw error;
   }
 
   @override
@@ -36,7 +38,7 @@ class AuthDataSourceImpl implements AuthDataSource {
   }
 
   @override
-  Future<AuthUser> signIn(String email, String password) async {
+  Future<User> signIn(String email, String password) async {
     late final UserCredential credentials;
     try {
       _validatFields(email, password);
@@ -45,18 +47,15 @@ class AuthDataSourceImpl implements AuthDataSource {
     } on AuthException {
       rethrow;
     } on FirebaseAuthException catch (e) {
-      throw FirebaseAuthExceptions.find(e.code, e.message); 
+      throw FirebaseAuthExceptions.find(e.code, e.message);
     } catch (e) {
-      throw FirebaseAuthExceptions.unknownError; 
+      throw FirebaseAuthExceptions.unknownError;
     }
-    final user = credentials.user!;
-    return AuthUser(
-        id: user.uid, email: user.email!, fullname: user.displayName!);
+    return credentials.user!;
   }
 
   @override
-  Future<AuthUser> signUp(
-      String email, String password, String fullname) async {
+  Future<User> signUp(String email, String password, String fullname) async {
     late final UserCredential credentials;
     try {
       _validatFields(email, password, fullname);
@@ -65,22 +64,47 @@ class AuthDataSourceImpl implements AuthDataSource {
     } on AuthException {
       rethrow;
     } on FirebaseAuthException catch (e) {
-      throw FirebaseAuthExceptions.find(e.code, e.message); 
+      throw FirebaseAuthExceptions.find(e.code, e.message);
     } catch (e) {
-      throw FirebaseAuthExceptions.unknownError; 
+      throw FirebaseAuthExceptions.unknownError;
     }
     credentials.user!.updateDisplayName(fullname);
-    final user = credentials.user!;
-    return AuthUser(
-        id: user.uid, email: user.email!, fullname: fullname);
+   
+    return credentials.user!;
   }
 
   @override
-  Stream<AuthUser?> get stateChanges =>
-      _firebaseAuth.authStateChanges().map<AuthUser?>(
-            (event) =>event == null ? null :  AuthUser(
-                id: event.uid,
-                email: event.email!,
-                fullname: event.displayName!),
-          );
+  Stream<User?> get stateChanges => _firebaseAuth.authStateChanges();
+
+  @override
+  Future<User> signInGoogle() async {
+    late final User user;
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      user = userCredential.user!;
+       
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthExceptions.find(e.code, e.message);
+    } catch (e) {
+      throw FirebaseAuthExceptions.unknownError;
+    }
+
+    return user;
+  }
+
+  @override
+  User? get currentUser {
+    print('getting auth user: ${_firebaseAuth.currentUser}'); 
+    return _firebaseAuth.currentUser;
+  }
 }

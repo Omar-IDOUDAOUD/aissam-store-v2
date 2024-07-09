@@ -1,4 +1,4 @@
-import 'package:aissam_store_v2/app/core/errors/exceptions.dart';
+import 'package:aissam_store_v2/core/exceptions.dart';
 
 class Failure {
   final String message;
@@ -7,7 +7,10 @@ class Failure {
 
   Failure(this.message, [this.error]);
 
-  factory Failure.fromException(Object exception, [String? elseMessage]) {
+  factory Failure.fromExceptionOrFailure(Object exception,
+      [String? elseMessage]) {
+    if (exception is Failure) return exception;
+    if (exception is NetworkException) return NetworkFailure();
     if (exception is Exception2) return Failure(exception.msg, exception.error);
     return Failure(elseMessage ?? 'An unknown error has occurred', exception);
   }

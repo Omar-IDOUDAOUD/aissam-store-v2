@@ -1,7 +1,7 @@
 
 
 
-import 'package:aissam_store_v2/app/core/errors/exceptions.dart';
+import 'package:aissam_store_v2/core/exceptions.dart';
 
 class NoUserAvailableException extends Exception2{
   NoUserAvailableException() : super(msg: 'No user available');

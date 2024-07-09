@@ -1,26 +1,12 @@
 import 'package:aissam_store_v2/app/buisness/authentication/core/error/failures.dart';
+import 'package:aissam_store_v2/app/buisness/authentication/core/params.dart';
 import 'package:dartz/dartz.dart';
 import 'package:aissam_store_v2/app/buisness/authentication/domain/repositories/auth_repo.dart';
 import 'package:aissam_store_v2/app/core/errors/failures.dart';
-import 'package:aissam_store_v2/app/core/usecase/usecase.dart';
+import 'package:aissam_store_v2/app/core/interfaces/usecase.dart';
 import 'package:aissam_store_v2/service_locator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class SignUpParams {
-  final String email;
-  final String password;
-  final String username;
-
-  SignUpParams(
-    {required this.email, required this.password, required this.username}  );
-}
-
-class SignInParams {
-  final String email;
-  final String password;
-
-  SignInParams({required this.email, required this.password});
-}
 
 class SignUp implements FutureUseCase<User, SignUpParams> {
   final AuthRepository _authRepository = sl();
@@ -28,7 +14,7 @@ class SignUp implements FutureUseCase<User, SignUpParams> {
   @override
   Future<Either<AuthenticationFailure, User>> call(
            SignUpParams params) async =>
-      _authRepository.signUp(params.email, params.password, params.username);
+      _authRepository.signUp(params);
 }
 
 class SignInGoogle implements FutureUseCase<User, NoParams> {
@@ -43,7 +29,7 @@ class SignIn implements FutureUseCase<User, SignInParams> {
   final AuthRepository _authRepository = sl();
 
   @override
-  Future<Either<AuthenticationFailure, User>> call(SignInParams params) async => _authRepository.signIn(params.email, params.password);
+  Future<Either<AuthenticationFailure, User>> call(SignInParams params) async => _authRepository.signIn(params);
 }
 
 class Logout implements FutureUseCase<void, NoParams> {

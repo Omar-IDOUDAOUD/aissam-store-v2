@@ -1,8 +1,9 @@
 
 
+import 'package:aissam_store_v2/app/buisness/authentication/core/params.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:aissam_store_v2/app/buisness/authentication/domain/usecases/usecases.dart';
-import 'package:aissam_store_v2/app/core/usecase/usecase.dart';
+import 'package:aissam_store_v2/app/core/interfaces/usecase.dart';
 import 'package:aissam_store_v2/app/presentation/authentication/providers/states.dart';
 
 final authProvider =

@@ -7,7 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initServiceLocator();
-  runApp(const ProviderScope(child:  AissamStoreV2()));
+  runApp(const ProviderScope(
+    child:  AissamStoreV2()));
 }
 
 class AissamStoreV2 extends StatelessWidget {

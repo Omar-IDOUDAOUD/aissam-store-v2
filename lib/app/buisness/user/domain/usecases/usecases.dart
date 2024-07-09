@@ -1,32 +1,12 @@
+import 'package:aissam_store_v2/app/buisness/user/core/params.dart';
 import 'package:aissam_store_v2/app/buisness/user/domain/entities/user.dart';
 import 'package:aissam_store_v2/app/buisness/user/domain/repositories/user_repository.dart';
 import 'package:aissam_store_v2/service_locator.dart';
 import 'package:dartz/dartz.dart';
 import 'package:aissam_store_v2/app/core/errors/failures.dart';
-import 'package:aissam_store_v2/app/core/usecase/usecase.dart';
+import 'package:aissam_store_v2/app/core/interfaces/usecase.dart';
 
-class CreateUserParams {
-  late final User newUser;
 
-  CreateUserParams({required this.newUser});
-}
-
-class GetUserParams {
-  final String userId;
-  GetUserParams({required this.userId});
-}
-
-class UpdateUserParams {
-  late final User updatedUser;
-
-  UpdateUserParams({required this.updatedUser});
-}
-
-class DeleteUserParams {
-  final String userId;
-
-  DeleteUserParams({required this.userId});
-}
 
 class LoadUser implements FutureUseCase<Unit, NoParams> {
   final UserRepository _userRepository=sl();

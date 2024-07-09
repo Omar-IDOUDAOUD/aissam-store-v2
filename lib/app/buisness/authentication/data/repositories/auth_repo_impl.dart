@@ -1,5 +1,7 @@
 import 'package:aissam_store_v2/app/buisness/authentication/core/error/exceptions.dart';
 import 'package:aissam_store_v2/app/buisness/authentication/core/error/failures.dart';
+import 'package:aissam_store_v2/app/buisness/authentication/core/params.dart';
+import 'package:aissam_store_v2/app/buisness/user/core/params.dart';
 import 'package:aissam_store_v2/app/buisness/user/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/core/errors/failures.dart';
 import 'package:dartz/dartz.dart';
@@ -26,9 +28,9 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<AuthenticationFailure, User>> signIn(
-      String email, String password) async {
+      SignInParams params) async {
     try {
-      final user = await _authDataSource.signIn(email, password);
+      final user = await _authDataSource.signIn(params.email, params.password);
       return Right(user);
     } on AuthException catch (e) {
       return Left(AuthenticationFailure.fromAuthException(e));
@@ -54,14 +56,14 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<AuthenticationFailure, User>> signUp(
-      String email, String password, String username) async {
+      SignUpParams params) async {
     try {
-      final user = await _authDataSource.signUp(email, password, username);
+      final user = await _authDataSource.signUp(params.email, params.password, params.username);
       return await _createUser(
         userEntity.User(
           id: user.uid,
-          email: email,
-          fullName: username,
+          email: params.email,
+          fullName: params.username,
         ),
         user,
       );

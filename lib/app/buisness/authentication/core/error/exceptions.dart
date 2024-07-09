@@ -1,4 +1,4 @@
-import 'package:aissam_store_v2/app/core/errors/exceptions.dart';
+import 'package:aissam_store_v2/core/exceptions.dart';
 
 class AuthException extends Exception2 {
   const AuthException({required this.code, this.message, this.causes})

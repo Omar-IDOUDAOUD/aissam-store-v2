@@ -17,7 +17,7 @@ class UserRepositoryImpl implements UserRepository {
       await _userDataSource.loadUser();
       return const Right(unit);
     } catch (e) {
-      return Left(Failure.fromException(e));
+      return Left(Failure.fromExceptionOrFailure(e));
     }
   }
 
@@ -27,7 +27,8 @@ class UserRepositoryImpl implements UserRepository {
       await _userDataSource.createUser(UserModel.fromEntity(user));
       return const Right(unit);
     } catch (e) {
-      return Left(Failure.fromException(e, "Error while creating user"));
+      return Left(
+          Failure.fromExceptionOrFailure(e, "Error while creating user"));
     }
   }
 
@@ -37,7 +38,8 @@ class UserRepositoryImpl implements UserRepository {
       await _userDataSource.deleteUser();
       return const Right(unit);
     } catch (e) {
-      return Left(Failure.fromException(e, "Error while deleting user"));
+      return Left(
+          Failure.fromExceptionOrFailure(e, "Error while deleting user"));
     }
   }
 
@@ -47,7 +49,8 @@ class UserRepositoryImpl implements UserRepository {
       final resp = await _userDataSource.getPublicUser(userId);
       return Right(resp);
     } catch (e) {
-      return Left(Failure.fromException(e, "Error while getting user"));
+      return Left(
+          Failure.fromExceptionOrFailure(e, "Error while getting user"));
     }
   }
 
@@ -57,7 +60,8 @@ class UserRepositoryImpl implements UserRepository {
       final resp = await _userDataSource.updateUser(UserModel.fromEntity(user));
       return Right(resp);
     } catch (e) {
-      return Left(Failure.fromException(e, "Error while updating user"));
+      return Left(
+          Failure.fromExceptionOrFailure(e, "Error while updating user"));
     }
   }
 
@@ -66,7 +70,8 @@ class UserRepositoryImpl implements UserRepository {
     try {
       return Right(_userDataSource.getUser());
     } catch (e) {
-      return Left(Failure.fromException(e, 'Error while getting current user'));
+      return Left(Failure.fromExceptionOrFailure(
+          e, 'Error while getting current user'));
     }
   }
 }

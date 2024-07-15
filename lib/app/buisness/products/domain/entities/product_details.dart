@@ -7,11 +7,10 @@ class ProductDetails extends ProductPreview {
   final String material;
   final int stockQuantity;
   final bool isAvailable;
-  final List<String> imageUrls;
+  final List<String> images;
   final int reviewCount;
   final int views;
   final DateTime createdAt;
-
   ProductDetails({
     required super.id,
     required super.name,
@@ -19,6 +18,7 @@ class ProductDetails extends ProductPreview {
     required super.averageRating,
     required super.price,
     required super.sales,
+    required super.image,
     required this.reviewCount,
     required this.description,
     required this.createdAt,
@@ -28,6 +28,6 @@ class ProductDetails extends ProductPreview {
     required this.material,
     required this.stockQuantity,
     required this.isAvailable,
-    required this.imageUrls,
+    required this.images,
   });
 }

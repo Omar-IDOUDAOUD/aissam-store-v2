@@ -1,5 +1,5 @@
 import 'package:aissam_store_v2/app/buisness/products/domain/entities/category.dart';
-import 'package:mongo_dart/mongo_dart.dart';
+import 'package:aissam_store_v2/databases/mongo_db.dart';
 
 class CategoryModel extends Category {
   CategoryModel(
@@ -8,7 +8,7 @@ class CategoryModel extends Category {
       required super.imageUrl,
       super.parentCategory});
   factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
-        id: (json['_id'] as ObjectId).oid,
+        id: (json['_id'] as ObjectId).toJson(),
         name: json["name"],
         imageUrl: json["image_url"],
         parentCategory: json["parent_category"],

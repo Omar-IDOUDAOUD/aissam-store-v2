@@ -5,7 +5,8 @@ import 'package:aissam_store_v2/app/buisness/products/domain/repositories/produc
 import 'package:aissam_store_v2/app/buisness/user/data/data_source/user_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/user/data/repositories/user_repo_impl.dart';
 import 'package:aissam_store_v2/app/buisness/user/domain/repositories/user_repository.dart';
-import 'package:aissam_store_v2/config/databases/mongo_db.dart';
+import 'package:aissam_store_v2/databases/mongo_db.dart';
+import 'package:aissam_store_v2/config/environment/environment.dart';
 import 'package:aissam_store_v2/services/connection_checker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,7 +36,7 @@ Future<void> _initServices() async {
   );
 
   sl.registerLazySingleton<MongoDb>(
-    () => MongoDb(sl.getAsync<ConnectionChecker>()),
+    () => MongoDb(Environment.mongodbDefName, sl.getAsync<ConnectionChecker>()),
     dispose: (i) => i.dispose(),
   );
 }

@@ -1,6 +1,6 @@
 import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_preview.dart';
+import 'package:aissam_store_v2/databases/mongo_db.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' as fs;
-import 'package:mongo_dart/mongo_dart.dart';
 
 class ProductPreviewModel extends ProductPreview {
   ProductPreviewModel({
@@ -8,22 +8,10 @@ class ProductPreviewModel extends ProductPreview {
     required super.name,
     required super.categories,
     required super.price,
-    required super.averageRating, 
-    required super.sales, 
+    required super.averageRating,
+    required super.sales,
+    required super.image, 
   });
-
-  factory ProductPreviewModel.fromFirestore(
-      fs.DocumentSnapshot<Map<String, dynamic>> snapshot, _) {
-    final json = snapshot.data()!;
-    return ProductPreviewModel(
-      id: snapshot.id,
-      name: json["name"],
-      categories: List.from(json["categories"]),
-      price: json["price"],
-      averageRating: json["average_rating"],
-      sales: json["sales"],
-    );
-  }
 
   factory ProductPreviewModel.fromJson(Map<String, dynamic> json) {
     return ProductPreviewModel(
@@ -32,11 +20,17 @@ class ProductPreviewModel extends ProductPreview {
       categories: List.from(json["categories"]),
       price: json["price"],
       averageRating: json["average_rating"],
-
       sales: json["sales"],
+       image: json["image"], 
     );
   }
-  static  List<String> get fields => ['name', 'categories', 'price', 'average_rating', 'review_count', 'views', 'sales', 'created_at'];  
-
-  
+  static List<String> get fields => [
+        'name',
+        'categories',
+        'price',
+        'average_rating',
+        'review_count',
+        'sales',
+        'image'
+      ];
 }

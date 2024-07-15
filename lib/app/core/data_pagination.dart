@@ -16,6 +16,7 @@ class DataPagination<T> {
     );
   }
 }
+
 class DataPaginationParams {
   final dynamic indexIdentifierObj;
   final int pageSize;
@@ -23,6 +24,4 @@ class DataPaginationParams {
     this.indexIdentifierObj,
     this.pageSize = BuisnessConsts.dataPaginationPageSize,
   });
-  
 }
-

@@ -5,9 +5,11 @@ class ProductPreview {
   final double price;
   final double averageRating;
   final int sales;
+  final String image; 
 
   ProductPreview({
     required this.id,
+    required this.image, 
     required this.name,
     required this.categories,
     required this.price,

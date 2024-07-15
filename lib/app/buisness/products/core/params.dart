@@ -30,7 +30,7 @@ class GetProductByPerformanceParams extends _DataPaginationParamsProperty {
 class SearchProductsParams extends _DataPaginationParamsProperty {
   final String keywords;
   final List<String>? categories;
-  final List<String>? colorName;
+  final List<String>? colorNames;
   final List<String>? sizes;
   final double? minPrice;
   final double? maxPrice;
@@ -39,7 +39,7 @@ class SearchProductsParams extends _DataPaginationParamsProperty {
     required super.paginationParams,
     required this.keywords,
     this.categories,
-    this.colorName,
+    this.colorNames,
     this.sizes,
     this.minPrice,
     this.maxPrice,

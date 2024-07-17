@@ -10,10 +10,14 @@ class Failure {
   factory Failure.fromExceptionOrFailure(Object exception,
       [String? elseMessage]) {
     if (exception is Failure) return exception;
-    if (exception is NetworkException) return NetworkFailure();
+    if ([NetworkException, NoCachedDataException]
+        .contains(exception.runtimeType)) return NetworkFailure();
     if (exception is Exception2) return Failure(exception.msg, exception.error);
     return Failure(elseMessage ?? 'An unknown error has occurred', exception);
   }
+
+
+  
 
   @override
   String toString() {

@@ -5,5 +5,7 @@ abstract   class DisposableService {
 }
 
 abstract class ServiceLifecycle extends DisposableService {
-  FutureOr<dynamic> init() {}
+  FutureOr<Object?> init() {
+    return null;
+  }
 }

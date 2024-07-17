@@ -1,4 +1,5 @@
 import 'package:aissam_store_v2/app/core/constants.dart';
+import 'package:aissam_store_v2/app/core/interfaces/cache_identifier.dart';
 
 class DataPagination<T> {
   final List<T> items;
@@ -17,11 +18,16 @@ class DataPagination<T> {
   }
 }
 
-class DataPaginationParams {
+class DataPaginationParams extends CacheIdentifier {
   final dynamic indexIdentifierObj;
   final int pageSize;
   DataPaginationParams({
     this.indexIdentifierObj,
     this.pageSize = BuisnessConsts.dataPaginationPageSize,
   });
+
+  @override
+  String buildCacheKey() {
+    return "$indexIdentifierObj";
+  }
 }

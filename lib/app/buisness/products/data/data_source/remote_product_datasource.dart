@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:aissam_store_v2/app/buisness/products/core/constants.dart';
-import 'package:aissam_store_v2/app/buisness/products/core/failures.dart';
-import 'package:aissam_store_v2/app/buisness/products/data/data_source/product_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/products/core/failures.dart'; 
 import 'package:aissam_store_v2/app/buisness/products/data/models/category.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/models/product_details.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/models/product_preview.dart';
@@ -10,7 +9,21 @@ import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
 import 'package:aissam_store_v2/app/core/data_pagination.dart';
 import 'package:aissam_store_v2/databases/mongo_db.dart';
 
-class ProductsRemoteDatasourceImpl implements ProductsDatasource {
+
+abstract class ProductsRemoteDatasource {
+  Future<DataPagination<CategoryModel>> categories(GetCategoriesParams params);
+  Future<DataPagination<ProductPreviewModel>> productsByPerformance(
+      GetProductByPerformanceParams params);
+  Future<DataPagination<ProductPreviewModel>> productsByCategory(
+      GetProductsByCategoryParams params);
+  Future<DataPagination<ProductPreviewModel>> searchProducts(
+      SearchProductsParams params);
+  Future<ProductDetailsModel> product(String id);
+}
+
+
+
+class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
   final MongoDb _mongodb;
 
   ProductsRemoteDatasourceImpl(this._mongodb);
@@ -43,7 +56,7 @@ class ProductsRemoteDatasourceImpl implements ProductsDatasource {
     final pagination = DataPagination<T>(
       items: convertedData,
       hasNextPage: data.length == paginationParams.pageSize,
-      indexIdentifier: paginationParams.indexIdentifierObj ?? 0 + data.length,
+      indexIdentifier: (paginationParams.indexIdentifierObj ?? 0 )+ data.length,
     );
     return pagination;
   }

@@ -19,7 +19,7 @@ class ProductDetailsModel extends ProductDetails {
     required super.material,
     required super.stockQuantity,
     required super.isAvailable,
-    required super.images, 
+    required super.images,
     required super.image,
   });
   factory ProductDetailsModel.fromJson(Map<String, dynamic> json,
@@ -44,4 +44,29 @@ class ProductDetailsModel extends ProductDetails {
         isAvailable: json["is_available"],
         images: List<String>.from(json["image_urls"]),
       );
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'categories': categories,
+        'price': price,
+        'average_rating': averageRating,
+        'review_count': reviewCount,
+        'views': views,
+        'sales': sales,
+        'created_at': createdAt,
+        'description': description,
+        'sizes': sizes,
+        'available_colors': availableColorsNames,
+        'material': material,
+        'stock_quantity': stockQuantity,
+        'is_available': isAvailable,
+        'image_urls': images,
+        'image': image,
+      };
+
+  factory ProductDetailsModel.fromCacheJson(Map<String, dynamic> json) =>
+      ProductDetailsModel.fromJson(
+        json..update('_id', (oldObj) => ObjectId.fromHexString(oldObj)),
+      );
+  Map<String, dynamic> toCacheJson() => {"_id": id, ...toJson()};
 }

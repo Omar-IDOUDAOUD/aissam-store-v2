@@ -1,0 +1,1 @@
+typedef Map2 = Map<String, dynamic>;

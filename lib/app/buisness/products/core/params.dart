@@ -1,5 +1,6 @@
 import 'package:aissam_store_v2/app/buisness/products/core/constants.dart';
 import 'package:aissam_store_v2/app/core/data_pagination.dart';
+import 'package:aissam_store_v2/app/core/interfaces/cache_identifier.dart';
 
 abstract class _DataPaginationParamsProperty {
   final DataPaginationParams paginationParams;
@@ -7,27 +8,46 @@ abstract class _DataPaginationParamsProperty {
   _DataPaginationParamsProperty({required this.paginationParams});
 }
 
-class GetCategoriesParams extends _DataPaginationParamsProperty {
+class GetCategoriesParams extends _DataPaginationParamsProperty
+    with CacheIdentifier {
   final String? parentCategory;
 
   GetCategoriesParams({required super.paginationParams, this.parentCategory});
+
+  @override
+  String buildCacheKey() {
+    return paginationParams.buildCacheKey() + parentCategory.toString();
+  }
 }
 
-class GetProductsByCategoryParams extends _DataPaginationParamsProperty {
+class GetProductsByCategoryParams extends _DataPaginationParamsProperty
+    with CacheIdentifier {
   final String category;
 
   GetProductsByCategoryParams(
       {required super.paginationParams, required this.category});
+
+  @override
+  String buildCacheKey() {
+    return paginationParams.buildCacheKey() + category;
+  }
 }
 
-class GetProductByPerformanceParams extends _DataPaginationParamsProperty {
+class GetProductByPerformanceParams extends _DataPaginationParamsProperty
+    with CacheIdentifier {
   final ProductsPerformance performance;
 
   GetProductByPerformanceParams(
       {required super.paginationParams, required this.performance});
+
+  @override
+  String buildCacheKey() {
+    return paginationParams.buildCacheKey() + performance.toString();
+  }
 }
 
-class SearchProductsParams extends _DataPaginationParamsProperty {
+class SearchProductsParams extends _DataPaginationParamsProperty
+    with CacheIdentifier {
   final String keywords;
   final List<String>? categories;
   final List<String>? colorNames;
@@ -44,4 +64,9 @@ class SearchProductsParams extends _DataPaginationParamsProperty {
     this.minPrice,
     this.maxPrice,
   });
+
+  @override
+  String buildCacheKey() {
+    return '${paginationParams.buildCacheKey()}$keywords${categories?.length}${colorNames?.length}${sizes?.length}$minPrice$maxPrice';
+  }
 }

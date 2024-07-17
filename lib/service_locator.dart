@@ -1,12 +1,14 @@
-import 'package:aissam_store_v2/app/buisness/products/data/data_source/mongodb/mongodb_product_datasource.dart';
-import 'package:aissam_store_v2/app/buisness/products/data/data_source/product_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/products/data/data_source/remote_product_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/products/data/data_source/local_products_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/repositories/products_repo_impl.dart';
 import 'package:aissam_store_v2/app/buisness/products/domain/repositories/products_repository.dart';
 import 'package:aissam_store_v2/app/buisness/user/data/data_source/user_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/user/data/repositories/user_repo_impl.dart';
 import 'package:aissam_store_v2/app/buisness/user/domain/repositories/user_repository.dart';
+import 'package:aissam_store_v2/databases/local_db.dart';
 import 'package:aissam_store_v2/databases/mongo_db.dart';
 import 'package:aissam_store_v2/config/environment/environment.dart';
+import 'package:aissam_store_v2/services/caching/cache_manager.dart';
 import 'package:aissam_store_v2/services/connection_checker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,6 +41,16 @@ Future<void> _initServices() async {
     () => MongoDb(Environment.mongodbDefName, sl.getAsync<ConnectionChecker>()),
     dispose: (i) => i.dispose(),
   );
+
+  sl.registerLazySingletonAsync<LocalDb>(
+    () => LocalDb().init(),
+    dispose: (i) => i.dispose(),
+  );
+
+  sl.registerLazySingletonAsync<CacheManager>(
+    () async => CacheManager(await sl.getAsync()).init(),
+    dispose: (i) => i.dispose(),
+  );
 }
 
 void _initDataSources() {
@@ -46,14 +58,17 @@ void _initDataSources() {
       AuthDataSourceImpl(FirebaseAuth.instance));
   sl.registerLazySingleton<UserDataSource>(
       () => UserDataSourceImpl(FirebaseFirestore.instance));
-  sl.registerLazySingleton<ProductsDatasource>(
+  sl.registerLazySingleton<ProductsRemoteDatasource>(
     () => ProductsRemoteDatasourceImpl(sl()),
+  );
+  sl.registerLazySingletonAsync<ProductsLocalDatasource>(
+    () async => ProductsLocalDatasourceImpl(await sl.getAsync()),
   );
 }
 
 void _initRepositories() {
   sl.registerSingleton<AuthRepository>(AuthRepositoryImpl(sl()));
   sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(sl()));
-  sl.registerLazySingleton<ProductsRepository>(
-      () => ProductsRepositoryImpl(sl()));
+  sl.registerLazySingletonAsync<ProductsRepository>(
+      () async => ProductsRepositoryImpl(sl(), await sl.getAsync()));
 }

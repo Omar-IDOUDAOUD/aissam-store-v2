@@ -19,14 +19,13 @@ class _TestPageState extends State<TestPage> {
     test();
   }
 
+  int index = 0;
   Future<void> test() async {
-    final res = await SearchProducts().call(
-      SearchProductsParams(
-        paginationParams: DataPaginationParams(),
-        categories: ['cat_5', 'cat_1'],
-        keywords: 'summer morocco',
-        sizes: ['XXL', 'XL'],
-        minPrice: 55
+    final res = await GetCategories().call(
+      GetCategoriesParams(
+        paginationParams: DataPaginationParams(
+          indexIdentifierObj: index
+        ),
       ),
     );
     print('data: ');

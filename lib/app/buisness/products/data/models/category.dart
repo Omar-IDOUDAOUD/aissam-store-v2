@@ -13,4 +13,10 @@ class CategoryModel extends Category {
         imageUrl: json["image_url"],
         parentCategory: json["parent_category"],
       );
+    Map<String, dynamic> toJson() => {
+        "name": name,
+        "image_url": imageUrl,
+        "parent_category": parentCategory,
+      };
+  
 }

@@ -1,8 +1,4 @@
-import 'package:aissam_store_v2/app/buisness/products/core/constants.dart';
-import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
 import 'package:aissam_store_v2/app/buisness/products/domain/usecases/usecases.dart';
-import 'package:aissam_store_v2/app/core/data_pagination.dart';
-import 'package:aissam_store_v2/databases/mongo_db.dart';
 import 'package:flutter/material.dart';
 
 class TestPage extends StatefulWidget {
@@ -21,15 +17,17 @@ class _TestPageState extends State<TestPage> {
 
   int index = 0;
   Future<void> test() async {
-    final res = await GetCategories().call(
-      GetCategoriesParams(
-        paginationParams: DataPaginationParams(
-          indexIdentifierObj: index
-        ),
-      ),
+    final res = await GetProduct().call('66902f041077b56518b8b3e3');
+
+    print('data: ----------------------------------------------');
+    res.fold(
+      print,
+      (d) { 
+        print(
+          d
+        );
+      },
     );
-    print('data: ');
-    res.fold(print, (d) => print(d.items.map((e) => e.toString())));
   }
 
   @override
@@ -40,6 +38,7 @@ class _TestPageState extends State<TestPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             MaterialButton(
+              child: const Text('clock me'),
               onPressed: () {
                 test();
               },

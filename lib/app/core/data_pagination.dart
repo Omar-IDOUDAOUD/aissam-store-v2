@@ -8,7 +8,6 @@ class DataPagination<T> {
 
   DataPagination(
       {required this.items, required this.hasNextPage, this.indexIdentifier});
- 
 
   copyWith({List<T>? items, bool? hasNextPage, Object? indexIdentifier}) {
     return DataPagination<T>(
@@ -17,21 +16,18 @@ class DataPagination<T> {
       indexIdentifier: indexIdentifier ?? this.indexIdentifier,
     );
   }
-  
-  
-  
 }
 
-class DataPaginationParams  extends CacheIdentifier{
+class DataPaginationParams extends CacheIdentifier {
   final dynamic indexIdentifierObj;
   final int pageSize;
   DataPaginationParams({
     this.indexIdentifierObj,
     this.pageSize = BuisnessConsts.dataPaginationPageSize,
   });
-  
+
   @override
-  String buildCacheIdentifier() {
-    return "$indexIdentifierObj"; 
+  String buildCacheKey() {
+    return "$indexIdentifierObj";
   }
 }

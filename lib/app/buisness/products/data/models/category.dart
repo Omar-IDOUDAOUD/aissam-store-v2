@@ -13,10 +13,15 @@ class CategoryModel extends Category {
         imageUrl: json["image_url"],
         parentCategory: json["parent_category"],
       );
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "name": name,
         "image_url": imageUrl,
         "parent_category": parentCategory,
       };
-  
+
+  factory CategoryModel.fromCacheJson(Map<String, dynamic> json) =>
+      CategoryModel.fromJson(
+        json..update('_id', (oldObj) => ObjectId.fromHexString(oldObj)),
+      );
+  Map<String, dynamic> toCacheJson() => {"_id": id, ...toJson()};
 }

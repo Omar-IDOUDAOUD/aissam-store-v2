@@ -1,6 +1,5 @@
 import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_preview.dart';
 import 'package:aissam_store_v2/databases/mongo_db.dart';
-import 'package:cloud_firestore/cloud_firestore.dart' as fs;
 
 class ProductPreviewModel extends ProductPreview {
   ProductPreviewModel({
@@ -10,7 +9,7 @@ class ProductPreviewModel extends ProductPreview {
     required super.price,
     required super.averageRating,
     required super.sales,
-    required super.image, 
+    required super.image,
   });
 
   factory ProductPreviewModel.fromJson(Map<String, dynamic> json) {
@@ -21,9 +20,24 @@ class ProductPreviewModel extends ProductPreview {
       price: json["price"],
       averageRating: json["average_rating"],
       sales: json["sales"],
-       image: json["image"], 
+      image: json["image"],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "categories": categories,
+        "price": price,
+        "average_rating": averageRating,
+        "sales": sales,
+        "image": image,
+      };
+
+  factory ProductPreviewModel.fromCacheJson(Map<String, dynamic> json) =>
+      ProductPreviewModel.fromJson(
+        json..update('_id', (oldObj) => ObjectId.fromHexString(oldObj)),
+      );
+  Map<String, dynamic> toCacheJson() => {"_id": id, ...toJson()};
   static List<String> get fields => [
         'name',
         'categories',

@@ -1,6 +1,5 @@
 import 'package:aissam_store_v2/app/buisness/products/data/data_source/local_products_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/data_source/remote_product_datasource.dart';
-import 'package:aissam_store_v2/app/buisness/products/data/models/category.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/models/product_details.dart';
 import 'package:aissam_store_v2/app/buisness/products/domain/entities/category.dart';
 import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_preview.dart';
@@ -23,25 +22,18 @@ class ProductsRepositoryImpl implements ProductsRepository {
       GetCategoriesParams params) async {
     try {
       final res = await _productsDatasource.categories(params);
-      _productsLocalDatasource
-          .saveAll<CategoryModel>(params,
-              collection: 'categories',
-              data: res.items,
-              toMap: (e) => e.toJson())
-          .catchError((e) => null);
+      _productsLocalDatasource.cacheCategories(params, res.items);
       return Right(res);
     } on NetworkException {
       return await _productsLocalDatasource
-          .getAll<CategoryModel>(
-            (params, params.paginationParams),
-            collection: 'categories',
-            fromMap: CategoryModel.fromJson,
-          )
+          .categories(params)
           .then<Either<Failure, DataPagination<Category>>>((res) => Right(res))
           .catchError(
             (e, _) => Left<Failure, DataPagination<Category>>(
                 Failure.fromExceptionOrFailure(e)),
           );
+    } catch (e) {
+      return Left(Failure.fromExceptionOrFailure(e));
     }
   }
 
@@ -50,7 +42,17 @@ class ProductsRepositoryImpl implements ProductsRepository {
       GetProductsByCategoryParams params) async {
     try {
       final res = await _productsDatasource.productsByCategory(params);
+      _productsLocalDatasource.cacheProductsByCategory(params, res.items);
       return Right(res);
+    } on NetworkException {
+      return await _productsLocalDatasource
+          .productsByCategory(params)
+          .then<Either<Failure, DataPagination<ProductPreview>>>(
+              (res) => Right(res))
+          .catchError(
+            (e, _) => Left<Failure, DataPagination<ProductPreview>>(
+                Failure.fromExceptionOrFailure(e)),
+          );
     } catch (e) {
       return Left(Failure.fromExceptionOrFailure(e));
     }
@@ -61,7 +63,17 @@ class ProductsRepositoryImpl implements ProductsRepository {
       GetProductByPerformanceParams params) async {
     try {
       final res = await _productsDatasource.productsByPerformance(params);
+      _productsLocalDatasource.cacheProductsByPerformance(params, res.items);
       return Right(res);
+    } on NetworkException {
+      return await _productsLocalDatasource
+          .productsByPerformance(params)
+          .then<Either<Failure, DataPagination<ProductPreview>>>(
+              (res) => Right(res))
+          .catchError(
+            (e, _) => Left<Failure, DataPagination<ProductPreview>>(
+                Failure.fromExceptionOrFailure(e)),
+          );
     } catch (e) {
       return Left(Failure.fromExceptionOrFailure(e));
     }
@@ -72,7 +84,18 @@ class ProductsRepositoryImpl implements ProductsRepository {
       SearchProductsParams params) async {
     try {
       final res = await _productsDatasource.searchProducts(params);
+      _productsLocalDatasource.cacheSearchProducts(params, res.items);
+
       return Right(res);
+    } on NetworkException {
+      return await _productsLocalDatasource
+          .searchProducts(params)
+          .then<Either<Failure, DataPagination<ProductPreview>>>(
+              (res) => Right(res))
+          .catchError(
+            (e, _) => Left<Failure, DataPagination<ProductPreview>>(
+                Failure.fromExceptionOrFailure(e)),
+          );
     } catch (e) {
       return Left(Failure.fromExceptionOrFailure(e));
     }
@@ -82,7 +105,16 @@ class ProductsRepositoryImpl implements ProductsRepository {
   Future<Either<Failure, ProductDetailsModel>> product(String id) async {
     try {
       final res = await _productsDatasource.product(id);
+      _productsLocalDatasource.cacheProduct(id, res);
       return Right(res);
+    } on NetworkException {
+      return await _productsLocalDatasource
+          .product(id)
+          .then<Either<Failure, ProductDetailsModel>>((res) => Right(res))
+          .catchError(
+            (e, _) => Left<Failure, ProductDetailsModel>(
+                Failure.fromExceptionOrFailure(e)),
+          );
     } catch (e) {
       return Left(Failure.fromExceptionOrFailure(e));
     }

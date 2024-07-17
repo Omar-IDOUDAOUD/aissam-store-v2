@@ -10,14 +10,14 @@ part 'cache_entity.g.dart';
 
 
 @HiveType(typeId: 0)
-class CacheEntity<T> {
+class CacheEntity {
   
   @HiveField(0)
   final String key;
   
   @HiveField(1)
   /// should be a primitive type
-  final T data;
+  final Object data;
   
   @HiveField(2)
   final DateTime expirationDate;

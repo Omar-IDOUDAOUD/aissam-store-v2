@@ -15,8 +15,8 @@ class GetCategoriesParams extends _DataPaginationParamsProperty
   GetCategoriesParams({required super.paginationParams, this.parentCategory});
 
   @override
-  String buildCacheIdentifier() {
-    return paginationParams.buildCacheIdentifier() + parentCategory.toString();
+  String buildCacheKey() {
+    return paginationParams.buildCacheKey() + parentCategory.toString();
   }
 }
 
@@ -28,8 +28,8 @@ class GetProductsByCategoryParams extends _DataPaginationParamsProperty
       {required super.paginationParams, required this.category});
 
   @override
-  String buildCacheIdentifier() {
-    return paginationParams.buildCacheIdentifier() + category;
+  String buildCacheKey() {
+    return paginationParams.buildCacheKey() + category;
   }
 }
 
@@ -41,8 +41,8 @@ class GetProductByPerformanceParams extends _DataPaginationParamsProperty
       {required super.paginationParams, required this.performance});
 
   @override
-  String buildCacheIdentifier() {
-    return paginationParams.buildCacheIdentifier() + performance.toString();
+  String buildCacheKey() {
+    return paginationParams.buildCacheKey() + performance.toString();
   }
 }
 
@@ -66,7 +66,7 @@ class SearchProductsParams extends _DataPaginationParamsProperty
   });
 
   @override
-  String buildCacheIdentifier() {
-    return '${paginationParams.buildCacheIdentifier()}$keywords${categories?.length}${colorNames?.length}${sizes?.length}$minPrice$maxPrice';
+  String buildCacheKey() {
+    return '${paginationParams.buildCacheKey()}$keywords${categories?.length}${colorNames?.length}${sizes?.length}$minPrice$maxPrice';
   }
 }

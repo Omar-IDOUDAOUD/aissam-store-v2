@@ -1,17 +1,22 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:aissam_store_v2/core/service_lifecycle.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as Path;
+import 'package:path/path.dart' as p;
 
 class LocalDb extends ServiceLifecycle {
-  
+  late final Directory _mainDirectory;
   @override
   Future<LocalDb> init() async {
-    Hive.init((await getApplicationSupportDirectory()).path);
+    _mainDirectory = await getApplicationSupportDirectory();
+    Hive.init(_mainDirectory.path);
     return this;
   }
+
+  String _buildFinalPath(List<String> path) =>
+      p.joinAll([..._mainDirectory.uri.pathSegments, ...path]);
 
   void registerAdapter<T>(TypeAdapter<T>? regiserAdapter) {
     if (regiserAdapter != null &&
@@ -27,19 +32,19 @@ class LocalDb extends ServiceLifecycle {
     registerAdapter(regiserAdapter);
     return Hive.openLazyBox(
       name,
-      path: Path.joinAll(path),
+      path: _buildFinalPath(path),
     );
   }
 
   Future<Box> openBox<T>({
     TypeAdapter<T>? regiserAdapter,
-    required Uri path,
+    required List<String> path,
     required String name,
   }) async {
     registerAdapter(regiserAdapter);
     return Hive.openBox(
       name,
-      path: path.path,
+      path: _buildFinalPath(path),
     );
   }
 

@@ -1,5 +1,5 @@
 abstract mixin class CacheIdentifier {
-  String buildCacheIdentifier();
+  String buildCacheKey();
 
   static String from(Object? object) => object.toString();
 }

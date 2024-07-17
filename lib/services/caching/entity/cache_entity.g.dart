@@ -6,19 +6,19 @@ part of 'cache_entity.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class CacheEntityAdapter<T> extends   TypeAdapter<CacheEntity<T>> {
+class CacheEntityAdapter extends   TypeAdapter<CacheEntity > {
   @override
   final int typeId = 0;
 
   @override
-  CacheEntity<T> read(BinaryReader reader) {
+  CacheEntity read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return CacheEntity(
       key: fields[0] as String,
-      data: fields[1] as T,
+      data: fields[1] ,
       expirationDate: fields[2] as DateTime,
     );
   }

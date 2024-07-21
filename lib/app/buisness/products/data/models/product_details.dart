@@ -25,7 +25,7 @@ class ProductDetailsModel extends ProductDetails {
   factory ProductDetailsModel.fromJson(Map<String, dynamic> json,
           [ProductPreview? productPreview]) =>
       ProductDetailsModel(
-        id: productPreview?.id ?? (json['_id'] as ObjectId).toJson(),
+        id: productPreview?.id ?? json['_id']as String,
         name: productPreview?.name ?? json['name'],
         categories:
             productPreview?.categories ?? List<String>.from(json['categories']),
@@ -46,6 +46,7 @@ class ProductDetailsModel extends ProductDetails {
       );
 
   Map<String, dynamic> toJson() => {
+        '_id': id,
         'name': name,
         'categories': categories,
         'price': price,
@@ -63,10 +64,4 @@ class ProductDetailsModel extends ProductDetails {
         'image_urls': images,
         'image': image,
       };
-
-  factory ProductDetailsModel.fromCacheJson(Map<String, dynamic> json) =>
-      ProductDetailsModel.fromJson(
-        json..update('_id', (oldObj) => ObjectId.fromHexString(oldObj)),
-      );
-  Map<String, dynamic> toCacheJson() => {"_id": id, ...toJson()};
 }

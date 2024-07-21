@@ -1,14 +1,13 @@
 import 'dart:async';
 
 import 'package:aissam_store_v2/app/buisness/products/core/constants.dart';
-import 'package:aissam_store_v2/app/buisness/products/core/failures.dart'; 
+import 'package:aissam_store_v2/app/buisness/products/core/failures.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/models/category.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/models/product_details.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/models/product_preview.dart';
 import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
 import 'package:aissam_store_v2/app/core/data_pagination.dart';
 import 'package:aissam_store_v2/databases/mongo_db.dart';
-
 
 abstract class ProductsRemoteDatasource {
   Future<DataPagination<CategoryModel>> categories(GetCategoriesParams params);
@@ -20,8 +19,6 @@ abstract class ProductsRemoteDatasource {
       SearchProductsParams params);
   Future<ProductDetailsModel> product(String id);
 }
-
-
 
 class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
   final MongoDb _mongodb;
@@ -56,7 +53,7 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
     final pagination = DataPagination<T>(
       items: convertedData,
       hasNextPage: data.length == paginationParams.pageSize,
-      indexIdentifier: (paginationParams.indexIdentifierObj ?? 0 )+ data.length,
+      indexIdentifier: (paginationParams.indexIdentifierObj ?? 0) + data.length,
     );
     return pagination;
   }
@@ -130,8 +127,12 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
   @override
   Future<ProductDetailsModel> product(String id) async {
     final coll = await _productsCollection;
-    final Map<String, dynamic>? res =
-        await coll.findOne(filter: where..id(ObjectId.fromHexString(id)));
+    final Map<String, dynamic>? res = await coll
+        .findOneAndUpdate(
+          where..id(ObjectId.fromHexString(id)),
+          UpdateExpression()..$inc('views', 1),
+        )
+        .then((v) => v.$2);
     if (res == null) throw ProductNotFoundFailure();
     return ProductDetailsModel.fromJson(res);
   }

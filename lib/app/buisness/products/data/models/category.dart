@@ -8,20 +8,15 @@ class CategoryModel extends Category {
       required super.imageUrl,
       super.parentCategory});
   factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
-        id: (json['_id'] as ObjectId).toJson(),
+        id: json['_id'] as String,
         name: json["name"],
         imageUrl: json["image_url"],
         parentCategory: json["parent_category"],
       );
   Map<String, dynamic> toJson() => {
+        '_id': id,
         "name": name,
         "image_url": imageUrl,
         "parent_category": parentCategory,
       };
-
-  factory CategoryModel.fromCacheJson(Map<String, dynamic> json) =>
-      CategoryModel.fromJson(
-        json..update('_id', (oldObj) => ObjectId.fromHexString(oldObj)),
-      );
-  Map<String, dynamic> toCacheJson() => {"_id": id, ...toJson()};
 }

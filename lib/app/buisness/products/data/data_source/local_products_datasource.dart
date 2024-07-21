@@ -61,7 +61,7 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
       key: params.buildCacheKey(),
       collection: 'categories',
       path: _defPath,
-      data: res.map((elem) => elem.toCacheJson()).toList(),
+      data: res.map((elem) => elem.toJson()).toList(),
     );
   }
 
@@ -72,7 +72,7 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
       key: id,
       collection: _productDetails,
       path: _defPath,
-      data: product.toCacheJson(),
+      data: product.toJson(),
     );
   }
 
@@ -84,7 +84,7 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
       key: params.buildCacheKey(),
       collection: _productByCategory,
       path: _defPath,
-      data: data.map((elem) => elem.toCacheJson()).toList(),
+      data: data.map((elem) => elem.toJson()).toList(),
     );
   }
 
@@ -97,7 +97,7 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
       key: params.buildCacheKey(),
       collection: _productByPerformance,
       path: _defPath,
-      data: data.map((elem) => elem.toCacheJson()).toList(),
+      data: data.map((elem) => elem.toJson()).toList(),
     );
   }
 
@@ -110,7 +110,7 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
       key: params.buildCacheKey(),
       collection: _productSearch,
       path: _defPath,
-      data: data.map((elem) => elem.toCacheJson()).toList(),
+      data: data.map((elem) => elem.toJson()).toList(),
     );
   }
 
@@ -124,7 +124,7 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
     );
     if (res == null) throw NoCachedDataException();
     return _buildPagination(
-        res, CategoryModel.fromCacheJson, params.paginationParams);
+        res, CategoryModel.fromJson, params.paginationParams);
   }
 
   @override
@@ -135,7 +135,7 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
       path: _defPath,
     );
     if (res == null) throw NoCachedDataException();
-    return ProductDetailsModel.fromCacheJson(res);
+    return ProductDetailsModel.fromJson(res);
   }
 
   @override
@@ -161,7 +161,7 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
     );
     if (res == null) throw NoCachedDataException();
     return _buildPagination(
-        res, ProductPreviewModel.fromCacheJson, params.paginationParams);
+        res, ProductPreviewModel.fromJson, params.paginationParams);
   }
 
   @override

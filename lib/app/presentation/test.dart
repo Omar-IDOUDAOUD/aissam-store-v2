@@ -17,7 +17,7 @@ class _TestPageState extends State<TestPage> {
 
   int index = 0;
   Future<void> test() async {
-    final res = await GetProduct().call('66902f041077b56518b8b3e3');
+    final res = await GetProduct().call('669021581077b56518b8b3df');
 
     print('data: ----------------------------------------------');
     res.fold(

@@ -1,5 +1,5 @@
 import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_preview.dart';
-import 'package:aissam_store_v2/databases/mongo_db.dart';
+import 'package:mongo_dart/mongo_dart.dart' show ObjectId;
 
 class ProductPreviewModel extends ProductPreview {
   ProductPreviewModel({
@@ -14,7 +14,7 @@ class ProductPreviewModel extends ProductPreview {
 
   factory ProductPreviewModel.fromJson(Map<String, dynamic> json) {
     return ProductPreviewModel(
-      id: (json["_id"] as ObjectId).toJson(),
+      id: (json['_id'] as ObjectId).toJson(),
       name: json["name"],
       categories: List.from(json["categories"]),
       price: json["price"],
@@ -24,7 +24,8 @@ class ProductPreviewModel extends ProductPreview {
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toCacheJson() => {
+        "_id": id,
         "name": name,
         "categories": categories,
         "price": price,
@@ -33,11 +34,6 @@ class ProductPreviewModel extends ProductPreview {
         "image": image,
       };
 
-  factory ProductPreviewModel.fromCacheJson(Map<String, dynamic> json) =>
-      ProductPreviewModel.fromJson(
-        json..update('_id', (oldObj) => ObjectId.fromHexString(oldObj)),
-      );
-  Map<String, dynamic> toCacheJson() => {"_id": id, ...toJson()};
   static List<String> get fields => [
         'name',
         'categories',
@@ -47,4 +43,10 @@ class ProductPreviewModel extends ProductPreview {
         'sales',
         'image'
       ];
+  factory ProductPreviewModel.fromCache(
+    Map<String, dynamic> json,
+  ) {
+    json['_id'] = ObjectId.fromHexString(json['_id']);
+    return ProductPreviewModel.fromJson(json);
+  }
 }

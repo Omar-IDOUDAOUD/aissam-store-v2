@@ -16,7 +16,8 @@ class AuthRepositoryImpl implements AuthRepository {
 
   AuthRepositoryImpl(this._authDataSource);
 
-  Future<Either<AuthenticationFailure, User>> _createUser(userEntity.User user, User returnRight) async {
+  Future<Either<AuthenticationFailure, User>> _createUser(
+      userEntity.User user, User returnRight) async {
     final createUser = await CreateUser().call(CreateUserParams(newUser: user));
 
     return createUser.fold(
@@ -58,7 +59,8 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<AuthenticationFailure, User>> signUp(
       SignUpParams params) async {
     try {
-      final user = await _authDataSource.signUp(params.email, params.password, params.username);
+      final user = await _authDataSource.signUp(
+          params.email, params.password, params.username);
       return await _createUser(
         userEntity.User(
           id: user.uid,
@@ -75,7 +77,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<AuthenticationFailure, Unit>> logOut() async {
     await _authDataSource.logOut();
-    
+
     return const Right(unit);
   }
 

@@ -6,6 +6,7 @@ class Exception2 {
   @override
   String toString() {
     return 'Exception2: $msg, error = $error';
+    
   }
 }
 

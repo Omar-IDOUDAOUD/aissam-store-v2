@@ -21,54 +21,74 @@ import 'package:aissam_store_v2/config/environment/firebase_options.dart';
 
 final sl = GetIt.I;
 
-Future<void> initServiceLocator() async {
-  await _initServices();
+void initServiceLocator() {
+  _initServices();
   _initDataSources();
   _initRepositories();
 }
 
-Future<void> _initServices() async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+void _initServices() {
+  // ALL SERVICES ANOTATED WITH (PRIMITIVE) MUST BE INITIALIZED
+  // BEFORE USING ANY OF REPOS/DATASOURCE INSTANCES
+  print('INIT SERVICES');
+
+  // PRIMITIVE
+  sl.registerLazySingletonAsync<FirebaseApp>(
+    () async {
+      return Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform);
+    },
   );
+
+  sl.registerFactory<FirebaseAuth>(() => FirebaseAuth.instanceFor(app: sl()));
+  sl.registerFactory<FirebaseFirestore>(
+      () => FirebaseFirestore.instanceFor(app: sl()));
 
   sl.registerLazySingletonAsync<ConnectionChecker>(
     () => ConnectionChecker().init(),
     dispose: (i) => i.dispose(),
   );
 
-  sl.registerLazySingleton<MongoDb>(
-    () => MongoDb(Environment.mongodbDefName, sl.getAsync<ConnectionChecker>()),
-    dispose: (i) => i.dispose(),
-  );
-
+  // PRIMITIVE
   sl.registerLazySingletonAsync<LocalDb>(
     () => LocalDb().init(),
     dispose: (i) => i.dispose(),
   );
 
-  sl.registerLazySingletonAsync<CacheManager>(
-    () async => CacheManager(await sl.getAsync()).init(),
+  // PRIMITIVE
+  sl.registerLazySingletonAsync<MongoDb>(
+    () async {
+      return MongoDb(Environment.mongodbDefName,
+              await sl.getAsync<ConnectionChecker>())
+          .init();
+    },
+    dispose: (i) => i.dispose(),
+  );
+
+  sl.registerLazySingleton<CacheManager>(
+    () => CacheManager(sl()).init(),
     dispose: (i) => i.dispose(),
   );
 }
 
 void _initDataSources() {
-  sl.registerSingleton<AuthDataSource>(
-      AuthDataSourceImpl(FirebaseAuth.instance));
-  sl.registerLazySingleton<UserDataSource>(
-      () => UserDataSourceImpl(FirebaseFirestore.instance));
+  print('INIT DATASOURCES');
+
+  sl.registerLazySingleton<AuthDataSource>(() => AuthDataSourceImpl(sl()));
+  sl.registerLazySingleton<UserDataSource>(() => UserDataSourceImpl(sl()));
+
+  //
   sl.registerLazySingleton<ProductsRemoteDatasource>(
-    () => ProductsRemoteDatasourceImpl(sl()),
-  );
-  sl.registerLazySingletonAsync<ProductsLocalDatasource>(
-    () async => ProductsLocalDatasourceImpl(await sl.getAsync()),
-  );
+      () => ProductsRemoteDatasourceImpl(sl()));
+  sl.registerLazySingleton<ProductsLocalDatasource>(
+      () => ProductsLocalDatasourceImpl(sl()));
+  //
 }
 
 void _initRepositories() {
-  sl.registerSingleton<AuthRepository>(AuthRepositoryImpl(sl()));
+  print('INIT REPOS');
+  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
   sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(sl()));
-  sl.registerLazySingletonAsync<ProductsRepository>(
-      () async => ProductsRepositoryImpl(sl(), await sl.getAsync()));
+  sl.registerLazySingleton<ProductsRepository>(
+      () => ProductsRepositoryImpl(sl(), sl()));
 }

@@ -1,5 +1,5 @@
 import 'package:aissam_store_v2/app/buisness/products/domain/entities/category.dart';
-import 'package:aissam_store_v2/databases/mongo_db.dart';
+import 'package:aissam_store_v2/databases/mongo_db.dart' show ObjectId;
 
 class CategoryModel extends Category {
   CategoryModel(
@@ -13,15 +13,15 @@ class CategoryModel extends Category {
         imageUrl: json["image_url"],
         parentCategory: json["parent_category"],
       );
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toCacheJson() => {
+        '_id': id,
         "name": name,
         "image_url": imageUrl,
         "parent_category": parentCategory,
       };
-
-  factory CategoryModel.fromCacheJson(Map<String, dynamic> json) =>
-      CategoryModel.fromJson(
-        json..update('_id', (oldObj) => ObjectId.fromHexString(oldObj)),
-      );
-  Map<String, dynamic> toCacheJson() => {"_id": id, ...toJson()};
+        factory CategoryModel.fromCache(Map<String, dynamic> json,
+      ) {
+    json['_id'] = ObjectId.fromHexString(json['_id']);
+    return CategoryModel.fromJson(json);
+  }
 }

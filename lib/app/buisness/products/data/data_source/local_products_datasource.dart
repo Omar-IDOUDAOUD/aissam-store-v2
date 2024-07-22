@@ -124,7 +124,7 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
     );
     if (res == null) throw NoCachedDataException();
     return _buildPagination(
-        res, CategoryModel.fromCacheJson, params.paginationParams);
+        res, CategoryModel.fromCache, params.paginationParams);
   }
 
   @override
@@ -135,7 +135,7 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
       path: _defPath,
     );
     if (res == null) throw NoCachedDataException();
-    return ProductDetailsModel.fromCacheJson(res);
+    return ProductDetailsModel.fromCache(res);
   }
 
   @override
@@ -148,7 +148,7 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
     );
     if (res == null) throw NoCachedDataException();
     return _buildPagination(
-        res, ProductPreviewModel.fromJson, params.paginationParams);
+        res, ProductPreviewModel.fromCache, params.paginationParams);
   }
 
   @override
@@ -161,7 +161,7 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
     );
     if (res == null) throw NoCachedDataException();
     return _buildPagination(
-        res, ProductPreviewModel.fromCacheJson, params.paginationParams);
+        res, ProductPreviewModel.fromCache, params.paginationParams);
   }
 
   @override
@@ -174,6 +174,6 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
     );
     if (res == null) throw NoCachedDataException();
     return _buildPagination(
-        res, ProductPreviewModel.fromJson, params.paginationParams);
+        res, ProductPreviewModel.fromCache, params.paginationParams);
   }
 }

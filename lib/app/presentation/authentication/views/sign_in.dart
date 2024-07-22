@@ -1,6 +1,7 @@
 import 'package:aissam_store_v2/app/buisness/authentication/core/error/exceptions.dart';
 import 'package:aissam_store_v2/app/buisness/authentication/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/presentation/authentication/views/sign_up.dart';
+import 'package:aissam_store_v2/app/presentation/test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:aissam_store_v2/app/presentation/authentication/providers/providers.dart';
@@ -14,7 +15,8 @@ class SignInPage extends ConsumerStatefulWidget {
 }
 
 class _SignUpPageState extends ConsumerState<SignInPage> {
-  late final TextEditingController _emailController = TextEditingController(text: 'duqshudiqsd@sfdgfg.sdf');
+  late final TextEditingController _emailController =
+      TextEditingController(text: 'duqshudiqsd@sfdgfg.sdf');
   late final TextEditingController _passwordController =
       TextEditingController(text: 'qsdqusdsldknf');
 
@@ -33,8 +35,16 @@ class _SignUpPageState extends ConsumerState<SignInPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(authProvider);
-    final emailError = state.checkFieldErrored(AuthErrorSources.emailField) ;
-    final passwordError = state.checkFieldErrored(AuthErrorSources.passwordField);
+    ref.listen(
+      authProvider,
+      (_, as) => as.success
+          ? Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (_) => const TestPage()))
+          : null,
+    );
+    final emailError = state.checkFieldErrored(AuthErrorSources.emailField);
+    final passwordError =
+        state.checkFieldErrored(AuthErrorSources.passwordField);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sign In'),
@@ -45,7 +55,7 @@ class _SignUpPageState extends ConsumerState<SignInPage> {
           children: [
             TextFieldWidget(
               controller: _emailController,
-              hint: 'Email', 
+              hint: 'Email',
               error: emailError != null,
               errorText: emailError?.errorMessage,
             ),
@@ -58,8 +68,7 @@ class _SignUpPageState extends ConsumerState<SignInPage> {
             const Spacer(),
             if (state.isLoading) const CircularProgressIndicator(),
             const Spacer(),
-            if (state.errorMessage != null )
-              Text(state.errorMessage!),
+            if (state.errorMessage != null) Text(state.errorMessage!),
             MaterialButton(
               color: Colors.blueAccent,
               onPressed: state.isLoading
@@ -77,14 +86,14 @@ class _SignUpPageState extends ConsumerState<SignInPage> {
               child: const Text('Sing Up'),
               onPressed: () {
                 Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (_) => const SignUpPage()));
+                    MaterialPageRoute(builder: (_) => const SignUpPage()));
               },
             ),
-              MaterialButton(
+            MaterialButton(
               color: Colors.blueAccent,
               child: const Text('Sing with google'),
               onPressed: () {
-                SignInGoogle().call(); 
+                SignInGoogle().call();
               },
             ),
           ],

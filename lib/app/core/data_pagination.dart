@@ -13,6 +13,7 @@ class DataPagination<T> {
     return DataPagination<T>(
       items: items ?? this.items,
       hasNextPage: hasNextPage ?? this.hasNextPage,
+
       indexIdentifier: indexIdentifier ?? this.indexIdentifier,
     );
   }

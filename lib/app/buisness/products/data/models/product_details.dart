@@ -1,6 +1,6 @@
 import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_details.dart';
 import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_preview.dart';
-import 'package:aissam_store_v2/databases/mongo_db.dart';
+import 'package:aissam_store_v2/databases/mongo_db.dart' show ObjectId;
 
 class ProductDetailsModel extends ProductDetails {
   ProductDetailsModel({
@@ -45,7 +45,8 @@ class ProductDetailsModel extends ProductDetails {
         images: List<String>.from(json["image_urls"]),
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toCacheJson() => {
+        '_id': id,
         'name': name,
         'categories': categories,
         'price': price,
@@ -63,10 +64,9 @@ class ProductDetailsModel extends ProductDetails {
         'image_urls': images,
         'image': image,
       };
-
-  factory ProductDetailsModel.fromCacheJson(Map<String, dynamic> json) =>
-      ProductDetailsModel.fromJson(
-        json..update('_id', (oldObj) => ObjectId.fromHexString(oldObj)),
-      );
-  Map<String, dynamic> toCacheJson() => {"_id": id, ...toJson()};
+  factory ProductDetailsModel.fromCache(Map<String, dynamic> json,
+      [ProductPreview? productPreview]) {
+    json['_id'] = ObjectId.fromHexString(json['_id']);
+    return ProductDetailsModel.fromJson(json, productPreview);
+  }
 }

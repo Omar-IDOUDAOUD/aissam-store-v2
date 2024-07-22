@@ -8,6 +8,8 @@ import 'package:aissam_store_v2/app/buisness/products/data/models/product_previe
 import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
 import 'package:aissam_store_v2/app/core/data_pagination.dart';
 import 'package:aissam_store_v2/databases/mongo_db.dart';
+import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:mongo_dart/mongo_dart.dart';
 
 
 abstract class ProductsRemoteDatasource {
@@ -28,21 +30,21 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
 
   ProductsRemoteDatasourceImpl(this._mongodb);
 
-  Future<MongoCollection> _getCollection(String collactionName) async {
+  Future<DbCollection> _getCollection(String collactionName) async {
     final db = await _mongodb.db;
     return db.collection(collactionName);
   }
 
-  Future<MongoCollection> get _productsCollection => _getCollection('products');
-  Future<MongoCollection> get _categoriesCollection =>
+  Future<DbCollection> get _productsCollection => _getCollection('products');
+  Future<DbCollection> get _categoriesCollection =>
       _getCollection('categories');
 
-  QueryExpression _buildQuery(DataPaginationParams paginationParams,
+  SelectorBuilder _buildQuery(DataPaginationParams paginationParams,
       {List<String>? fields}) {
     var builder = where
       ..limit(paginationParams.pageSize)
       ..skip(paginationParams.indexIdentifierObj ?? 0);
-    if (fields != null) builder.selectFields(fields);
+    if (fields != null) builder.fields(fields);
     return builder;
   }
 
@@ -65,8 +67,7 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
   Future<DataPagination<CategoryModel>> categories(
       GetCategoriesParams params) async {
     final coll = await _categoriesCollection;
-    final res =
-        await coll.find(filter: _buildQuery(params.paginationParams)).toList();
+    final res = await coll.find(_buildQuery(params.paginationParams)).toList();
     return _buildPagination<CategoryModel>(
         res, CategoryModel.fromJson, params.paginationParams);
   }
@@ -77,9 +78,9 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
     final coll = await _productsCollection;
     final res = await coll
         .find(
-          filter: _buildQuery(params.paginationParams,
+          _buildQuery(params.paginationParams,
               fields: ProductPreviewModel.fields)
-            ..$eq('categories', params.category),
+            ..eq('categories', params.category),
         )
         .toList();
 
@@ -91,18 +92,20 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
   Future<DataPagination<ProductPreviewModel>> productsByPerformance(
       GetProductByPerformanceParams params) async {
     final coll = await _productsCollection;
-    final SortExpression sort = switch (params.performance) {
-      ProductsPerformance.bestSellers => SortExpression()
-        ..addField('sales', descending: true),
-      ProductsPerformance.newArrivals => SortExpression()
-        ..addField('created_at', descending: true),
-      ProductsPerformance.trending => SortExpression()
-        ..addField('views', descending: true),
-      _ => SortExpression()..addField('average_rating', descending: true),
-    };
-    final res = await coll
-        .find(filter: _buildQuery(params.paginationParams), sort: sort)
-        .toList();
+    final s = _buildQuery(params.paginationParams);
+
+    switch (params.performance) {
+      case ProductsPerformance.bestSellers:
+        s.sortBy('sales', descending: true);
+      case ProductsPerformance.newArrivals:
+        s.sortBy('created_at', descending: true);
+      case ProductsPerformance.trending:
+        s.sortBy('views', descending: true);
+      default:
+        s.sortBy('average_rating', descending: true);
+    }
+    ;
+    final res = await coll.find(s).toList();
     return _buildPagination<ProductPreviewModel>(
         res, ProductPreviewModel.fromJson, params.paginationParams);
   }
@@ -113,15 +116,15 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
     final coll = await _productsCollection;
     final query = _buildQuery(params.paginationParams);
     if (params.categories != null && params.categories!.isNotEmpty)
-      query.$in('categories', params.categories!);
+      query.oneFrom('categories', params.categories!);
     if (params.sizes != null && params.sizes!.isNotEmpty)
-      query.$in('sizes', params.sizes!);
+      query.oneFrom('sizes', params.sizes!);
     if (params.colorNames != null && params.colorNames!.isNotEmpty)
-      query.$in('available_colors', params.colorNames!);
+      query.oneFrom('available_colors', params.colorNames!);
     query.inRange(
         'price', params.minPrice ?? 0, params.maxPrice ?? double.infinity);
     return _buildPagination(
-      await coll.find(filter: query).toList(),
+      await coll.find(query).toList(),
       ProductPreviewModel.fromJson,
       params.paginationParams,
     );
@@ -130,8 +133,10 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
   @override
   Future<ProductDetailsModel> product(String id) async {
     final coll = await _productsCollection;
-    final Map<String, dynamic>? res =
-        await coll.findOne(filter: where..id(ObjectId.fromHexString(id)));
+    final Map<String, dynamic>? res = await coll.findAndModify(
+      query: where..id2(id),
+      update: modify.inc('views', 1),
+    );
     if (res == null) throw ProductNotFoundFailure();
     return ProductDetailsModel.fromJson(res);
   }

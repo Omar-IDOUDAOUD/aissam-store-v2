@@ -54,12 +54,15 @@ dependencies:
   get_it: ^7.7.0
   google_sign_in: ^6.2.1
   connectivity_plus: ^6.0.3
-  mongo_db_driver: ^0.1.0-1.2.dev
-  mongo_db_query: ^0.1.0-1.6.beta
-  bson: ^5.0.4
+  # mongo_db_driver: ^0.1.0-1.2.dev
+  # mongo_db_query: ^0.1.0-1.6.beta
+  # bson: ^5.0.4
   path_provider: ^2.1.3
   
   path: any
+  mongo_dart: ^0.10.3
+
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -71,9 +74,10 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
   hive_generator: ^2.0.1
-  build_runner: ^2.4.11
+  # build_runner: ^2.4.11
   freezed: ^2.5.2
   json_serializable: ^6.8.0
+  build_runner: ^2.4.9
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

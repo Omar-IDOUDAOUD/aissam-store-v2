@@ -66,7 +66,7 @@ void _initServices() {
   );
 
   sl.registerLazySingleton<CacheManager>(
-    () => CacheManager(sl()).init(),
+    () => CacheManager(sl()),
     dispose: (i) => i.dispose(),
   );
 }

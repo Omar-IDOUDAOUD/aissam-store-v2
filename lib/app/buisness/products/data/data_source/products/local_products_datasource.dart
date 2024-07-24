@@ -11,21 +11,19 @@ abstract class ProductsLocalDatasource {
   ////////// Get Data
   Future<DataPagination<CategoryModel>> categories(GetCategoriesParams params);
   Future<DataPagination<ProductPreviewModel>> productsByPerformance(
-      GetProductByPerformanceParams params);
+      ProductByPerformanceParams params);
   Future<DataPagination<ProductPreviewModel>> productsByCategory(
-      GetProductsByCategoryParams params);
-  Future<DataPagination<ProductPreviewModel>> searchProducts(
-      SearchProductsParams params);
+      ProductsByCategoryParams params);
+
   Future<ProductDetailsModel> product(String id);
   ////////// Cache Data
   Future<void> cacheCategories(
       GetCategoriesParams params, List<CategoryModel> res);
   Future<void> cacheProductsByPerformance(
-      GetProductByPerformanceParams params, List<ProductPreviewModel> res);
+      ProductByPerformanceParams params, List<ProductPreviewModel> res);
   Future<void> cacheProductsByCategory(
-      GetProductsByCategoryParams params, List<ProductPreviewModel> res);
-  Future<void> cacheSearchProducts(
-      SearchProductsParams params, List<ProductPreviewModel> res);
+      ProductsByCategoryParams params, List<ProductPreviewModel> res);
+
   Future<void> cacheProduct(String id, ProductDetailsModel product);
 }
 
@@ -34,7 +32,7 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
 
   ProductsLocalDatasourceImpl(this._cacheManager);
 
-  get _defPath => <String>['products'];
+  List<String> get _defPath => ['products/interfaces'];
   T _defFromMap<T>(e) => e as T;
   Map2 _defToMap<T>(e) => e as Map2;
 
@@ -57,10 +55,9 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
   @override
   Future<void> cacheCategories(
       GetCategoriesParams params, List<CategoryModel> res) {
-    return _cacheManager.commitNewCache(
-      key: params.buildCacheKey(),
-      collection: 'categories',
-      path: _defPath,
+    return _cacheManager.addToDocument(
+      document: params.buildCacheKey(),
+      path: _defPath..add(_categories),
       data: res.map((elem) => elem.toCacheJson()).toList(),
     );
   }
@@ -68,10 +65,9 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
   String get _productDetails => 'product_details';
   @override
   Future<void> cacheProduct(String id, ProductDetailsModel product) {
-    return _cacheManager.commitNewCache(
-      key: id,
-      collection: _productDetails,
-      path: _defPath,
+    return _cacheManager.addToDocument(
+      document: id,
+      path: _defPath..add(_productDetails),
       data: product.toCacheJson(),
     );
   }
@@ -79,12 +75,11 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
   String get _productByCategory => 'products_by_category';
   @override
   Future<void> cacheProductsByCategory(
-      GetProductsByCategoryParams params, List<ProductPreviewModel> data) {
-    return _cacheManager.commitNewCache(
-      key: params.buildCacheKey(),
-      collection: _productByCategory,
-      path: _defPath,
-      data: data.map((elem) => elem.toCacheJson()).toList(),
+      ProductsByCategoryParams params, List<ProductPreviewModel> res) {
+    return _cacheManager.addToDocument(
+      document: params.buildCacheKey(),
+      path: _defPath..add(_productByCategory),
+      data: res.map((elem) => elem.toCacheJson()).toList(),
     );
   }
 
@@ -92,88 +87,58 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
 
   @override
   Future<void> cacheProductsByPerformance(
-      GetProductByPerformanceParams params, List<ProductPreviewModel> data) {
-    return _cacheManager.commitNewCache(
-      key: params.buildCacheKey(),
-      collection: _productByPerformance,
-      path: _defPath,
-      data: data.map((elem) => elem.toCacheJson()).toList(),
-    );
-  }
-
-  String get _productSearch => 'products_search';
-
-  @override
-  Future<void> cacheSearchProducts(
-      SearchProductsParams params, List<ProductPreviewModel> data) {
-    return _cacheManager.commitNewCache(
-      key: params.buildCacheKey(),
-      collection: _productSearch,
-      path: _defPath,
-      data: data.map((elem) => elem.toCacheJson()).toList(),
+      ProductByPerformanceParams params, List<ProductPreviewModel> res) {
+    return _cacheManager.addToDocument(
+      document: params.buildCacheKey(),
+      path: _defPath..add(_productByPerformance),
+      data: res.map((elem) => elem.toCacheJson()).toList(),
     );
   }
 
   @override
   Future<DataPagination<CategoryModel>> categories(
       GetCategoriesParams params) async {
-    final res = await _cacheManager.getListCaches<Map2>(
-      key: params.buildCacheKey(),
-      collection: _categories,
-      path: _defPath,
+    final res = await _cacheManager.getDocument(
+      document: params.buildCacheKey(),
+      path: _defPath..add(_categories),
     );
     if (res == null) throw NoCachedDataException();
-    return _buildPagination(
-        res, CategoryModel.fromCache, params.paginationParams);
+    return _buildPagination(List.from(res.values.map((e) => Map2.from(e))),
+        CategoryModel.fromCache, params.paginationParams);
   }
 
   @override
   Future<ProductDetailsModel> product(String id) async {
-    final res = await _cacheManager.getCacheObject<Map2>(
-      key: id,
-      collection: _productDetails,
-      path: _defPath,
+    final res = await _cacheManager.getDocumentEntry(
+      document: id,
+      path: _defPath..add(_productDetails),
+      key: 0,
     );
     if (res == null) throw NoCachedDataException();
-    return ProductDetailsModel.fromCache(res);
+    return ProductDetailsModel.fromCache(Map2.from(res as Map));
   }
 
   @override
   Future<DataPagination<ProductPreviewModel>> productsByCategory(
-      GetProductsByCategoryParams params) async {
-    final res = await _cacheManager.getListCaches<Map2>(
-      key: params.buildCacheKey(),
-      collection: _productByCategory,
-      path: _defPath,
+      ProductsByCategoryParams params) async {
+    final res = await _cacheManager.getDocument(
+      document: params.buildCacheKey(),
+      path: _defPath..add(_productByCategory),
     );
     if (res == null) throw NoCachedDataException();
-    return _buildPagination(
-        res, ProductPreviewModel.fromCache, params.paginationParams);
+    return _buildPagination(List.from(res.values.map((e) => Map2.from(e))),
+        ProductPreviewModel.fromCache, params.paginationParams);
   }
 
   @override
   Future<DataPagination<ProductPreviewModel>> productsByPerformance(
-      GetProductByPerformanceParams params) async {
-    final res = await _cacheManager.getListCaches<Map2>(
-      key: params.buildCacheKey(),
-      collection: _productByPerformance,
-      path: _defPath,
+      ProductByPerformanceParams params) async {
+    final res = await _cacheManager.getDocument(
+      document: params.buildCacheKey(),
+      path: _defPath..add(_productByPerformance),
     );
     if (res == null) throw NoCachedDataException();
-    return _buildPagination(
-        res, ProductPreviewModel.fromCache, params.paginationParams);
-  }
-
-  @override
-  Future<DataPagination<ProductPreviewModel>> searchProducts(
-      SearchProductsParams params) async {
-    final res = await _cacheManager.getListCaches<Map2>(
-      key: params.buildCacheKey(),
-      collection: _productSearch,
-      path: _defPath,
-    );
-    if (res == null) throw NoCachedDataException();
-    return _buildPagination(
-        res, ProductPreviewModel.fromCache, params.paginationParams);
+    return _buildPagination(List.from(res.values.map((e) => Map2.from(e))),
+        ProductPreviewModel.fromCache, params.paginationParams);
   }
 }

@@ -16,6 +16,8 @@ class MongoDb extends ServiceLifecycle {
   @override
   Future<MongoDb> init() async {
     print('INITIALIZING MONGO DB');
+    final isConnected = _connectionChecker.currentState;
+    if (!isConnected) return this; 
     final dbUri = Uri(
       scheme: "mongodb+srv",
       userInfo: "${Environment.mongodbUsername}:${Environment.mongodbPassword}",
@@ -27,7 +29,7 @@ class MongoDb extends ServiceLifecycle {
       _db = await Db.create(dbUri.toString());
       await _db!.open().timeout(GlobalConstnts.requestTimeoutDuration);
     } on TimeoutException {
-      throw NetworkException();
+      return this;
     } catch (e) {
       throw Exception2(msg: 'Error while conneting to database', error: e);
     }

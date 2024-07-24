@@ -1,5 +1,5 @@
 import 'package:aissam_store_v2/app/core/constants.dart';
-import 'package:aissam_store_v2/app/core/interfaces/cache_identifier.dart';
+import 'package:aissam_store_v2/app/core/interfaces/cache_key_builder.dart';
 
 class DataPagination<T> {
   final List<T> items;
@@ -13,13 +13,17 @@ class DataPagination<T> {
     return DataPagination<T>(
       items: items ?? this.items,
       hasNextPage: hasNextPage ?? this.hasNextPage,
-
       indexIdentifier: indexIdentifier ?? this.indexIdentifier,
     );
   }
+
+  @override
+  String toString() {
+    return 'DataPagination: length: ${items.length}';
+  }
 }
 
-class DataPaginationParams extends CacheIdentifier {
+class DataPaginationParams extends CacheKeyBuilder {
   final dynamic indexIdentifierObj;
   final int pageSize;
   DataPaginationParams({

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:aissam_store_v2/app/buisness/products/core/constants.dart';
-import 'package:aissam_store_v2/app/buisness/products/core/failures.dart'; 
+import 'package:aissam_store_v2/app/buisness/products/core/failures.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/models/category.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/models/product_details.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/models/product_preview.dart';
@@ -11,19 +11,15 @@ import 'package:aissam_store_v2/databases/mongo_db.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
-
 abstract class ProductsRemoteDatasource {
   Future<DataPagination<CategoryModel>> categories(GetCategoriesParams params);
   Future<DataPagination<ProductPreviewModel>> productsByPerformance(
-      GetProductByPerformanceParams params);
+      ProductByPerformanceParams params);
   Future<DataPagination<ProductPreviewModel>> productsByCategory(
-      GetProductsByCategoryParams params);
-  Future<DataPagination<ProductPreviewModel>> searchProducts(
-      SearchProductsParams params);
+      ProductsByCategoryParams params);
+
   Future<ProductDetailsModel> product(String id);
 }
-
-
 
 class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
   final MongoDb _mongodb;
@@ -41,7 +37,7 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
 
   SelectorBuilder _buildQuery(DataPaginationParams paginationParams,
       {List<String>? fields}) {
-    var builder = where
+    final builder = where
       ..limit(paginationParams.pageSize)
       ..skip(paginationParams.indexIdentifierObj ?? 0);
     if (fields != null) builder.fields(fields);
@@ -58,7 +54,7 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
     final pagination = DataPagination<T>(
       items: convertedData,
       hasNextPage: data.length == paginationParams.pageSize,
-      indexIdentifier: (paginationParams.indexIdentifierObj ?? 0 )+ data.length,
+      indexIdentifier: (paginationParams.indexIdentifierObj ?? 0) + data.length,
     );
     return pagination;
   }
@@ -74,13 +70,13 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
 
   @override
   Future<DataPagination<ProductPreviewModel>> productsByCategory(
-      GetProductsByCategoryParams params) async {
+      ProductsByCategoryParams params) async {
     final coll = await _productsCollection;
     final res = await coll
         .find(
           _buildQuery(params.paginationParams,
-              fields: ProductPreviewModel.fields)
-            ..eq('categories', params.category),
+                  fields: ProductPreviewModel.fields)
+              .eq('categories', params.category),
         )
         .toList();
 
@@ -90,7 +86,7 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
 
   @override
   Future<DataPagination<ProductPreviewModel>> productsByPerformance(
-      GetProductByPerformanceParams params) async {
+      ProductByPerformanceParams params) async {
     final coll = await _productsCollection;
     final s = _buildQuery(params.paginationParams);
 
@@ -108,26 +104,6 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
     final res = await coll.find(s).toList();
     return _buildPagination<ProductPreviewModel>(
         res, ProductPreviewModel.fromJson, params.paginationParams);
-  }
-
-  @override
-  Future<DataPagination<ProductPreviewModel>> searchProducts(
-      SearchProductsParams params) async {
-    final coll = await _productsCollection;
-    final query = _buildQuery(params.paginationParams);
-    if (params.categories != null && params.categories!.isNotEmpty)
-      query.oneFrom('categories', params.categories!);
-    if (params.sizes != null && params.sizes!.isNotEmpty)
-      query.oneFrom('sizes', params.sizes!);
-    if (params.colorNames != null && params.colorNames!.isNotEmpty)
-      query.oneFrom('available_colors', params.colorNames!);
-    query.inRange(
-        'price', params.minPrice ?? 0, params.maxPrice ?? double.infinity);
-    return _buildPagination(
-      await coll.find(query).toList(),
-      ProductPreviewModel.fromJson,
-      params.paginationParams,
-    );
   }
 
   @override

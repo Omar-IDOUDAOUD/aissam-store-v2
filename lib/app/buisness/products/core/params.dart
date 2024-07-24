@@ -1,6 +1,6 @@
 import 'package:aissam_store_v2/app/buisness/products/core/constants.dart';
 import 'package:aissam_store_v2/app/core/data_pagination.dart';
-import 'package:aissam_store_v2/app/core/interfaces/cache_identifier.dart';
+import 'package:aissam_store_v2/app/core/interfaces/cache_key_builder.dart';
 
 abstract class _DataPaginationParamsProperty {
   final DataPaginationParams paginationParams;
@@ -9,7 +9,7 @@ abstract class _DataPaginationParamsProperty {
 }
 
 class GetCategoriesParams extends _DataPaginationParamsProperty
-    with CacheIdentifier {
+    with CacheKeyBuilder {
   final String? parentCategory;
 
   GetCategoriesParams({required super.paginationParams, this.parentCategory});
@@ -20,11 +20,11 @@ class GetCategoriesParams extends _DataPaginationParamsProperty
   }
 }
 
-class GetProductsByCategoryParams extends _DataPaginationParamsProperty
-    with CacheIdentifier {
+class ProductsByCategoryParams extends _DataPaginationParamsProperty
+    with CacheKeyBuilder {
   final String category;
 
-  GetProductsByCategoryParams(
+  ProductsByCategoryParams(
       {required super.paginationParams, required this.category});
 
   @override
@@ -33,11 +33,11 @@ class GetProductsByCategoryParams extends _DataPaginationParamsProperty
   }
 }
 
-class GetProductByPerformanceParams extends _DataPaginationParamsProperty
-    with CacheIdentifier {
+class ProductByPerformanceParams extends _DataPaginationParamsProperty
+    with CacheKeyBuilder {
   final ProductsPerformance performance;
 
-  GetProductByPerformanceParams(
+  ProductByPerformanceParams(
       {required super.paginationParams, required this.performance});
 
   @override
@@ -47,7 +47,7 @@ class GetProductByPerformanceParams extends _DataPaginationParamsProperty
 }
 
 class SearchProductsParams extends _DataPaginationParamsProperty
-    with CacheIdentifier {
+    with CacheKeyBuilder {
   final String keywords;
   final List<String>? categories;
   final List<String>? colorNames;
@@ -67,6 +67,6 @@ class SearchProductsParams extends _DataPaginationParamsProperty
 
   @override
   String buildCacheKey() {
-    return '${paginationParams.buildCacheKey()}$keywords${categories?.length}${colorNames?.length}${sizes?.length}$minPrice$maxPrice';
+    return '$keywords${categories?.length}${colorNames?.length}${sizes?.length}$minPrice$maxPrice';
   }
 }

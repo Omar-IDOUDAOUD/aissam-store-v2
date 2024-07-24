@@ -1,7 +1,8 @@
-import 'package:aissam_store_v2/app/buisness/products/data/data_source/local_products_datasource.dart';
-import 'package:aissam_store_v2/app/buisness/products/data/data_source/remote_product_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/products/data/data_source/products/local_products_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/products/data/data_source/products/remote_product_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/models/product_details.dart';
 import 'package:aissam_store_v2/app/buisness/products/domain/entities/category.dart';
+import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_details.dart';
 import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_preview.dart';
 import 'package:aissam_store_v2/app/buisness/products/domain/repositories/products_repository.dart';
 import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
@@ -39,7 +40,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
 
   @override
   Future<Either<Failure, DataPagination<ProductPreview>>> productsByCategory(
-      GetProductsByCategoryParams params) async {
+      ProductsByCategoryParams params) async {
     try {
       final res = await _productsDatasource.productsByCategory(params);
       _productsLocalDatasource.cacheProductsByCategory(params, res.items);
@@ -60,7 +61,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
 
   @override
   Future<Either<Failure, DataPagination<ProductPreview>>> productsByPerformance(
-      GetProductByPerformanceParams params) async {
+      ProductByPerformanceParams params) async {
     try {
       final res = await _productsDatasource.productsByPerformance(params);
       _productsLocalDatasource.cacheProductsByPerformance(params, res.items);
@@ -80,29 +81,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Failure, DataPagination<ProductPreview>>> searchProducts(
-      SearchProductsParams params) async {
-    try {
-      final res = await _productsDatasource.searchProducts(params);
-      _productsLocalDatasource.cacheSearchProducts(params, res.items);
-
-      return Right(res);
-    } on NetworkException {
-      return await _productsLocalDatasource
-          .searchProducts(params)
-          .then<Either<Failure, DataPagination<ProductPreview>>>(
-              (res) => Right(res))
-          .catchError(
-            (e, _) => Left<Failure, DataPagination<ProductPreview>>(
-                Failure.fromExceptionOrFailure(e)),
-          );
-    } catch (e) {
-      return Left(Failure.fromExceptionOrFailure(e));
-    }
-  }
-
-  @override
-  Future<Either<Failure, ProductDetailsModel>> product(String id) async {
+  Future<Either<Failure, ProductDetails>> product(String id) async {
     try {
       final res = await _productsDatasource.product(id);
       _productsLocalDatasource.cacheProduct(id, res);

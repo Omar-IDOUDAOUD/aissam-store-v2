@@ -10,7 +10,7 @@ class LocalDb extends ServiceLifecycle {
   late final Directory _mainDirectory;
   @override
   Future<LocalDb> init() async {
-    _mainDirectory = await getApplicationSupportDirectory();
+    _mainDirectory = (await getDownloadsDirectory())!;
     Hive.init(_mainDirectory.path);
     return this;
   }
@@ -48,8 +48,9 @@ class LocalDb extends ServiceLifecycle {
     );
   }
 
-  Future<void> deleteBox(String name, {String? path}) {
-    return Hive.deleteBoxFromDisk(name, path: path);
+  Future<void> deleteBox(String name, {List<String>? path}) {
+    return Hive.deleteBoxFromDisk(name,
+        path: path != null ? _buildFinalPath(path) : null);
   }
 
   Future<void> reset() {

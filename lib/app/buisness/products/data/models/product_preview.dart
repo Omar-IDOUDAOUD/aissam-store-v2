@@ -13,15 +13,15 @@ class ProductPreviewModel extends ProductPreview {
   });
 
   factory ProductPreviewModel.fromJson(Map<String, dynamic> json) {
-    return ProductPreviewModel(
-      id: (json['_id'] as ObjectId).toJson(),
-      name: json["name"],
-      categories: List.from(json["categories"]),
-      price: json["price"],
-      averageRating: json["average_rating"],
-      sales: json["sales"],
-      image: json["image"],
-    );
+      return  ProductPreviewModel(
+        id: (json['_id'] as ObjectId).toJson(),
+        name: json["name"],
+        categories: List.from(json["categories"]),
+        price:json["price"],
+        averageRating: json["average_rating"],
+        sales: json["sales"],
+        image: json["image"],
+      );
   }
 
   Map<String, dynamic> toCacheJson() => {

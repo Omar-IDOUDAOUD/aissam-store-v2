@@ -30,4 +30,9 @@ class ProductDetails extends ProductPreview {
     required this.isAvailable,
     required this.images,
   });
+
+  @override
+  String toString() =>
+      'ProductDetails(id: $id, name: $name, categories: $categories, price: $price, averageRating: $averageRating, sales: $sales, ...)';
+
 }

@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'app/presentation/splash/splash.dart';
 
 void main()   {
-  print('======================================================================='); 
+  print('================================MAIN======================================='); 
   WidgetsFlutterBinding.ensureInitialized();
   initServiceLocator();
   runApp(const ProviderScope(child: AissamStoreV2()));

@@ -20,3 +20,7 @@ class ProductPreview {
   String toString() =>
       'ProductPreview(id: $id, name: $name, categories: $categories, price: $price, averageRating: $averageRating, sales: $sales)';
 }
+
+
+
+typedef PopularProductSearchType = ({String image, String name}); 

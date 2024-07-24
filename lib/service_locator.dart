@@ -1,7 +1,11 @@
-import 'package:aissam_store_v2/app/buisness/products/data/data_source/remote_product_datasource.dart';
-import 'package:aissam_store_v2/app/buisness/products/data/data_source/local_products_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/products/data/data_source/products/remote_product_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/products/data/data_source/products/local_products_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/products/data/data_source/search/local_search_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/products/data/data_source/search/remote_search_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/repositories/products_repo_impl.dart';
+import 'package:aissam_store_v2/app/buisness/products/data/repositories/search_repo_impl.dart';
 import 'package:aissam_store_v2/app/buisness/products/domain/repositories/products_repository.dart';
+import 'package:aissam_store_v2/app/buisness/products/domain/repositories/search_repository.dart';
 import 'package:aissam_store_v2/app/buisness/user/data/data_source/user_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/user/data/repositories/user_repo_impl.dart';
 import 'package:aissam_store_v2/app/buisness/user/domain/repositories/user_repository.dart';
@@ -82,13 +86,20 @@ void _initDataSources() {
       () => ProductsRemoteDatasourceImpl(sl()));
   sl.registerLazySingleton<ProductsLocalDatasource>(
       () => ProductsLocalDatasourceImpl(sl()));
+
+  sl.registerLazySingleton<SearchRemoteDataSource>(
+      () => SearchRemoteDataSourceImpl(sl()));
+  sl.registerLazySingleton<SearchLocalDataSource>(
+      () => SearchLocalDataSourceImpl(sl(), sl()));
   //
 }
 
 void _initRepositories() {
-  print('INIT REPOS');
+  print('INIT REPOSITORIES');
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
   sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(sl()));
   sl.registerLazySingleton<ProductsRepository>(
       () => ProductsRepositoryImpl(sl(), sl()));
+  sl.registerLazySingleton<SearchRepository>(
+      () => SearchRepositoryImpl(sl(), sl()));
 }

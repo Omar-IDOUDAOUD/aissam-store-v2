@@ -1,4 +1,3 @@
-
 import 'package:aissam_store_v2/app/presentation/test.dart';
 import 'package:aissam_store_v2/core/exceptions.dart';
 import 'package:aissam_store_v2/databases/local_db.dart';
@@ -44,6 +43,7 @@ class _SplashPageState extends State<SplashPage> {
     } on NetworkException {
       _loadingState = _SplashLoadingStates.finished;
     } catch (e) {
+      print(e);
       _loadingState = _SplashLoadingStates.errored;
     }
 

@@ -16,7 +16,7 @@ class SearchRepositoryImpl extends SearchRepository {
   SearchRepositoryImpl(this._remoteDataSource, this._localDataSource);
 
   @override
-  Future<Either<Failure, List<SearchProductsParams>>> history() async {
+  Future<Either<Failure, List<SearchProductFilterParams>>> history() async {
     try {
       final res = await _localDataSource.history();
       return Right(res);
@@ -106,7 +106,7 @@ class SearchRepositoryImpl extends SearchRepository {
   Future<Either<Failure, Unit>> addToHistory(
       SearchProductsParams params) async {
     try {
-      await _localDataSource.saveHistory(params);
+      await _localDataSource.saveHistory(params.filterParams);
       return const Right(unit);
     } catch (e) {
       return Left(Failure.fromExceptionOrFailure(e));

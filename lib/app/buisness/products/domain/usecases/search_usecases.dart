@@ -28,9 +28,9 @@ class PopularSearchedProducts
 }
 
 class SearchHistory
-    implements FutureUseCase<List<SearchProductsParams>, NoParams> {
+    implements FutureUseCase<List<SearchProductFilterParams>, NoParams> {
   @override
-  Future<Either<Failure, List<SearchProductsParams>>> call([NoParams? params]) {
+  Future<Either<Failure, List<SearchProductFilterParams>>> call([NoParams? params]) {
     return sl<SearchRepository>().history();
   }
 }

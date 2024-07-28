@@ -43,17 +43,20 @@ class ProductsRepositoryImpl implements ProductsRepository {
       ProductsByCategoryParams params) async {
     try {
       final res = await _productsDatasource.productsByCategory(params);
-      _productsLocalDatasource.cacheProductsByCategory(params, res.items);
+      _productsLocalDatasource.cacheProductsByCategory(
+          params.paginationParams, res.items);
       return Right(res);
     } on NetworkException {
       return await _productsLocalDatasource
-          .productsByCategory(params)
-          .then<Either<Failure, DataPagination<ProductPreview>>>(
-              (res) => Right(res))
-          .catchError(
-            (e, _) => Left<Failure, DataPagination<ProductPreview>>(
-                Failure.fromExceptionOrFailure(e)),
-          );
+          .productsByCategory(params.paginationParams)
+          .then<Either<Failure, DataPagination<ProductPreview>>>((res) {
+        return Right(res);
+      }).catchError(
+        (e, _) {
+          return Left<Failure, DataPagination<ProductPreview>>(
+              Failure.fromExceptionOrFailure(e));
+        },
+      );
     } catch (e) {
       return Left(Failure.fromExceptionOrFailure(e));
     }
@@ -63,18 +66,33 @@ class ProductsRepositoryImpl implements ProductsRepository {
   Future<Either<Failure, DataPagination<ProductPreview>>> productsByPerformance(
       ProductByPerformanceParams params) async {
     try {
+      print('REQUEST PARAMS: ${params.paginationParams}');
+
       final res = await _productsDatasource.productsByPerformance(params);
-      _productsLocalDatasource.cacheProductsByPerformance(params, res.items);
+      _productsLocalDatasource.cacheProductsByPerformance(
+          params.paginationParams, res.items);
+      print('GOT REMOTE PARAMS: ${res.params}');
+
       return Right(res);
     } on NetworkException {
+      print('GOT REMOTE ERROR');
+
       return await _productsLocalDatasource
-          .productsByPerformance(params)
+          .productsByPerformance(params.paginationParams)
           .then<Either<Failure, DataPagination<ProductPreview>>>(
-              (res) => Right(res))
-          .catchError(
-            (e, _) => Left<Failure, DataPagination<ProductPreview>>(
-                Failure.fromExceptionOrFailure(e)),
-          );
+        (res) {
+          print('GOT LOCAL PARAMS: ${res.params}');
+
+          return Right(res);
+        },
+      ).catchError(
+        (e, _) {
+          print('GOT LOCAL ERROR');
+
+          return Left<Failure, DataPagination<ProductPreview>>(
+              Failure.fromExceptionOrFailure(e));
+        },
+      );
     } catch (e) {
       return Left(Failure.fromExceptionOrFailure(e));
     }

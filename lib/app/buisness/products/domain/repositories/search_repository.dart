@@ -8,7 +8,7 @@ import 'package:aissam_store_v2/app/core/errors/failures.dart';
 abstract class SearchRepository {
   Future<Either<Failure, List<String>>> popularSuggestions();
   Future<Either<Failure, List<PopularProductSearchType>>> popularProducts();
-  Future<Either<Failure, List<SearchProductsParams>>> history();
+  Future<Either<Failure, List<SearchProductFilterParams>>> history();
   Future<Either<Failure, DataPagination<ProductPreview>>> searchProducts(
       SearchProductsParams params);
   Future<Either<Failure, List<String>>> getSuggestions(String terms);

@@ -17,7 +17,7 @@ class MongoDb extends ServiceLifecycle {
   Future<MongoDb> init() async {
     print('INITIALIZING MONGO DB');
     final isConnected = _connectionChecker.currentState;
-    if (!isConnected) return this; 
+    if (!isConnected) return this;
     final dbUri = Uri(
       scheme: "mongodb+srv",
       userInfo: "${Environment.mongodbUsername}:${Environment.mongodbPassword}",

@@ -64,24 +64,24 @@ class SearchRemoteDataSourceImpl extends SearchRemoteDataSource {
     final coll = await _productsCollection;
     final query = where
         .limit(BuisnessConsts.dataPaginationPageSize)
-        .skip(params.paginationParams.indexIdentifierObj ?? 0)
+        .skip(params.paginationParams.tokenObj ?? 0)
         .fields(ProductPreviewModel.fields);
-    query.eq(r'$text', {r'$search': params.keywords});
-    if (params.categories != null && params.categories!.isNotEmpty)
-      query.oneFrom('categories', params.categories!);
-    if (params.sizes != null && params.sizes!.isNotEmpty)
-      query.oneFrom('sizes', params.sizes!);
-    if (params.colorNames != null && params.colorNames!.isNotEmpty)
-      query.oneFrom('available_colors', params.colorNames!);
+    final filters = params.filterParams;
+    query.eq(r'$text', {r'$search': filters.keywords});
+    if (filters.categories != null && filters.categories!.isNotEmpty)
+      query.oneFrom('categories', filters.categories!);
+    if (filters.sizes != null && filters.sizes!.isNotEmpty)
+      query.oneFrom('sizes', filters.sizes!);
+    if (filters.colorNames != null && filters.colorNames!.isNotEmpty)
+      query.oneFrom('available_colors', filters.colorNames!);
     query.inRange(
-        'price', params.minPrice ?? 0, params.maxPrice ?? double.infinity);
+        'price', filters.minPrice ?? 0, filters.maxPrice ?? double.infinity);
 
     final res = await coll.find(query).toList();
-    return DataPagination(
+    return DataPagination.ready(
       items: res.map((e) => ProductPreviewModel.fromJson(e)).toList(),
-      hasNextPage: res.length == params.paginationParams.pageSize,
-      indexIdentifier:
-          (params.paginationParams.indexIdentifierObj ?? 0) + res.length,
+      params: params.paginationParams,
+      tokenObj: (params.paginationParams.tokenObj ?? 0) + res.length,
     );
   }
 

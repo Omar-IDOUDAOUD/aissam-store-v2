@@ -1,6 +1,5 @@
 import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
 import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_preview.dart';
-import 'package:aissam_store_v2/app/core/data_pagination.dart';
 import 'package:aissam_store_v2/config/constants/global_consts.dart';
 import 'package:aissam_store_v2/core/exceptions.dart';
 import 'package:aissam_store_v2/databases/local_db.dart';
@@ -12,12 +11,12 @@ abstract class SearchLocalDataSource {
   // Cache data
   Future<void> cachePopularSuggestions(List<String> terms);
   Future<void> cachePopularProducts(List<PopularProductSearchType> products);
-  Future<void> saveHistory(SearchProductsParams params);
+  Future<void> saveHistory(SearchProductFilterParams params);
 
   // Get data
   Future<List<String>> popularSuggestions();
   Future<List<PopularProductSearchType>> popularProducts();
-  Future<List<SearchProductsParams>> history();
+  Future<List<SearchProductFilterParams>> history();
 
   Future<void> deleteHistoryItem(int index);
 }
@@ -59,14 +58,12 @@ class SearchLocalDataSourceImpl extends SearchLocalDataSource {
   }
 
   @override
-  Future<List<SearchProductsParams>> history() async {
+  Future<List<SearchProductFilterParams>> history() async {
     final box = await _localDb.openBox(
         path: GlobalConstnts.userDataPath, name: _history);
-    final res = box.values.map<SearchProductsParams>(
+    final res = box.values.map<SearchProductFilterParams>(
       (e) {
-        return SearchProductsParams(
-          ///THIS field is ignored, its not used
-          paginationParams: DataPaginationParams(),
+        return SearchProductFilterParams(
           keywords: e['keywords'],
           categories: e['categories'],
           colorNames: e['colors'],
@@ -104,12 +101,13 @@ class SearchLocalDataSourceImpl extends SearchLocalDataSource {
 
   String get _history => 'history';
   @override
-  Future<void> saveHistory(SearchProductsParams params) async {
+  Future<void> saveHistory(SearchProductFilterParams params) async {
     final box = await _localDb.openLazyBox(
         path: GlobalConstnts.userDataPath, name: _history);
     if (box.length >= _maxHistoryLength) await box.deleteAt(0);
     if (box.length > 0 &&
-        (await box.getAt(box.length - 1))['keywords'] == params.keywords) {
+        (await box.getAt(box.length - 1))['keywords'] ==
+            params.keywords) {
       await box.close();
       return;
     }

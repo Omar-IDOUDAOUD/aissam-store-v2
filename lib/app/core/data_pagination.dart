@@ -1,19 +1,27 @@
 import 'package:aissam_store_v2/app/core/constants.dart';
-import 'package:aissam_store_v2/app/core/interfaces/cache_key_builder.dart';
 
 class DataPagination<T> {
   final List<T> items;
-  final dynamic indexIdentifier;
-  final bool hasNextPage;
+  final DataPaginationParams params;
 
-  DataPagination(
-      {required this.items, required this.hasNextPage, this.indexIdentifier});
+  DataPagination({
+    required this.items,
+    required this.params,
+  });
 
-  copyWith({List<T>? items, bool? hasNextPage, Object? indexIdentifier}) {
-    return DataPagination<T>(
-      items: items ?? this.items,
-      hasNextPage: hasNextPage ?? this.hasNextPage,
-      indexIdentifier: indexIdentifier ?? this.indexIdentifier,
+  factory DataPagination.ready({
+    required DataPaginationParams params,
+    required List<T> items,
+    dynamic tokenObj,
+  }) {
+    return DataPagination(
+      items: items,
+      params: DataPaginationParams(
+        pageSize: params.pageSize,
+        page: params.page + 1,
+        hasNextPage: items.length == params.pageSize,
+        tokenObj: tokenObj,
+      ),
     );
   }
 
@@ -23,16 +31,28 @@ class DataPagination<T> {
   }
 }
 
-class DataPaginationParams extends CacheKeyBuilder {
-  final dynamic indexIdentifierObj;
+class DataPaginationParams {
+  /// used for getting specified pagination data
+  final dynamic tokenObj;
   final int pageSize;
+  final bool hasNextPage;
+
+  /// used for data caching
+  int page;
+
   DataPaginationParams({
-    this.indexIdentifierObj,
+    this.tokenObj,
     this.pageSize = BuisnessConsts.dataPaginationPageSize,
+    this.page = 0,
+    this.hasNextPage = true,
   });
 
+  void incrementPage() {
+    page += 1;
+  }
+
   @override
-  String buildCacheKey() {
-    return "$indexIdentifierObj";
+  String toString() {
+    return 'DataPaginationParams: token:$tokenObj, page: $page, hasNextPage: $hasNextPage';
   }
 }

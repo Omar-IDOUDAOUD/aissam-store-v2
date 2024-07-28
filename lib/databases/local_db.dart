@@ -57,6 +57,11 @@ class LocalDb extends ServiceLifecycle {
     return Hive.deleteFromDisk();
   }
 
+  void deleteDir(List<String> subDir) async {
+    final dir = Directory(_buildFinalPath(subDir));
+    dir.deleteSync(recursive: true);
+  }
+
   @override
   Future<void> dispose() async {
     return Hive.close();

@@ -9,7 +9,6 @@ import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
 import 'package:aissam_store_v2/app/core/data_pagination.dart';
 import 'package:aissam_store_v2/databases/mongo_db.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
-import 'package:mongo_dart/mongo_dart.dart';
 
 abstract class ProductsRemoteDatasource {
   Future<DataPagination<CategoryModel>> categories(GetCategoriesParams params);
@@ -39,8 +38,9 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
       {List<String>? fields}) {
     final builder = where
       ..limit(paginationParams.pageSize)
-      ..skip(paginationParams.indexIdentifierObj ?? 0);
+      ..skip(paginationParams.tokenObj ?? 0);
     if (fields != null) builder.fields(fields);
+
     return builder;
   }
 
@@ -51,10 +51,10 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
     final convertedData = data.map((e) {
       return fromMap(e);
     }).toList();
-    final pagination = DataPagination<T>(
+    final pagination = DataPagination<T>.ready(
+      params: paginationParams,
       items: convertedData,
-      hasNextPage: data.length == paginationParams.pageSize,
-      indexIdentifier: (paginationParams.indexIdentifierObj ?? 0) + data.length,
+      tokenObj: (paginationParams.tokenObj ?? 0) + data.length,
     );
     return pagination;
   }
@@ -63,7 +63,14 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
   Future<DataPagination<CategoryModel>> categories(
       GetCategoriesParams params) async {
     final coll = await _categoriesCollection;
-    final res = await coll.find(_buildQuery(params.paginationParams)).toList();
+    final res = await coll
+        .find(
+          _buildQuery(params.paginationParams).eq(
+            'parent_category',
+            null,
+          ),
+        )
+        .toList();
     return _buildPagination<CategoryModel>(
         res, CategoryModel.fromJson, params.paginationParams);
   }
@@ -100,7 +107,6 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
       default:
         s.sortBy('average_rating', descending: true);
     }
-    ;
     final res = await coll.find(s).toList();
     return _buildPagination<ProductPreviewModel>(
         res, ProductPreviewModel.fromJson, params.paginationParams);

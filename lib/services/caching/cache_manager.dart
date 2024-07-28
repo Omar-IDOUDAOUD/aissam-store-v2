@@ -110,4 +110,8 @@ class CacheManager extends ServiceLifecycle {
   }
 
   List<String> _insertCacheDirTo(List<String> path) => path..insert(0, 'cache');
+
+  void destryAllCaches() {
+    return _localDb.deleteDir(_insertCacheDirTo([]));
+  }
 }

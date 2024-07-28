@@ -9,6 +9,7 @@ class ConnectionChecker extends ServiceLifecycle {
 
   late bool _currentState;
   bool get currentState {
+
     return _currentState;
   }
 

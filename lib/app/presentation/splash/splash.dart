@@ -38,7 +38,13 @@ class _SplashPageState extends State<SplashPage> {
     final localdbInit = sl.getAsync<LocalDb>();
 
     try {
-      await Future.wait([firebaseInit, monogdbInit, localdbInit]);
+      await Future.wait(
+        [
+          firebaseInit,
+          monogdbInit,
+          localdbInit,
+        ],
+      );
       _loadingState = _SplashLoadingStates.finished;
     } on NetworkException {
       _loadingState = _SplashLoadingStates.finished;

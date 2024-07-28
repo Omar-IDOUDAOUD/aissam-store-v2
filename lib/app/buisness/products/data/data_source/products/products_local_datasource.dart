@@ -24,7 +24,7 @@ abstract class ProductsLocalDatasource {
   Future<void> cacheProductsByCategory(
       DataPaginationParams params, List<ProductPreviewModel> res);
 
-  Future<void> cacheProduct(String id, ProductDetailsModel product);
+  Future<void> cacheProduct(ProductDetailsModel product);
 }
 
 class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
@@ -66,9 +66,9 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
 
   String get _productDetails => 'product_details';
   @override
-  Future<void> cacheProduct(String id, ProductDetailsModel product) {
+  Future<void> cacheProduct(ProductDetailsModel product) {
     return _cacheManager.addToDocument(
-      document: id,
+      document: product.id,
       path: _defPath..add(_productDetails),
       data: product.toCacheJson(),
     );

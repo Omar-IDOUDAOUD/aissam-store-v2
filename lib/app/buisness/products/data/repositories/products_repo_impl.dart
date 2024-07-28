@@ -1,6 +1,7 @@
-import 'package:aissam_store_v2/app/buisness/products/data/data_source/products/local_products_datasource.dart';
-import 'package:aissam_store_v2/app/buisness/products/data/data_source/products/remote_product_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/products/data/data_source/products/products_local_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/products/data/data_source/products/product_remote_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/models/product_details.dart';
+import 'package:aissam_store_v2/app/buisness/products/data/models/product_preview.dart';
 import 'package:aissam_store_v2/app/buisness/products/domain/entities/category.dart';
 import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_details.dart';
 import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_preview.dart';
@@ -75,20 +76,14 @@ class ProductsRepositoryImpl implements ProductsRepository {
 
       return Right(res);
     } on NetworkException {
-      print('GOT REMOTE ERROR');
-
       return await _productsLocalDatasource
           .productsByPerformance(params.paginationParams)
           .then<Either<Failure, DataPagination<ProductPreview>>>(
         (res) {
-          print('GOT LOCAL PARAMS: ${res.params}');
-
           return Right(res);
         },
       ).catchError(
         (e, _) {
-          print('GOT LOCAL ERROR');
-
           return Left<Failure, DataPagination<ProductPreview>>(
               Failure.fromExceptionOrFailure(e));
         },
@@ -102,7 +97,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   Future<Either<Failure, ProductDetails>> product(String id) async {
     try {
       final res = await _productsDatasource.product(id);
-      _productsLocalDatasource.cacheProduct(id, res);
+      _productsLocalDatasource.cacheProduct(res);
       return Right(res);
     } on NetworkException {
       return await _productsLocalDatasource
@@ -116,4 +111,23 @@ class ProductsRepositoryImpl implements ProductsRepository {
       return Left(Failure.fromExceptionOrFailure(e));
     }
   }
+
+  // @override
+  // Future<Either<Failure, ProductPreview>> productPreview(String id) async {
+  //   try {
+  //     final res = await _productsDatasource.productPreview(id);
+  //     _productsLocalDatasource.cacheProductPreview(res);
+  //     return Right(res);
+  //   }  on NetworkException {
+  //     return await _productsLocalDatasource
+  //         .productPreview(id)
+  //         .then<Either<Failure, ProductPreviewModel>>((res) => Right(res))
+  //         .catchError(
+  //           (e, _) => Left<Failure, ProductPreviewModel>(
+  //               Failure.fromExceptionOrFailure(e)),
+  //         );
+  //   } catch (e) {
+  //     return Left(Failure.fromExceptionOrFailure(e));
+  //   }
+  // }
 }

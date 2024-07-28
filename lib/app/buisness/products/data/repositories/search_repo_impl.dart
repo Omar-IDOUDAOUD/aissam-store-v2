@@ -83,7 +83,7 @@ class SearchRepositoryImpl extends SearchRepository {
   @override
   Future<Either<Failure, ProductDetails>> product(String id) async {
     try {
-      final either = await Product().call(id);
+      final either = await GetProduct().call(id);
       final res = either.fold((l) => throw l, (r) => r);
       _remoteDataSource.markFirstProductClick(id).catchError((_) => null);
       return Right(res);

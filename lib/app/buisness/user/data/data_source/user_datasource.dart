@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:aissam_store_v2/app/buisness/authentication/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/buisness/user/core/errors/exceptions.dart';
 import 'package:aissam_store_v2/app/buisness/user/data/models/user.dart';
+import 'package:aissam_store_v2/config/constants/global_consts.dart';
 import 'package:aissam_store_v2/core/exceptions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb show User;
@@ -27,7 +28,7 @@ class UserDataSourceImpl implements UserDataSource {
   UserModel? _currentUser;
 
   CollectionReference<UserModel> get _ref =>
-      _fbFirestore.collection('users').withConverter<UserModel>(
+      _fbFirestore.collection(GlobalConstnts.userRemoteCollection).withConverter<UserModel>(
             fromFirestore: (snapshot, _) =>
                 UserModel.fromJson(snapshot.data()!),
             toFirestore: (user, _) => user.toJson(),

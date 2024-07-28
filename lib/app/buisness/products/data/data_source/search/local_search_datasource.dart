@@ -59,8 +59,8 @@ class SearchLocalDataSourceImpl extends SearchLocalDataSource {
 
   @override
   Future<List<SearchProductFilterParams>> history() async {
-    final box = await _localDb.openBox(
-        path: GlobalConstnts.userDataPath, name: _history);
+    final box = await _localDb
+        .openBox(path: [GlobalConstnts.userLocalDataDir], name: _history);
     final res = box.values.map<SearchProductFilterParams>(
       (e) {
         return SearchProductFilterParams(
@@ -102,12 +102,11 @@ class SearchLocalDataSourceImpl extends SearchLocalDataSource {
   String get _history => 'history';
   @override
   Future<void> saveHistory(SearchProductFilterParams params) async {
-    final box = await _localDb.openLazyBox(
-        path: GlobalConstnts.userDataPath, name: _history);
+    final box = await _localDb
+        .openLazyBox(path: [GlobalConstnts.userLocalDataDir], name: _history);
     if (box.length >= _maxHistoryLength) await box.deleteAt(0);
     if (box.length > 0 &&
-        (await box.getAt(box.length - 1))['keywords'] ==
-            params.keywords) {
+        (await box.getAt(box.length - 1))['keywords'] == params.keywords) {
       await box.close();
       return;
     }
@@ -125,8 +124,8 @@ class SearchLocalDataSourceImpl extends SearchLocalDataSource {
 
   @override
   Future<void> deleteHistoryItem(int index) async {
-    final box = await _localDb.openLazyBox(
-        path: GlobalConstnts.userDataPath, name: _history);
+    final box = await _localDb
+        .openLazyBox(path: [GlobalConstnts.userLocalDataDir], name: _history);
     await box.deleteAt(index);
     await box.close();
   }

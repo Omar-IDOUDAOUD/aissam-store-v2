@@ -6,6 +6,7 @@ import 'package:aissam_store_v2/app/buisness/products/data/models/category.dart'
 import 'package:aissam_store_v2/app/buisness/products/data/models/product_details.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/models/product_preview.dart';
 import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
+import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_preview.dart';
 import 'package:aissam_store_v2/app/core/data_pagination.dart';
 import 'package:aissam_store_v2/databases/mongo_db.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
@@ -16,7 +17,7 @@ abstract class ProductsRemoteDatasource {
       ProductByPerformanceParams params);
   Future<DataPagination<ProductPreviewModel>> productsByCategory(
       ProductsByCategoryParams params);
-
+      
   Future<ProductDetailsModel> product(String id);
 }
 

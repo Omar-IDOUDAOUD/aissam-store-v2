@@ -15,4 +15,5 @@ abstract class ProductsRepository {
       ProductsByCategoryParams params);
 
   Future<Either<Failure, ProductDetails>> product(String id);
+  // Future<Either<Failure, ProductPreview>> productPreview(String id);
 }

@@ -42,7 +42,7 @@ class ProductsByPerformance
   }
 }
 
-class Product implements FutureUseCase<ProductDetails, String> {
+class GetProduct implements FutureUseCase<ProductDetails, String> {
   @override
   Future<Either<Failure, ProductDetails>> call(String id) async {
     return sl<ProductsRepository>().product(id);

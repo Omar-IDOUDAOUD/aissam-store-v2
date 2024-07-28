@@ -1,5 +1,5 @@
-import 'package:aissam_store_v2/app/buisness/products/data/data_source/products/remote_product_datasource.dart';
-import 'package:aissam_store_v2/app/buisness/products/data/data_source/products/local_products_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/products/data/data_source/products/product_remote_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/products/data/data_source/products/products_local_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/data_source/search/local_search_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/data_source/search/remote_search_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/repositories/products_repo_impl.dart';
@@ -9,6 +9,10 @@ import 'package:aissam_store_v2/app/buisness/products/domain/repositories/search
 import 'package:aissam_store_v2/app/buisness/user/data/data_source/user_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/user/data/repositories/user_repo_impl.dart';
 import 'package:aissam_store_v2/app/buisness/user/domain/repositories/user_repository.dart';
+import 'package:aissam_store_v2/app/buisness/whishlist/data/data_source/wishlist_local_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/whishlist/data/data_source/wishlist_remote_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/whishlist/data/repositories/wishlist_repo_impl.dart';
+import 'package:aissam_store_v2/app/buisness/whishlist/domain/repositories/whishlist_repository.dart';
 import 'package:aissam_store_v2/databases/local_db.dart';
 import 'package:aissam_store_v2/databases/mongo_db.dart';
 import 'package:aissam_store_v2/config/environment/environment.dart';
@@ -91,6 +95,12 @@ void _initDataSources() {
       () => SearchRemoteDataSourceImpl(sl()));
   sl.registerLazySingleton<SearchLocalDataSource>(
       () => SearchLocalDataSourceImpl(sl(), sl()));
+
+  sl.registerLazySingleton<WishlistRemoteDataSource>(
+      () => WishlistRemoteDataSourceImpl(sl(), sl()));
+
+  sl.registerLazySingleton<WishlistLocalDataSource>(
+      () => WishlistLocalDataSourceImpl(sl(), sl()));
   //
 }
 
@@ -102,4 +112,6 @@ void _initRepositories() {
       () => ProductsRepositoryImpl(sl(), sl()));
   sl.registerLazySingleton<SearchRepository>(
       () => SearchRepositoryImpl(sl(), sl()));
+  sl.registerLazySingleton<WishlistRepository>(
+      () => WishlistRepositoryImpl(sl(), sl()));
 }

@@ -88,7 +88,7 @@ class SearchRemoteDataSourceImpl extends SearchRemoteDataSource {
   @override
   Future<void> markSeachSuggestionClick(String terms) async {
     final coll = await _searchTermsCollection;
-    coll.updateOne(where.eq('terms', terms), modify.inc('clicks', 1));
+    await coll.updateOne(where.eq('terms', terms), modify.inc('clicks', 1));
   }
 
   @override

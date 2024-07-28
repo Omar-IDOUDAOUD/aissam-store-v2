@@ -4,8 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/presentation/splash/splash.dart';
 
-void main()   {
-  print('================================MAIN======================================='); 
+void main() {
+  print('=============================== ||\\\\//|| ================================');
+  print('=============================== ||    ||================================');
   WidgetsFlutterBinding.ensureInitialized();
   initServiceLocator();
   runApp(const ProviderScope(child: AissamStoreV2()));
@@ -16,9 +17,9 @@ class AissamStoreV2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return   MaterialApp(
+    return MaterialApp( 
       home: const SplashPage(),
-      theme:ThemeData.dark(),
+      theme: ThemeData.dark(),
     );
   }
 }

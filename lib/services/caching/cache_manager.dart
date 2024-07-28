@@ -99,6 +99,26 @@ class CacheManager extends ServiceLifecycle {
     return res;
   }
 
+  Future<void> deleteDocumentEntry({
+    required String document,
+    required List<String> path,
+    required Object key,
+  }) async {
+    final LazyBox box = await _localDb.openLazyBox(
+      path: _insertCacheDirTo(path),
+      name: document,
+    );
+    if (box.isEmpty) {
+      await box.close();
+      return;
+    }
+    if (key is int)
+      await box.deleteAt(key);
+    else
+      await box.delete(key);
+    await box.close();
+  }
+
   Future<void> cleanUpDocument({
     required String document,
     required List<String> path,

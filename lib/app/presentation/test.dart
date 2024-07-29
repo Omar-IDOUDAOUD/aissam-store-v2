@@ -8,7 +8,6 @@ class TestPage extends StatefulWidget {
 }
 
 class _TestPageState extends State<TestPage> {
- 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,12 +18,17 @@ class _TestPageState extends State<TestPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            MaterialButton(
-              child: const Text('click me'),
-              onPressed: () {
-                //
-              },
-            )
+            OutlinedButton(
+              onPressed: () {},
+              child: Text('hello'),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            FilledButton(
+              onPressed: () {},
+              child: Text('hello'),
+            ),
           ],
         ),
       ),

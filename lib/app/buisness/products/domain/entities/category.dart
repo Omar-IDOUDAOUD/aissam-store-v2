@@ -16,3 +16,16 @@ class Category {
   String toString() => 'Category(id: $id, name: $name, imageUrl: $imageUrl, parentCategory: $parentCategory)';
 
 }
+
+
+
+void fonctionX(){
+  // get data from server
+  final dataFromServer = Object; 
+
+  var listOfCaegories = [
+    dataFromServer.first , dataFromServer.second ,  dataFromServer.third
+  ] ; 
+
+  // show result to user
+}

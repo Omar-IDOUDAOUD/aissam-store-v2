@@ -8,6 +8,8 @@ import 'package:aissam_store_v2/app/buisness/products/data/models/product_previe
 import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
 import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_preview.dart';
 import 'package:aissam_store_v2/app/core/data_pagination.dart';
+import 'package:aissam_store_v2/app/core/errors/failures.dart';
+import 'package:aissam_store_v2/core/types.dart';
 import 'package:aissam_store_v2/databases/mongo_db.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 
@@ -17,8 +19,9 @@ abstract class ProductsRemoteDatasource {
       ProductByPerformanceParams params);
   Future<DataPagination<ProductPreviewModel>> productsByCategory(
       ProductsByCategoryParams params);
-      
+
   Future<ProductDetailsModel> product(String id);
+  Future<List<Map2>> productMap(ProductMapParams params);
 }
 
 class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
@@ -122,5 +125,32 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
     );
     if (res == null) throw ProductNotFoundFailure();
     return ProductDetailsModel.fromJson(res);
+  }
+
+  @override
+  Future<List<Map2>> productMap(ProductMapParams params) async {
+    
+      final coll = await _productsCollection;
+      final res = await coll
+          .find(
+            where.oneFrom(
+              '_id',
+              params.ids.map(
+                (e) {
+                  return ObjectId.fromHexString(e);
+                },
+              ).toList(),
+            ),
+          )
+          .toList()
+          .then((res) {
+        return res.map<Map2>((e) {
+          e['id'] = (e['_id'] as ObjectId).toJson();
+          e.remove('_id');
+          return e;
+        }).toList();
+      });
+      return res;
+    
   }
 }

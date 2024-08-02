@@ -5,7 +5,7 @@ import 'package:aissam_store_v2/databases/mongo_db.dart' show ObjectId;
 class ProductDetailsModel extends ProductDetails {
   ProductDetailsModel({
     required super.id,
-    required super.name,
+    required super.title,
     required super.categories,
     required super.price,
     required super.averageRating,
@@ -21,12 +21,14 @@ class ProductDetailsModel extends ProductDetails {
     required super.isAvailable,
     required super.images,
     required super.image,
+    required super.discountPercent,
+    required super.discountExpirationDate,
   });
   factory ProductDetailsModel.fromJson(Map<String, dynamic> json,
           [ProductPreview? productPreview]) =>
       ProductDetailsModel(
         id: productPreview?.id ?? (json['_id'] as ObjectId).toJson(),
-        name: productPreview?.name ?? json['name'],
+        title: productPreview?.title ?? json['name'],
         categories:
             productPreview?.categories ?? List<String>.from(json['categories']),
         price: productPreview?.price ?? json['price'],
@@ -43,11 +45,13 @@ class ProductDetailsModel extends ProductDetails {
         stockQuantity: json["stock_quantity"],
         isAvailable: json["is_available"],
         images: List<String>.from(json["image_urls"]),
+        discountPercent: json['discount_percent'],
+        discountExpirationDate: json['discount_exp_date'],
       );
 
   Map<String, dynamic> toCacheJson() => {
         '_id': id,
-        'name': name,
+        'name': title,
         'categories': categories,
         'price': price,
         'average_rating': averageRating,

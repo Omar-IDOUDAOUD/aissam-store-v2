@@ -16,7 +16,7 @@ extension GetItExtension on GetIt {
 extension SelectorBuilderExtension on SelectorBuilder {
   /// shortcut for: where..id(ObjectId.fromHexString(hexString))
   SelectorBuilder id2(String hexString) {
-    return this.id(ObjectId.fromHexString(hexString));
+    return id(ObjectId.fromHexString(hexString));
   }
 }
 

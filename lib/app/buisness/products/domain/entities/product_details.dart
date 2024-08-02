@@ -11,9 +11,11 @@ class ProductDetails extends ProductPreview {
   final int reviewCount;
   final int views;
   final DateTime createdAt;
+  final int? discountPercent;
+  final DateTime? discountExpirationDate;
   ProductDetails({
     required super.id,
-    required super.name,
+    required super.title,
     required super.categories,
     required super.averageRating,
     required super.price,
@@ -29,10 +31,11 @@ class ProductDetails extends ProductPreview {
     required this.stockQuantity,
     required this.isAvailable,
     required this.images,
+    required this.discountPercent,
+    required this.discountExpirationDate,
   });
 
   @override
   String toString() =>
-      'ProductDetails(id: $id, name: $name, categories: $categories, price: $price, averageRating: $averageRating, sales: $sales, ...)';
-
+      'ProductDetails(id: id, name: $title, categories: $categories, price: $price, averageRating: $averageRating, sales: $sales, ...)';
 }

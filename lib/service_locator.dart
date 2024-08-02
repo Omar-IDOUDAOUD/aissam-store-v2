@@ -1,3 +1,6 @@
+import 'package:aissam_store_v2/app/buisness/cart/data/data_source/cart_data_source.dart';
+import 'package:aissam_store_v2/app/buisness/cart/data/repositories/cart_repo_impl.dart';
+import 'package:aissam_store_v2/app/buisness/cart/domain/repositories/cart_repository.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/data_source/products/product_remote_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/data_source/products/products_local_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/data_source/search/local_search_datasource.dart';
@@ -101,7 +104,10 @@ void _initDataSources() {
 
   sl.registerLazySingleton<WishlistLocalDataSource>(
       () => WishlistLocalDataSourceImpl(sl(), sl()));
-  //
+
+    sl.registerLazySingleton<CartDataSource>(
+      () => CartDataSourceImpl(sl()));
+  //105.67.133.96
 }
 
 void _initRepositories() {
@@ -114,4 +120,7 @@ void _initRepositories() {
       () => SearchRepositoryImpl(sl(), sl()));
   sl.registerLazySingleton<WishlistRepository>(
       () => WishlistRepositoryImpl(sl(), sl()));
+  
+  sl.registerLazySingleton<CartRepository>(
+      () => CartRepositoryImpl(sl()));
 }

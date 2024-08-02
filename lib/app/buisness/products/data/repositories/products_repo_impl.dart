@@ -9,6 +9,7 @@ import 'package:aissam_store_v2/app/buisness/products/domain/repositories/produc
 import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
 import 'package:aissam_store_v2/app/core/data_pagination.dart';
 import 'package:aissam_store_v2/core/exceptions.dart';
+import 'package:aissam_store_v2/core/types.dart';
 import 'package:dartz/dartz.dart';
 import 'package:aissam_store_v2/app/core/errors/failures.dart';
 
@@ -112,22 +113,14 @@ class ProductsRepositoryImpl implements ProductsRepository {
     }
   }
 
-  // @override
-  // Future<Either<Failure, ProductPreview>> productPreview(String id) async {
-  //   try {
-  //     final res = await _productsDatasource.productPreview(id);
-  //     _productsLocalDatasource.cacheProductPreview(res);
-  //     return Right(res);
-  //   }  on NetworkException {
-  //     return await _productsLocalDatasource
-  //         .productPreview(id)
-  //         .then<Either<Failure, ProductPreviewModel>>((res) => Right(res))
-  //         .catchError(
-  //           (e, _) => Left<Failure, ProductPreviewModel>(
-  //               Failure.fromExceptionOrFailure(e)),
-  //         );
-  //   } catch (e) {
-  //     return Left(Failure.fromExceptionOrFailure(e));
-  //   }
-  // }
+  @override
+  Future<Either<Failure, List<Map2>>> productMap(
+      ProductMapParams params) async {
+    try {
+      final res = await _productsDatasource.productMap(params);
+      return Right(res);
+    } catch (e) {
+      return Left(Failure.fromExceptionOrFailure(e));
+    }
+  }
 }

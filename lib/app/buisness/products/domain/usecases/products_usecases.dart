@@ -6,6 +6,7 @@ import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_pr
 import 'package:aissam_store_v2/app/buisness/products/domain/repositories/products_repository.dart';
 import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
 import 'package:aissam_store_v2/app/core/data_pagination.dart';
+import 'package:aissam_store_v2/core/types.dart';
 import 'package:aissam_store_v2/service_locator.dart';
 import 'package:dartz/dartz.dart';
 import 'package:aissam_store_v2/app/core/errors/failures.dart';
@@ -46,5 +47,12 @@ class GetProduct implements FutureUseCase<ProductDetails, String> {
   @override
   Future<Either<Failure, ProductDetails>> call(String id) async {
     return sl<ProductsRepository>().product(id);
+  }
+}
+
+class GetProductMap implements FutureUseCase<List<Map2>, ProductMapParams> {
+  @override
+  Future<Either<Failure, List<Map2>>> call(ProductMapParams params) async {
+    return sl<ProductsRepository>().productMap(params);
   }
 }

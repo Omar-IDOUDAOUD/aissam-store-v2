@@ -52,3 +52,10 @@ class SearchProductFilterParams {
     this.maxPrice,
   });
 }
+
+class ProductMapParams {
+  final List<String> fields;
+  final List<String> ids;
+
+  ProductMapParams({required this.fields, required this.ids});
+}

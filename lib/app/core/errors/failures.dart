@@ -28,3 +28,8 @@ class Failure {
 class NetworkFailure extends Failure {
   NetworkFailure() : super("Intrernet connection is required this time");
 }
+
+
+class ProductNotFoundFailure extends Failure {
+  ProductNotFoundFailure() : super('This product is not found or not longer exists!');
+}

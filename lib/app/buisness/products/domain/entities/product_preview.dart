@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 
-class ProductPreview   {
+class ProductPreview {
   final String id;
-  final String name;
+  final String title;
   final List<String> categories;
   final double price;
   final double averageRating;
@@ -12,7 +12,7 @@ class ProductPreview   {
   ProductPreview({
     required this.id,
     required this.image,
-    required this.name,
+    required this.title,
     required this.categories,
     required this.price,
     required this.averageRating,
@@ -20,8 +20,7 @@ class ProductPreview   {
   });
   @override
   String toString() =>
-      'ProductPreview(id: $id, name: $name, categories: $categories, price: $price, averageRating: $averageRating, sales: $sales)';
- 
+      'ProductPreview(id: $id, name: $title, categories: $categories, price: $price, averageRating: $averageRating, sales: $sales)';
 }
 
 typedef PopularProductSearchType = ({String image, String name});

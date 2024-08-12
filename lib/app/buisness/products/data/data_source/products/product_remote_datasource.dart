@@ -6,7 +6,6 @@ import 'package:aissam_store_v2/app/buisness/products/data/models/category.dart'
 import 'package:aissam_store_v2/app/buisness/products/data/models/product_details.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/models/product_preview.dart';
 import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
-import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_preview.dart';
 import 'package:aissam_store_v2/app/core/data_pagination.dart';
 import 'package:aissam_store_v2/app/core/errors/failures.dart';
 import 'package:aissam_store_v2/core/types.dart';
@@ -71,7 +70,7 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
         .find(
           _buildQuery(params.paginationParams).eq(
             'parent_category',
-            null,
+            params.parentCategory,
           ),
         )
         .toList();
@@ -129,28 +128,26 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
 
   @override
   Future<List<Map2>> productMap(ProductMapParams params) async {
-    
-      final coll = await _productsCollection;
-      final res = await coll
-          .find(
-            where.oneFrom(
-              '_id',
-              params.ids.map(
-                (e) {
-                  return ObjectId.fromHexString(e);
-                },
-              ).toList(),
-            ),
-          )
-          .toList()
-          .then((res) {
-        return res.map<Map2>((e) {
-          e['id'] = (e['_id'] as ObjectId).toJson();
-          e.remove('_id');
-          return e;
-        }).toList();
-      });
-      return res;
-    
+    final coll = await _productsCollection;
+    final res = await coll
+        .find(
+          where.oneFrom(
+            '_id',
+            params.ids.map(
+              (e) {
+                return ObjectId.fromHexString(e);
+              },
+            ).toList(),
+          ),
+        )
+        .toList()
+        .then((res) {
+      return res.map<Map2>((e) {
+        e['id'] = (e['_id'] as ObjectId).toJson();
+        e.remove('_id');
+        return e;
+      }).toList();
+    });
+    return res;
   }
 }

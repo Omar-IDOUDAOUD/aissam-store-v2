@@ -6,20 +6,25 @@ import 'package:aissam_store_v2/app/buisness/products/data/data_source/products/
 import 'package:aissam_store_v2/app/buisness/products/data/data_source/search/local_search_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/data_source/search/remote_search_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/repositories/products_repo_impl.dart';
+
 import 'package:aissam_store_v2/app/buisness/products/data/repositories/search_repo_impl.dart';
 import 'package:aissam_store_v2/app/buisness/products/domain/repositories/products_repository.dart';
+
 import 'package:aissam_store_v2/app/buisness/products/domain/repositories/search_repository.dart';
 import 'package:aissam_store_v2/app/buisness/user/data/data_source/user_datasource.dart';
+
 import 'package:aissam_store_v2/app/buisness/user/data/repositories/user_repo_impl.dart';
 import 'package:aissam_store_v2/app/buisness/user/domain/repositories/user_repository.dart';
 import 'package:aissam_store_v2/app/buisness/whishlist/data/data_source/wishlist_local_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/whishlist/data/data_source/wishlist_remote_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/whishlist/data/repositories/wishlist_repo_impl.dart';
+
 import 'package:aissam_store_v2/app/buisness/whishlist/domain/repositories/whishlist_repository.dart';
 import 'package:aissam_store_v2/databases/local_db.dart';
 import 'package:aissam_store_v2/databases/mongo_db.dart';
 import 'package:aissam_store_v2/config/environment/environment.dart';
 import 'package:aissam_store_v2/services/caching/cache_manager.dart';
+
 import 'package:aissam_store_v2/services/connection_checker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -105,9 +110,7 @@ void _initDataSources() {
   sl.registerLazySingleton<WishlistLocalDataSource>(
       () => WishlistLocalDataSourceImpl(sl(), sl()));
 
-    sl.registerLazySingleton<CartDataSource>(
-      () => CartDataSourceImpl(sl()));
-  //105.67.133.96
+  sl.registerLazySingleton<CartDataSource>(() => CartDataSourceImpl(sl()));
 }
 
 void _initRepositories() {
@@ -120,7 +123,6 @@ void _initRepositories() {
       () => SearchRepositoryImpl(sl(), sl()));
   sl.registerLazySingleton<WishlistRepository>(
       () => WishlistRepositoryImpl(sl(), sl()));
-  
-  sl.registerLazySingleton<CartRepository>(
-      () => CartRepositoryImpl(sl()));
+
+  sl.registerLazySingleton<CartRepository>(() => CartRepositoryImpl(sl()));
 }

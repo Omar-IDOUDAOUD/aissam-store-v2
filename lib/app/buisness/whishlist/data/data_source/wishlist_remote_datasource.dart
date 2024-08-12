@@ -38,7 +38,6 @@ class WishlistRemoteDataSourceImpl extends WishlistRemoteDataSource {
 
   @override
   Future<void> addItem(String id) {
-    print('add item');
     final doc = WishlistItemModel(
       createdAt: DateTime.now(),
       productId: id,
@@ -62,9 +61,7 @@ class WishlistRemoteDataSourceImpl extends WishlistRemoteDataSource {
       DataPaginationParams params) async {
     var fq = _userCollection.limit(BuisnessConsts.dataPaginationPageSize);
     if (params.tokenObj != null) fq = fq.startAfterDocument(params.tokenObj);
-    print('TEST 1');
     final sn = await fq.get2();
-    print('TEST 2');
     final res = sn.docs.map(
       (elem) {
         return elem.data();

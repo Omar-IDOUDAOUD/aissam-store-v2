@@ -25,6 +25,10 @@ class DataPagination<T> {
     );
   }
 
+  factory DataPagination.empty() {
+    return DataPagination(items: [], params: DataPaginationParams());
+  }
+
   @override
   String toString() {
     return 'DataPagination: length: ${items.length}';

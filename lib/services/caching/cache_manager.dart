@@ -1,3 +1,5 @@
+// ignore_for_file: dead_code
+
 import 'dart:async';
 
 import 'package:aissam_store_v2/config/constants/global_consts.dart';
@@ -33,25 +35,30 @@ class CacheManager extends ServiceLifecycle {
     bool cleanUpFirst = false,
     required Object data,
   }) async {
+    return;
+    print('==>ADD TO DOCUMENT: $document, path: $path');
     if (!_canInsertOnDoc(document, path)) return;
-
     final LazyBox box = await _localDb.openLazyBox(
       path: _insertCacheDirTo(path),
       name: document,
     );
     if (cleanUpFirst) {
-      box.deleteAll(box.keys);
+      await box.deleteAll(box.keys);
     }
 
     await box.put(
         'exp_date', DateTime.now().add(GlobalConstnts.cacheExpirationPeriod));
+    if (attachKey != null) {
+      print('======>ADD TO DOCUMENT: $document, path: $path, case 1');
 
-    if (attachKey != null)
       await box.put(attachKey, data);
-    else if (data is Iterable)
+    } else if (data is Iterable) {
+      print('======>ADD TO DOCUMENT: $document, path: $path, case 2');
       await box.addAll(data);
-    else
+    } else {
+      print('======>ADD TO DOCUMENT: $document, path: $path, case 3');
       await box.add(data);
+    }
     await box.close();
   }
 
@@ -59,20 +66,29 @@ class CacheManager extends ServiceLifecycle {
     required String document,
     required List<String> path,
   }) async {
+    return null;
+    print('==>GET CACHE DOCUMENT: $document, path: $path');
     final Box box = await _localDb.openBox(
       path: _insertCacheDirTo(path),
       name: document,
     );
+    print('case 1');
     if (box.isEmpty) {
       await box.close();
+      print('======>GET CACHE DOCUMENT: $document, path: $path, result: empty');
+
       return null;
     }
     if ((box.get('exp_date') as DateTime).isBefore(DateTime.now())) {
       box.deleteFromDisk();
+      print(
+          '======>GET CACHE DOCUMENT: $document, path: $path, result: experation date');
       return null;
     }
+
     var res = box.toMap()..remove('exp_date');
     await box.close();
+    print('======>GET CACHE DOCUMENT: $document, path: $path, result: $res');
     return res;
   }
 
@@ -81,42 +97,66 @@ class CacheManager extends ServiceLifecycle {
     required List<String> path,
     required Object key,
   }) async {
+    return null;
+    print('==>GET CACHE DOCUMENT ENTRY: $document, path: $path');
     final LazyBox box = await _localDb.openLazyBox(
       path: _insertCacheDirTo(path),
       name: document,
     );
     if (box.isEmpty) {
       await box.close();
+      print(
+          '=======>GET CACHE DOCUMENT ENTRY: $document, path: $path, result: empty');
+
       return null;
     }
     if ((await box.get('exp_date') as DateTime).isBefore(DateTime.now())) {
       await box.deleteFromDisk();
+      print(
+          '=======>GET CACHE DOCUMENT ENTRY: $document, path: $path, result: exp date');
       return null;
     }
-    if (key is int && box.containsKey(key)) return await box.getAt(key);
+    if (key is int && box.containsKey(key)) {
+      print(
+          '======>GET CACHE DOCUMENT ENTRY: $document, path: $path, result: ${await box.getAt(key)}');
+
+      return await box.getAt(key);
+    }
     final res = await box.get(key);
     await box.close();
+    print(
+        '======>GET CACHE DOCUMENT ENTRY: $document, path: $path, result: $res');
+
     return res;
   }
+
+  // Future<void> _closeBoxBeforeUse(BoxBase box, [bool justLazyBoxes = false]) async {
+  //   if (justLazyBoxes && box.lazy) {
+  //     await box.close();
+  //   } else if (!justLazyBoxes && box.isOpen){
+
+  //   }
+  // }
 
   Future<void> deleteDocumentEntry({
     required String document,
     required List<String> path,
     required Object key,
   }) async {
+    return;
     final LazyBox box = await _localDb.openLazyBox(
       path: _insertCacheDirTo(path),
       name: document,
     );
     if (box.isEmpty) {
-      await box.close();
+      // await box.close();
       return;
     }
     if (key is int)
       await box.deleteAt(key);
     else
       await box.delete(key);
-    await box.close();
+    // await box.close();
   }
 
   Future<void> cleanUpDocument({

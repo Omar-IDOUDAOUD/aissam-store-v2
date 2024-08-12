@@ -2,6 +2,7 @@ import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/models/category.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/models/product_details.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/models/product_preview.dart';
+import 'package:aissam_store_v2/app/buisness/products/domain/usecases/products_usecases.dart';
 import 'package:aissam_store_v2/app/core/data_pagination.dart';
 import 'package:aissam_store_v2/core/exceptions.dart';
 import 'package:aissam_store_v2/services/caching/cache_manager.dart';
@@ -20,7 +21,7 @@ abstract class ProductsLocalDatasource {
   Future<void> cacheCategories(
       GetCategoriesParams params, List<CategoryModel> res);
   Future<void> cacheProductsByPerformance(
-      DataPaginationParams params, List<ProductPreviewModel> res);
+      ProductByPerformanceParams params, List<ProductPreviewModel> res);
   Future<void> cacheProductsByCategory(
       DataPaginationParams params, List<ProductPreviewModel> res);
 
@@ -32,7 +33,7 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
 
   ProductsLocalDatasourceImpl(this._cacheManager);
 
-  List<String> get _defPath => ['products/interfaces'];
+  List<String> get _defPath => ['products', 'interfaces'];
   T _defFromMap<T>(e) => e as T;
   Map2 _defToMap<T>(e) => e as Map2;
 
@@ -90,11 +91,11 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
 
   @override
   Future<void> cacheProductsByPerformance(
-      DataPaginationParams params, List<ProductPreviewModel> res) {
+      ProductByPerformanceParams params, List<ProductPreviewModel> res) {
     return _cacheManager.addToDocument(
       cleanUpFirst: true,
-      document: params.page.toString(),
-      path: _defPath..add(_productByPerformance),
+      document: params.paginationParams.page.toString(),
+      path: _defPath..addAll([_productByPerformance, params.performance.name]),
       data: res.map((elem) => elem.toCacheJson()).toList(),
     );
   }

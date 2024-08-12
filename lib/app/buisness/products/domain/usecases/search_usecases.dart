@@ -81,5 +81,3 @@ class DeleteSearchHistory implements FutureUseCase<Unit, int> {
     return sl<SearchRepository>().deleteHistoryItem(index);
   }
 }
-
-

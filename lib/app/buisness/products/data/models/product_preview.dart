@@ -17,9 +17,9 @@ class ProductPreviewModel extends ProductPreview {
       id: (json['_id'] as ObjectId).toJson(),
       title: json["name"],
       categories: List.from(json["categories"]),
-      price: json["price"],
-      averageRating: json["average_rating"],
-      sales: json["sales"],
+      price: (json["price"] as num).toDouble(),
+      averageRating: (json["average_rating"]as num).toDouble(),
+      sales: (json["sales"]as num).toInt(),
       image: json["image"],
     );
   }

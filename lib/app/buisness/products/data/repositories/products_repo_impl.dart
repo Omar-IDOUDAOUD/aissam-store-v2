@@ -68,12 +68,8 @@ class ProductsRepositoryImpl implements ProductsRepository {
   Future<Either<Failure, DataPagination<ProductPreview>>> productsByPerformance(
       ProductByPerformanceParams params) async {
     try {
-      print('REQUEST PARAMS: ${params.paginationParams}');
-
       final res = await _productsDatasource.productsByPerformance(params);
-      _productsLocalDatasource.cacheProductsByPerformance(
-          params.paginationParams, res.items);
-      print('GOT REMOTE PARAMS: ${res.params}');
+      _productsLocalDatasource.cacheProductsByPerformance(params, res.items);
 
       return Right(res);
     } on NetworkException {

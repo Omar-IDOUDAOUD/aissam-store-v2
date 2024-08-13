@@ -1,13 +1,10 @@
 import 'package:aissam_store_v2/app/presentation/config/theme.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/page.dart';
 import 'package:aissam_store_v2/app/presentation/pages/splash/splash.dart';
-import 'package:aissam_store_v2/app/presentation/test.dart';
 import 'package:aissam_store_v2/service_locator.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   print('==== AISSAM STORE V2 ====');

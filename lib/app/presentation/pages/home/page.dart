@@ -1,8 +1,10 @@
+import 'package:aissam_store_v2/app/buisness/cart/core/params.dart';
+import 'package:aissam_store_v2/app/buisness/cart/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/nav_bar.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/cart.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/views/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/view.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/wishlist.dart'; 
-import 'package:flutter/material.dart'; 
+import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/wishlist.dart';
+import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,6 +21,10 @@ class _HomePageState extends State<HomePage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 5, vsync: this);
+    // SignUp().call(SignUpParams(
+    //   email: 'email@email.email', password: 'password', username: 'username'
+    // ));
+    
   }
 
   @override
@@ -35,8 +41,8 @@ class _HomePageState extends State<HomePage>
         children: [
           const HomeTab(),
           WishlistTab(),
-          CartTab(),
           const HomeTab(),
+          CartTab(),
           const HomeTab(),
         ],
       ),

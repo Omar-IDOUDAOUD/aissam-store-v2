@@ -32,6 +32,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void init() async {
+    
     final firebaseInit = sl.getAsync<FirebaseApp>();
     final monogdbInit = sl.getAsync<MongoDb>();
     final localdbInit = sl.getAsync<LocalDb>();

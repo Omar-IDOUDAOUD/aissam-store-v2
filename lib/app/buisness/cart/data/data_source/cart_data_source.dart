@@ -73,7 +73,7 @@ class CartDataSourceImpl implements CartDataSource {
         productPrice: product['price'],
         createdAt: DateTime.now(),
         modifiedAt: DateTime.now(),
-        lastDataUpdate: DateTime.utc(2000),
+        lastDataUpdate: DateTime.now(),
       ),
     );
   }

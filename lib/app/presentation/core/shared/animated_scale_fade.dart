@@ -4,8 +4,7 @@
 
 
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class AnimatedScaleFade extends StatelessWidget {
   final bool show; 

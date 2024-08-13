@@ -1,10 +1,9 @@
 import 'package:aissam_store_v2/utils/extensions.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class PrimaryButton extends StatelessWidget {
-  const PrimaryButton({super.key, required this.child});
+  const PrimaryButton({super.key, required this.child, this.onPressed});
+  final VoidCallback? onPressed; 
   final Widget child; 
 
   @override

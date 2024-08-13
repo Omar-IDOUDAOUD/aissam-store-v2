@@ -1,8 +1,7 @@
-import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_preview.dart';
+
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/providers/providers.dart';
 import 'package:aissam_store_v2/app/presentation/core/shared/pagination_loader.dart';
-import 'package:aissam_store_v2/app/presentation/core/shared/product/product.dart';
 import 'package:aissam_store_v2/app/presentation/core/shared/product/products_grid.dart';
 
 import 'package:aissam_store_v2/app/presentation/core/shared/product/products_list.dart';
@@ -10,9 +9,7 @@ import 'package:aissam_store_v2/app/presentation/core/shared/scroll_notification
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:animations/animations.dart';
 
 import 'state.dart';
 
@@ -436,36 +433,3 @@ class _CategoriesSingleList extends ConsumerWidget {
     );
   }
 }
-
-// class _ProductsGride extends ConsumerWidget {
-//   const _ProductsGride({super.key, required this.state});
-//   final AsyncValue<List<ProductPreview>> Function(WidgetRef ref) state;
-
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     return SliverGrid.builder(
-//       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-//         crossAxisCount: 2,
-//         mainAxisSpacing: ViewConsts.seperatorSize,
-//         crossAxisSpacing: ViewConsts.seperatorSize,
-//         mainAxisExtent: regularProductHeight,
-//       ),
-//       itemCount: buildPaginationListCount(state(ref)),
-//       itemBuilder: (_, i) => buildPaginationListItem(
-//         asyncValue: state(ref),
-//         index: i,
-//         onData: (data) {
-//           return ProductWidget(data: data);
-//         },
-//         onError: (err) => SizedBox(
-//           width: 200,
-//           child: ColoredBox(
-//             color: Colors.grey,
-//             child: Text(err.toString()),
-//           ),
-//         ),
-//         onLoading: (i) => const CircularProgressIndicator(),
-//       ),
-//     );
-//   }
-// }

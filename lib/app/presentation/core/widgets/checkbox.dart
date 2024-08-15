@@ -1,5 +1,5 @@
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
-import 'package:aissam_store_v2/app/presentation/core/shared/animated_scale_fade.dart';
+import 'package:aissam_store_v2/app/presentation/core/widgets/animated_scale_fade.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';

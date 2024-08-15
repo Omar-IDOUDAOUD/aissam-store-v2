@@ -2,8 +2,8 @@ import 'package:aissam_store_v2/app/presentation/config/constants.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/providers/providers.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/widgets/section.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/widgets/section_title.dart';
-import 'package:aissam_store_v2/app/presentation/core/shared/scroll_notification_listener.dart';
-import 'package:aissam_store_v2/app/presentation/core/shared/tabs.dart';
+import 'package:aissam_store_v2/app/presentation/core/widgets/scroll_notification_listener.dart';
+import 'package:aissam_store_v2/app/presentation/core/widgets/tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

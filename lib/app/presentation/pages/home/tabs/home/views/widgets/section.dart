@@ -1,5 +1,5 @@
 import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_preview.dart';
-import 'package:aissam_store_v2/app/presentation/core/shared/product/products_list.dart';
+import 'package:aissam_store_v2/app/presentation/core/widgets/product/products_list.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/widgets/section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

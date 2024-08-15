@@ -1,4 +1,4 @@
-import 'package:aissam_store_v2/app/buisness/whishlist/domain/entities/wishlist.dart';
+import 'package:aissam_store_v2/app/buisness/wishlist/domain/entities/wishlist.dart';
 import 'package:aissam_store_v2/app/core/data_pagination.dart';
 import 'package:dartz/dartz.dart';
 import 'package:aissam_store_v2/app/core/errors/failures.dart';

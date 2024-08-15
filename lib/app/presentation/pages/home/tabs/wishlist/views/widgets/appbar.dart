@@ -1,21 +1,20 @@
-
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/providers/providers.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/providers/providers.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CartAppbar extends ConsumerWidget {
-  const CartAppbar({super.key});
+class WishlistAppbar extends ConsumerWidget {
+  const WishlistAppbar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selections = ref
-        .watch(cartSelectionsProvider.select((state) => state.selections));
+        .watch(wishlistSelectionsProvider.select((state) => state.selections));
     return SliverAppBar(
       pinned: true,
-      title: const Text('My Cart'),
+      title: const Text('Wishlist'),
       leadingWidth: MediaQuery.sizeOf(context).width * 0.3,
       leading: Align(
         alignment: Alignment.centerLeft,
@@ -52,7 +51,7 @@ class CartAppbar extends ConsumerWidget {
       ),
       actions: [
         IconButton(
-          onPressed: ref.read(cartSelectionsProvider.notifier).unselectAll,
+          onPressed: ref.read(wishlistSelectionsProvider.notifier).unselectAll,
           icon: Icon(
             selections.isEmpty
                 ? FluentIcons.cart_24_regular

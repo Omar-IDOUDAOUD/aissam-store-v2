@@ -1,31 +1,31 @@
 import 'dart:async';
 
-import 'package:aissam_store_v2/app/buisness/cart/domain/entities/cart_item.dart';
-import 'package:aissam_store_v2/app/buisness/cart/domain/usecases/usecases.dart';
+import 'package:aissam_store_v2/app/buisness/wishlist/domain/entities/wishlist.dart';
+import 'package:aissam_store_v2/app/buisness/wishlist/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/core/data_pagination.dart';
 import 'package:aissam_store_v2/app/presentation/core/card_states.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/providers/snackbar.dart'; 
+import 'package:aissam_store_v2/app/presentation/pages/home/providers/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final cartProvider =
-    AsyncNotifierProvider<_Provider, List<CartItem>>(_Provider.new);
+final wishlistProvider =
+    AsyncNotifierProvider<_Provider, List<WishlistItem>>(_Provider.new);
 
-class _Provider extends AsyncNotifier<List<CartItem>> {
+class _Provider extends AsyncNotifier<List<WishlistItem>> {
   DataPaginationParams _dataPaginationParams = DataPaginationParams();
 
   @override
-  Future<List<CartItem>> build() async {
+  Future<List<WishlistItem>> build() async {
     await loadData();
     return state.requireValue;
   }
 
   Future<void> loadData() async {
     if (state.isLoading && state.hasValue) return;
-
     if (!_dataPaginationParams.hasNextPage) return;
+
     state = const AsyncValue.loading();
-    final res = await GetCart().call(_dataPaginationParams);
+    final res = await GetWishlist().call(_dataPaginationParams);
     res.fold((err) {
       state = AsyncValue.error(err, StackTrace.empty);
     }, (res) {
@@ -35,7 +35,7 @@ class _Provider extends AsyncNotifier<List<CartItem>> {
   }
 }
 
-final cartSelectionsProvider =
+final wishlistSelectionsProvider =
     ChangeNotifierProvider<_SelectionsNotifier>(_SelectionsNotifier.new);
 
 class _SelectionsNotifier extends ChangeNotifier {
@@ -44,7 +44,7 @@ class _SelectionsNotifier extends ChangeNotifier {
   List<int> selections = [];
   List<int> trash = [];
   List<int> restored = [];
-  List<int> deleted = []; 
+  List<int> deleted = [];
 
   void select(bool select, int index) {
     if (trash.isNotEmpty) return;
@@ -68,7 +68,7 @@ class _SelectionsNotifier extends ChangeNotifier {
     //
 
     ref.read(snackBarProvider.notifier).state = SnackBarEvent(
-      message: 'Removing Items...',
+      message: 'Removing items...',
       action: 'Restore',
       onActionPress: _restoreFromTrach,
     );
@@ -89,12 +89,12 @@ class _SelectionsNotifier extends ChangeNotifier {
   void _delete() async {
     final itemsToDelete = <String>[];
 
-    final data = ref.read(cartProvider).valueOrNull!;
+    final data = ref.read(wishlistProvider).valueOrNull!;
     for (var index in trash) {
       itemsToDelete.add(data[index].id!);
     }
 
-    final res = await RemoveCartItems().call(itemsToDelete);
+    final res = await RemoveWishlistItems().call(itemsToDelete);
     return res.fold(
       (err) {
         restored = trash;

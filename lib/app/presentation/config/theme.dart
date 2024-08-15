@@ -139,6 +139,9 @@ class ThemeBuilder {
       borderSide: borderSide.copyWith(color: Colors.pink),
     ),
   );
+  late final SnackBarThemeData snackbarTheme = const SnackBarThemeData( 
+    behavior: SnackBarBehavior.fixed, 
+  );
 
   late final ThemeData buildThemeData = ThemeData(
     colorSchemeSeed: colors.d,
@@ -149,6 +152,7 @@ class ThemeBuilder {
     focusColor: Color.lerp(colors.d, colors.a, 0.85),
     indicatorColor: colors.d,
     dialogBackgroundColor: colors.b,
+    snackBarTheme: snackbarTheme,
     scaffoldBackgroundColor: colors.b,
     appBarTheme: appBarTheme,
     dialogTheme: dialogTheme,

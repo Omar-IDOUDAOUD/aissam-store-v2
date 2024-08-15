@@ -1,5 +1,5 @@
 import 'package:aissam_store_v2/app/buisness/products/data/models/product_preview.dart';
-import 'package:aissam_store_v2/app/buisness/whishlist/domain/entities/wishlist.dart';
+import 'package:aissam_store_v2/app/buisness/wishlist/domain/entities/wishlist.dart';
 import 'package:aissam_store_v2/core/types.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

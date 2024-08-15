@@ -1,31 +1,31 @@
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
 import 'package:aissam_store_v2/app/presentation/core/card_states.dart';
 import 'package:aissam_store_v2/app/presentation/core/widgets/checkbox.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/providers/providers.dart'; 
 import 'package:aissam_store_v2/utils/extensions.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 final double _height = 115;
 
-class CartCard extends StatefulWidget {
-  const CartCard({
+class WishlistItemCard extends StatefulWidget {
+  const WishlistItemCard({
     super.key,
     required this.index,
     required this.onSelect,
-    required this.doSelectOnTap,
+    required this.doSelectOnTap, 
     required this.state,
   });
   final String index;
   final CardStates state;
   final bool doSelectOnTap;
-  final Function(bool) onSelect;
+  final Function(bool) onSelect; 
 
   @override
-  State<CartCard> createState() => _CartCardState();
+  State<WishlistItemCard> createState() => _WishlistItemCardState();
 }
 
-class _CartCardState extends State<CartCard>
+class _WishlistItemCardState extends State<WishlistItemCard>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController;
   late final Animation<double> _animation;
@@ -49,7 +49,7 @@ class _CartCardState extends State<CartCard>
   }
 
   @override
-  void didUpdateWidget(covariant CartCard oldWidget) {
+  void didUpdateWidget(covariant WishlistItemCard oldWidget) {
     if (widget.state == CardStates.restored) {
       _animationController.forward();
     } else if (widget.state == CardStates.trash) {
@@ -146,17 +146,6 @@ class _CartCardState extends State<CartCard>
                                 ),
                               ),
                             ),
-                            _quantityButton(FluentIcons.subtract_24_regular),
-                            const SizedBox(width: 5),
-                            Text(
-                              '2',
-                              style: context.textTheme.bodyMedium!.copyWith(
-                                height: 1.5,
-                              ),
-                            ),
-                            const SizedBox(width: 5),
-                            _quantityButton(FluentIcons.add_24_regular),
-                            const SizedBox(width: 5),
                             Checkbox2(
                               selected: widget.state.isSelected,
                               onChange: (bool b) {
@@ -174,23 +163,4 @@ class _CartCardState extends State<CartCard>
           ),
         ),
       );
-  Widget _quantityButton(IconData icon) {
-    return SizedBox.square(
-      dimension: 20,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color:
-              widget.state.isSelected ? context.theme.colors.a : context.theme.colors.t,
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Icon(
-          icon,
-          color: context.theme.colors.p,
-          size: 18,
-        ),
-      ),
-    );
-  }
 }
-
-   

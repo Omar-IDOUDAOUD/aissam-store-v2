@@ -1,5 +1,5 @@
-import 'package:aissam_store_v2/app/buisness/whishlist/domain/entities/wishlist.dart';
-import 'package:aissam_store_v2/app/buisness/whishlist/domain/repositories/whishlist_repository.dart';
+import 'package:aissam_store_v2/app/buisness/wishlist/domain/entities/wishlist.dart';
+import 'package:aissam_store_v2/app/buisness/wishlist/domain/repositories/whishlist_repository.dart';
 import 'package:aissam_store_v2/app/core/data_pagination.dart';
 import 'package:aissam_store_v2/service_locator.dart';
 import 'package:dartz/dartz.dart';

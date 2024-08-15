@@ -1,25 +1,28 @@
 import 'package:aissam_store_v2/app/buisness/authentication/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/buisness/products/data/models/product_preview.dart';
-import 'package:aissam_store_v2/app/buisness/whishlist/data/models/wishlist.dart';
+import 'package:aissam_store_v2/app/buisness/wishlist/data/models/wishlist.dart';
 import 'package:aissam_store_v2/app/core/constants.dart';
 import 'package:aissam_store_v2/app/core/data_pagination.dart';
 import 'package:aissam_store_v2/config/constants/global_consts.dart';
-import 'package:aissam_store_v2/databases/mongo_db.dart';
+import 'package:aissam_store_v2/core/exceptions.dart';
+import 'package:aissam_store_v2/core/types.dart';
+import 'package:aissam_store_v2/services/caching/cache_manager.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-abstract class WishlistRemoteDataSource {
+abstract class WishlistLocalDataSource {
+  Future<void> cacheWishList(
+      DataPaginationParams params, List<ProductPreviewModel> items);
+
   Future<DataPagination<WishlistItemModel>> wishList(
       DataPaginationParams params);
-  Future<void> addItem(String id);
-  Future<void> deleteItems(List<String> ids);
 }
 
-class WishlistRemoteDataSourceImpl extends WishlistRemoteDataSource {
+class WishlistLocalDataSourceImpl extends WishlistLocalDataSource {
   final FirebaseFirestore _fbFirestore;
-  final MongoDb _mongoDb;
+  final CacheManager _cacheManager;
 
-  WishlistRemoteDataSourceImpl(this._fbFirestore, this._mongoDb);
+  WishlistLocalDataSourceImpl(this._fbFirestore, this._cacheManager);
 
   late final CollectionReference<WishlistItemModel> _userCollection =
       _fbFirestore
@@ -36,25 +39,7 @@ class WishlistRemoteDataSourceImpl extends WishlistRemoteDataSource {
             toFirestore: (WishlistItemModel data, _) => data.toJson(),
           );
 
-  @override
-  Future<void> addItem(String id) {
-    final doc = WishlistItemModel(
-      createdAt: DateTime.now(),
-      productId: id,
-    );
-    return _userCollection.doc(id).set(doc);
-  }
-
-  @override
-  Future<void> deleteItems(List<String> ids) async {
-    const batchSize = 8;
-
-    for (var i = 0; i < ids.length; i += batchSize) {
-      final batchIds = ids.sublist(
-          i, i + batchSize > ids.length ? ids.length : i + batchSize);
-      await Future.wait(batchIds.map((id) => _userCollection.doc(id).delete()));
-    }
-  }
+  List<String> get _defPath => ['wishlist'];
 
   @override
   Future<DataPagination<WishlistItemModel>> wishList(
@@ -62,32 +47,33 @@ class WishlistRemoteDataSourceImpl extends WishlistRemoteDataSource {
     var fq = _userCollection.limit(BuisnessConsts.dataPaginationPageSize);
     if (params.tokenObj != null) fq = fq.startAfterDocument(params.tokenObj);
     final sn = await fq.get2();
-    final res = sn.docs.map(
-      (elem) {
-        return elem.data();
+    final res = sn.docs
+        .map(
+          (elem) => elem.data(),
+        )
+        .toList();
+
+    final List<ProductPreviewModel> localRes = await _cacheManager
+        .getDocument(
+      document: params.page.toString(),
+      path: _defPath,
+    )
+        .then(
+      (value) {
+        if (value == null) throw NoCachedDataException();
+        final values = value.values;
+        return values
+            .map(
+              (e) => ProductPreviewModel.fromCache(Map2.from(e)),
+            )
+            .toList();
       },
-    ).toList();
-
-    final db = await _mongoDb.db;
-    final coll = db.collection('products');
-    final requestIds = res.map(
-      (e) => ObjectId.fromHexString(e.productId),
     );
-
-    final q = where
-        .oneFrom('_id', requestIds.toList())
-        .fields(ProductPreviewModel.fields);
-
-    final mongoRes = await coll.find(q).toList().then(
-          (value) => value.map(
-            (e) => ProductPreviewModel.fromJson(e),
-          ),
-        );
 
     for (var i = 0; i < res.length; i++) {
       final item = res[i];
       final productPreview =
-          mongoRes.where((element) => element.id == item.productId);
+          localRes.where((element) => element.id == item.productId);
       if (productPreview.isEmpty) {
         res.removeAt(i);
         continue;
@@ -99,6 +85,17 @@ class WishlistRemoteDataSourceImpl extends WishlistRemoteDataSource {
     return DataPagination.ready(
       params: params,
       items: res,
+    );
+  }
+
+  @override
+  Future<void> cacheWishList(
+      DataPaginationParams params, List<ProductPreviewModel> items) async {
+    await _cacheManager.addToDocument(
+      cleanUpFirst: true,
+      path: _defPath,
+      document: params.page.toString(),
+      data: items.map((e) => e.toCacheJson()),
     );
   }
 }

@@ -1,23 +1,24 @@
+import 'package:aissam_store_v2/app/buisness/wishlist/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
 import 'package:aissam_store_v2/app/presentation/core/widgets/pagination_loader.dart';
 import 'package:aissam_store_v2/app/presentation/core/widgets/scroll_notification_listener.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/providers/providers.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/views/widgets/appbar.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/views/widgets/cart_card.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/views/widgets/selection_panel.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/providers/providers.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/views/widgets/appbar.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/views/widgets/wishlist_card.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/views/widgets/selection_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // TODO: Add items count (app bar leading text)
 
-class CartTab extends StatefulWidget {
-  const CartTab({super.key});
+class WishlistTab extends StatefulWidget {
+  const WishlistTab({super.key});
 
   @override
-  State<CartTab> createState() => _CartTabState();
+  State<WishlistTab> createState() => _WishlistTabState();
 }
 
-class _CartTabState extends State<CartTab> {
+class _WishlistTabState extends State<WishlistTab> {
   @override
   Widget build(BuildContext context) {
     // for (var i = 0; i < 100; i++) {
@@ -34,7 +35,7 @@ class _CartTabState extends State<CartTab> {
             return AnimatedPositioned(
               duration: ViewConsts.animationDuration2,
               curve: ViewConsts.animationCurve,
-              bottom: ref.watch(cartSelectionsProvider
+              bottom: ref.watch(wishlistSelectionsProvider
                       .select((state) => state.selections.isEmpty))
                   ? -100
                   : 0,
@@ -54,14 +55,14 @@ class _Content extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectionProvider = ref.watch(cartSelectionsProvider);
-    final dataProvider = ref.watch(cartProvider);
+    final selectionProvider = ref.watch(wishlistSelectionsProvider);
+    final dataProvider = ref.watch(wishlistProvider);
 
     return ScrollNotificationListener(
-      listener: ref.read(cartProvider.notifier).loadData,
+      listener: ref.read(wishlistProvider.notifier).loadData,
       child: CustomScrollView(
         slivers: [
-          const CartAppbar(),
+          const WishlistAppbar(),
           SliverPadding(
             padding: const EdgeInsets.symmetric(
                 horizontal: ViewConsts.pagePadding, vertical: 10),
@@ -71,7 +72,7 @@ class _Content extends ConsumerWidget {
                 return buildPaginationListItem(
                   asyncValue: dataProvider,
                   index: index,
-                  onData: (data) => CartCard(
+                  onData: (data) => WishlistItemCard(
                     index: data.id!,
                     doSelectOnTap: selectionProvider.selections.isNotEmpty,
                     state: selectionProvider.buildCardState(index),

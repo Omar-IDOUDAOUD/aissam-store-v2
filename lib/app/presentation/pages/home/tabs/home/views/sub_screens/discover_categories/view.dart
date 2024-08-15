@@ -1,11 +1,11 @@
 
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/providers/providers.dart';
-import 'package:aissam_store_v2/app/presentation/core/shared/pagination_loader.dart';
-import 'package:aissam_store_v2/app/presentation/core/shared/product/products_grid.dart';
+import 'package:aissam_store_v2/app/presentation/core/widgets/pagination_loader.dart';
+import 'package:aissam_store_v2/app/presentation/core/widgets/product/products_grid.dart';
 
-import 'package:aissam_store_v2/app/presentation/core/shared/product/products_list.dart';
-import 'package:aissam_store_v2/app/presentation/core/shared/scroll_notification_listener.dart';
+import 'package:aissam_store_v2/app/presentation/core/widgets/product/products_list.dart';
+import 'package:aissam_store_v2/app/presentation/core/widgets/scroll_notification_listener.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';

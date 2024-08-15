@@ -2,7 +2,8 @@ import 'package:aissam_store_v2/app/presentation/config/constants.dart';
 import 'package:aissam_store_v2/app/presentation/core/widgets/buttons/content.dart';
 import 'package:aissam_store_v2/app/presentation/core/widgets/buttons/primary_button.dart';
 import 'package:aissam_store_v2/app/presentation/core/widgets/buttons/secondary_button.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/providers/providers.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/providers/snackbar.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/providers/providers.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class SelectionPanel extends ConsumerWidget {
         child: Row(
           children: [
             SecondaryButton(
-              onPressed:  ref.read(cartSelectionsProvider.notifier).moveToTrach,
+              onPressed:  ref.read(wishlistSelectionsProvider.notifier).moveToTrach,
               child: const ButtonFormat3(icon: FluentIcons.delete_24_regular),
             ),
             const SizedBox(width: ViewConsts.seperatorSize),

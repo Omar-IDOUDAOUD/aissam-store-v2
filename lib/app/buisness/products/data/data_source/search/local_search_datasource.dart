@@ -59,6 +59,19 @@ class SearchLocalDataSourceImpl extends SearchLocalDataSource {
 
   @override
   Future<List<SearchProductFilterParams>> history() async {
+    // await Future.delayed(Duration(seconds: 2));
+    // return [
+    //   SearchProductFilterParams.empty(),
+    //   SearchProductFilterParams.empty(),
+    //   SearchProductFilterParams.empty(),
+    //   SearchProductFilterParams.empty(),
+    //   SearchProductFilterParams.empty(),
+    //   SearchProductFilterParams.empty(),
+    //   SearchProductFilterParams.empty(),
+    //   SearchProductFilterParams.empty(),
+    //   SearchProductFilterParams.empty(),
+    //   SearchProductFilterParams.empty(),
+    // ];
     final box = await _localDb
         .openBox(path: [GlobalConstnts.userLocalDataDir], name: _history);
     final res = box.values.map<SearchProductFilterParams>(
@@ -70,6 +83,7 @@ class SearchLocalDataSourceImpl extends SearchLocalDataSource {
           sizes: e['sizes'],
           minPrice: e['min_price'],
           maxPrice: e['max_price'],
+          suggestionClick: e['suggestion_click'],
         );
       },
     ).toList();
@@ -118,6 +132,7 @@ class SearchLocalDataSourceImpl extends SearchLocalDataSource {
       'max_price': params.maxPrice,
       'color': params.colorNames,
       'sizes': params.sizes,
+      'suggestion_click': params.suggestionClick,
     });
     await box.close();
   }

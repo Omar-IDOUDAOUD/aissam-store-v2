@@ -12,6 +12,7 @@ import 'package:dartz/dartz.dart';
 import 'package:aissam_store_v2/app/core/errors/failures.dart';
 import 'package:aissam_store_v2/app/core/interfaces/usecase.dart';
 
+//TODO: use category id as parentCategory inseatd of its name
 class Categories
     implements FutureUseCase<DataPagination<Category>, GetCategoriesParams> {
   @override
@@ -21,6 +22,9 @@ class Categories
   }
 }
 
+
+// TODO: every product document, should not have just the specified sub-category name but also its suer parent-category name (for every sub-category name) in categories field
+// TODO: this is more beneficial in search filter by categories proccess
 class ProductsByCategory
     implements
         FutureUseCase<DataPagination<ProductPreview>,
@@ -47,6 +51,7 @@ class GetProduct implements FutureUseCase<ProductDetails, String> {
   @override
   Future<Either<Failure, ProductDetails>> call(String id) async {
     return sl<ProductsRepository>().product(id);
+    
   }
 }
 

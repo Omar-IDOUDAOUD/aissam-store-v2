@@ -9,10 +9,10 @@ class ButtonFormat1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = DefaultTextStyle.of(context).style.color;
+    final color = DefaultTextStyle.of(context).style.color!;
     Widget text() => Text(
           label,
-          style: context.textTheme.bodyLarge!.copyWith(color: color),
+          style: context.textTheme.bodyMedium!.copyWith(color: color),
         );
     return icon == null
         ? Center(child: text())
@@ -25,7 +25,8 @@ class ButtonFormat1 extends StatelessWidget {
               text(),
               Icon(
                 icon,
-                color: color,
+                color: color.withOpacity(.5),
+                size: 20,
               ),
             ],
           );
@@ -37,9 +38,9 @@ class ButtonFormat2 extends StatelessWidget {
       {super.key,
       required this.label,
       required this.icon,
-      required this.subLabel});
+      this.subLabel});
   final String label;
-  final String subLabel;
+  final String? subLabel;
   final IconData icon;
 
   @override
@@ -51,14 +52,16 @@ class ButtonFormat2 extends StatelessWidget {
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               label,
               style: context.textTheme.bodyLarge!
                   .copyWith(color: color, fontWeight: FontWeight.w600),
             ),
+            if (subLabel != null)
             Text(
-              subLabel,
+              subLabel!,
               style: context.textTheme.bodySmall!
                   .copyWith(color: color!.withOpacity(.8)),
             ),

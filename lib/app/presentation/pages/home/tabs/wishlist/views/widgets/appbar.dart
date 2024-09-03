@@ -1,9 +1,11 @@
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/providers/providers.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/providers/data.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../providers/selection.dart';
 
 class WishlistAppbar extends ConsumerWidget {
   const WishlistAppbar({super.key});

@@ -10,6 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
+
+// TODO: use extension/ instead of this, then delete this file
+
+
 extension GetItExtension on GetIt {
   FutureOr<T> getAsyncOnce<T extends Object>() async =>
       isReadySync<T>() ? get<T>() : await getAsync<T>();

@@ -1,17 +1,22 @@
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/widgets/error_card.dart';
 import 'package:aissam_store_v2/app/presentation/core/widgets/pagination_loader.dart';
 import 'package:aissam_store_v2/app/presentation/core/widgets/scroll_notification_listener.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/providers/providers.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/providers/data.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/views/widgets/appbar.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/views/widgets/cart_card.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/views/widgets/selection_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../providers/selection.dart';
+
 // TODO: Add items count (app bar leading text)
 
 class CartTab extends StatefulWidget {
   const CartTab({super.key});
+
+    
 
   @override
   State<CartTab> createState() => _CartTabState();
@@ -57,8 +62,9 @@ class _Content extends ConsumerWidget {
     final selectionProvider = ref.watch(cartSelectionsProvider);
     final dataProvider = ref.watch(cartProvider);
 
-    return ScrollNotificationListener(
-      listener: ref.read(cartProvider.notifier).loadData,
+    return buildStateAwareChild(
+      asyncValue: dataProvider,
+      onRety: () => ref.refresh(cartProvider),
       child: CustomScrollView(
         slivers: [
           const CartAppbar(),
@@ -66,12 +72,13 @@ class _Content extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(
                 horizontal: ViewConsts.pagePadding, vertical: 10),
             sliver: SliverList.builder(
-              itemCount: buildPaginationListCount(dataProvider),
+              itemCount: calculatePaginationItemCount(dataProvider),
               itemBuilder: (context, index) {
-                return buildPaginationListItem(
+                return buildPaginatedListItem(
+                  loadData: ref.read(cartProvider.notifier).loadData,
                   asyncValue: dataProvider,
                   index: index,
-                  onData: (data) => CartCard(
+                  onDataBuilder: (data) => CartCard(
                     index: data.id!,
                     doSelectOnTap: selectionProvider.selections.isNotEmpty,
                     state: selectionProvider.buildCardState(index),
@@ -79,10 +86,13 @@ class _Content extends ConsumerWidget {
                       selectionProvider.select(select, index);
                     },
                   ),
-                  onError: (err) {
-                    return Text(err.toString());
+                  onErrorBuilder: (err) {
+                    return ErrorCard(
+                      error: err,
+                      onRety: ref.read(cartProvider.notifier).loadData,
+                    );
                   },
-                  onLoading: (_) {
+                  onLoadingBuilder: (_) {
                     return const CircularProgressIndicator();
                   },
                 );

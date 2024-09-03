@@ -40,6 +40,7 @@ class MongoDb extends ServiceLifecycle {
 
   /// It Constructs the connection first if its not connected yet
   FutureOr<Db> get db async {
+    throw 'sheet';
     final isConnected = _connectionChecker.currentState;
     if (!isConnected) throw NetworkException();
     if (_db?.isConnected == true) return _db!;

@@ -24,13 +24,13 @@ class ThemeBuilder {
     height: 1.3,
   );
   late final TextTheme textTheme = TextTheme(
-    bodySmall: _textStyleBase.copyWith(fontSize: 12),
-    bodyMedium: _textStyleBase.copyWith(fontSize: 14),
-    bodyLarge: _textStyleBase.copyWith(fontSize: 18),
-    displaySmall: _textStyleBase.copyWith(fontSize: 22),
-    displayMedium: _textStyleBase.copyWith(fontSize: 25),
-    displayLarge: _textStyleBase.copyWith(fontSize: 29),
-    titleSmall: _textStyleBase.copyWith(fontSize: 34),
+    bodySmall: _textStyleBase.copyWith(fontSize: 10),
+    bodyMedium: _textStyleBase.copyWith(fontSize: 12),
+    bodyLarge: _textStyleBase.copyWith(fontSize: 16),
+    displaySmall: _textStyleBase.copyWith(fontSize: 20),
+    displayMedium: _textStyleBase.copyWith(fontSize: 23),
+    displayLarge: _textStyleBase.copyWith(fontSize: 27),
+    titleSmall: _textStyleBase.copyWith(fontSize: 32),
   );
   late final AppBarTheme appBarTheme = AppBarTheme(
     toolbarHeight: ViewConsts.toolbarHeight,
@@ -139,8 +139,8 @@ class ThemeBuilder {
       borderSide: borderSide.copyWith(color: Colors.pink),
     ),
   );
-  late final SnackBarThemeData snackbarTheme = const SnackBarThemeData( 
-    behavior: SnackBarBehavior.fixed, 
+  late final SnackBarThemeData snackbarTheme = const SnackBarThemeData(
+    behavior: SnackBarBehavior.fixed,
   );
 
   late final ThemeData buildThemeData = ThemeData(

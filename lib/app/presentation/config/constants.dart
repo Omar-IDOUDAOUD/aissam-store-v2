@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 abstract class ViewConsts {
+
   static const Duration animationDuration = Duration(milliseconds: 300);
   static const Duration animationDuration2 = Duration(milliseconds: 600);
   static const Duration snackbarDuration =

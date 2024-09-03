@@ -101,9 +101,9 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
     final s = _buildQuery(params.paginationParams);
 
     switch (params.performance) {
-      case ProductsPerformance.bestSellers:
+      case ProductsPerformance.best_sellers:
         s.sortBy('sales', descending: true);
-      case ProductsPerformance.newArrivals:
+      case ProductsPerformance.new_arrivals:
         s.sortBy('created_at', descending: true);
       case ProductsPerformance.trending:
         s.sortBy('views', descending: true);

@@ -19,8 +19,7 @@ class SectionTitle extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: context.textTheme.bodyLarge!
-                  .copyWith(fontWeight: FontWeight.w600),
+              style: context.textTheme.bodyLarge,
             ),
           ),
           MaterialButton(

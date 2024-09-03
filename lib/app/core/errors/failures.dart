@@ -1,5 +1,8 @@
 import 'package:aissam_store_v2/core/exceptions.dart';
 
+
+
+// TODO: for every failure class, add an error code property to show it to user when this error is happen
 class Failure {
   final String message;
   // this can be deleted in prodction

@@ -1,11 +1,21 @@
+import 'package:aissam_store_v2/app/buisness/authentication/core/params.dart';
+import 'package:aissam_store_v2/app/buisness/authentication/domain/usecases/usecases.dart';
+import 'package:aissam_store_v2/app/core/errors/failures.dart';
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/widgets/animated_scale_fade.dart';
+import 'package:aissam_store_v2/app/presentation/core/widgets/error_card.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/nav_bar.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/providers/fab.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/providers/snackbar.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/views/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/views/view.dart';
+import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'providers/back_action.dart';
+import 'tabs/search/views/view.dart';
 
 // TODO: correct duration and curve for every animation
 class HomePage extends ConsumerStatefulWidget {
@@ -37,6 +47,7 @@ class _HomePageState extends ConsumerState<HomePage>
 
   @override
   Widget build(BuildContext context) {
+ 
     ref.listen<SnackBarEvent?>(snackBarProvider, (previous, next) {
       if (next != null) {
         final state = ref.read(snackBarProvider)!;
@@ -68,12 +79,53 @@ class _HomePageState extends ConsumerState<HomePage>
         children: const [
           HomeTab(),
           WishlistTab(),
-          HomeTab(),
+          SearchTab(),
           CartTab(),
           HomeTab(),
         ],
       ),
       bottomNavigationBar: HomeNavBar(tabController: _tabController),
+      floatingActionButton: _Fab(),
+    );
+  }
+}
+
+class _Fab extends ConsumerStatefulWidget {
+  _Fab({super.key});
+
+  @override
+  ConsumerState<_Fab> createState() => _FabState();
+}
+
+class _FabState extends ConsumerState<_Fab> {
+  var _previousIcon;
+
+  @override
+  Widget build(BuildContext context) {
+   
+    final icon = _previousIcon;
+    final fabEvent = ref.watch(fabProvider).fabEvent;
+    _previousIcon = fabEvent?.icon;
+
+    return AnimatedScaleFade(
+      show: fabEvent != null,
+      child: SizedBox.square(
+        dimension: ViewConsts.buttonHeight,
+        child: Material(
+          type: MaterialType.circle,
+          color: context.theme.colors.a,
+          shadowColor: Colors.black87.withOpacity(.1),
+          elevation: 10,
+          child: InkWell(
+            onTap: fabEvent?.onPressed,
+            borderRadius: BorderRadius.circular(50),
+            child: Icon(
+              fabEvent?.icon ?? icon,
+              color: context.theme.colors.d,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

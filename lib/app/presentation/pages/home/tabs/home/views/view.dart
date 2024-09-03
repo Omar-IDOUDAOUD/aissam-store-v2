@@ -1,15 +1,20 @@
+import 'dart:ui';
+
 import 'package:aissam_store_v2/app/buisness/products/core/constants.dart';
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/providers/providers.dart';
+import 'package:aissam_store_v2/app/presentation/core/widgets/product/products_list.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/providers/data.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/sub_screens/discover_categories/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/sub_screens/discover_products/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/widgets/categories_section.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/widgets/dialy_banner.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/widgets/header_greeting.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/widgets/section.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/widgets/section_title.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeTab extends ConsumerStatefulWidget {
@@ -20,6 +25,8 @@ class HomeTab extends ConsumerStatefulWidget {
 }
 
 class _HomeTabState extends ConsumerState<HomeTab> {
+  ///TODO: use Navigator widget to handle sub-screens, see [Navigator];
+
   Widget Function()? _pushToScreen;
   bool _showPushScreen = false;
 
@@ -75,7 +82,7 @@ class _HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<_HomeScreen> {
-  String? _selectedCategory;
+  String? _selectedCategory;   
 
   @override
   Widget build(BuildContext context) {
@@ -135,32 +142,35 @@ class _HomeScreenState extends State<_HomeScreen> {
             const SizedBox(height: 20),
 
             /// BEST SELLER <<<
-            ProductsSection(
+            SectionTitle(
+              title: 'Best seller',
               onDiscoverAllClick: () => widget.pushSubScreenRequest(
                 () => DiscoverProductsSubScreen(
                   title: 'Best seller',
                   description: 'Discover all best selled products',
                   state: (ref) => ref.watch(
                     productsByPerformanceProvider(
-                      ProductsPerformance.bestSellers,
+                      ProductsPerformance.best_sellers,
                     ),
                   ),
                   loadData: (ref) => ref
                       .read(
                         productsByPerformanceProvider(
-                          ProductsPerformance.bestSellers,
+                          ProductsPerformance.best_sellers,
                         ).notifier,
                       )
                       .loadData,
                 ),
               ),
-              title: 'Best Seller',
+            ),
+            const SizedBox(height: 12),
+            ProductsList(
               state: (ref) => ref.watch(productsByPerformanceProvider(
-                  ProductsPerformance.bestSellers)),
+                  ProductsPerformance.best_sellers)),
               loadData: (ref) => ref
                   .read(
                     productsByPerformanceProvider(
-                            ProductsPerformance.bestSellers)
+                            ProductsPerformance.best_sellers)
                         .notifier,
                   )
                   .loadData,
@@ -170,7 +180,7 @@ class _HomeScreenState extends State<_HomeScreen> {
             const SizedBox(height: 20),
 
             /// TRENDING <<<
-            ProductsSection(
+            SectionTitle(
               onDiscoverAllClick: () => widget.pushSubScreenRequest(
                 () => DiscoverProductsSubScreen(
                   title: 'Trending',
@@ -190,6 +200,9 @@ class _HomeScreenState extends State<_HomeScreen> {
                 ),
               ),
               title: 'Trending',
+            ),
+            const SizedBox(height: 12),
+            ProductsList(
               state: (ref) => ref.watch(
                 productsByPerformanceProvider(ProductsPerformance.trending),
               ),
@@ -205,32 +218,35 @@ class _HomeScreenState extends State<_HomeScreen> {
             const SizedBox(height: 20),
 
             /// TOP RATED <<<
-            ProductsSection(
+            SectionTitle(
               onDiscoverAllClick: () => widget.pushSubScreenRequest(
                 () => DiscoverProductsSubScreen(
                   title: 'Top rated',
                   description: 'Top rated products',
                   state: (ref) => ref.watch(
                     productsByPerformanceProvider(
-                      ProductsPerformance.topRated,
+                      ProductsPerformance.top_rated,
                     ),
                   ),
                   loadData: (ref) => ref
                       .read(
                         productsByPerformanceProvider(
-                          ProductsPerformance.topRated,
+                          ProductsPerformance.top_rated,
                         ).notifier,
                       )
                       .loadData,
                 ),
               ),
               title: 'Top Rated',
+            ),
+            const SizedBox(height: 12),
+            ProductsList(
               state: (ref) => ref.watch(
-                productsByPerformanceProvider(ProductsPerformance.topRated),
+                productsByPerformanceProvider(ProductsPerformance.top_rated),
               ),
               loadData: (ref) => ref
                   .read(
-                    productsByPerformanceProvider(ProductsPerformance.topRated)
+                    productsByPerformanceProvider(ProductsPerformance.top_rated)
                         .notifier,
                   )
                   .loadData,

@@ -59,7 +59,7 @@ class WishlistRemoteDataSourceImpl extends WishlistRemoteDataSource {
   @override
   Future<DataPagination<WishlistItemModel>> wishList(
       DataPaginationParams params) async {
-    var fq = _userCollection.limit(BuisnessConsts.dataPaginationPageSize);
+    var fq = _userCollection.limit(params.pageSize);
     if (params.tokenObj != null) fq = fq.startAfterDocument(params.tokenObj);
     final sn = await fq.get2();
     final res = sn.docs.map(
@@ -99,6 +99,7 @@ class WishlistRemoteDataSourceImpl extends WishlistRemoteDataSource {
     return DataPagination.ready(
       params: params,
       items: res,
+      tokenObj: sn.docs.lastOrNull,
     );
   }
 }

@@ -1,10 +1,12 @@
 
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/providers/providers.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/providers/data.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../providers/selection.dart';
 
 class CartAppbar extends ConsumerWidget {
   const CartAppbar({super.key});

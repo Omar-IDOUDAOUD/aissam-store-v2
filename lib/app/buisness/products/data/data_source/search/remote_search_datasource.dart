@@ -64,7 +64,7 @@ class SearchRemoteDataSourceImpl extends SearchRemoteDataSource {
     final coll = await _productsCollection;
     final query = where
         .limit(BuisnessConsts.dataPaginationPageSize)
-        .skip(params.paginationParams.tokenObj ?? 0)
+        .skip(params.paginationParams!.tokenObj ?? 0)
         .fields(ProductPreviewModel.fields);
     final filters = params.filterParams;
     query.eq(r'$text', {r'$search': filters.keywords});
@@ -80,8 +80,8 @@ class SearchRemoteDataSourceImpl extends SearchRemoteDataSource {
     final res = await coll.find(query).toList();
     return DataPagination.ready(
       items: res.map((e) => ProductPreviewModel.fromJson(e)).toList(),
-      params: params.paginationParams,
-      tokenObj: (params.paginationParams.tokenObj ?? 0) + res.length,
+      params: params.paginationParams!,
+      tokenObj: (params.paginationParams!.tokenObj ?? 0) + res.length,
     );
   }
 

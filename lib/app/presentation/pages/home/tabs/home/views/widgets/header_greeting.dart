@@ -35,7 +35,7 @@ class _HeaderGreatingState extends State<HeaderGreating> {
                   ),
                 ),
                 Text(
-                  'Omar Idoudaoud!',
+                  'Yass!',
                   style: context.textTheme.displaySmall,
                 ),
               ],

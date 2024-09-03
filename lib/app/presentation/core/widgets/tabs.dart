@@ -7,23 +7,29 @@ import 'package:flutter/material.dart';
 class Tabs extends StatefulWidget {
   const Tabs({
     super.key,
+    this.extraLabels,
+    this.initialSelectedTab = 0,
     required this.labels,
     required this.onSelect,
-    this.extraLabels,
+    this.onUnSelect,
     this.onSelectExtraLabel,
+    this.onUnSelectExtraLabel,
   });
 
   final List<String> labels;
   final List<Widget>? extraLabels;
+  final int initialSelectedTab;
   final Function(int index) onSelect;
+  final Function(int index)? onUnSelect;
   final Function(int index)? onSelectExtraLabel;
+  final Function(int index)? onUnSelectExtraLabel;
 
   @override
   State<Tabs> createState() => _TabsState();
 }
 
 class _TabsState extends State<Tabs> {
-  int _selectedIndex = 0;
+  late int _selectedIndex = widget.initialSelectedTab;
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +46,17 @@ class _TabsState extends State<Tabs> {
           return GestureDetector(
             onTap: () {
               if (index < widget.labels.length) {
-                widget.onSelect(index);
+                if (_selectedIndex == index)
+                  widget.onUnSelect?.call(index);
+                else
+                  widget.onSelect(index);
                 _selectedIndex = index;
                 return;
               }
-              widget.onSelectExtraLabel?.call(index - widget.labels.length);
+              if (_selectedIndex == index)
+                widget.onUnSelectExtraLabel?.call(index - widget.labels.length);
+              else
+                widget.onSelectExtraLabel?.call(index - widget.labels.length);
             },
             child: () {
               if (index < widget.labels.length)

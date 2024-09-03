@@ -3,11 +3,13 @@ import 'package:aissam_store_v2/app/presentation/core/widgets/buttons/content.da
 import 'package:aissam_store_v2/app/presentation/core/widgets/buttons/primary_button.dart';
 import 'package:aissam_store_v2/app/presentation/core/widgets/buttons/secondary_button.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/providers/snackbar.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/providers/providers.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/providers/data.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../providers/selection.dart';
 
 class SelectionPanel extends ConsumerWidget {
   const SelectionPanel({super.key});

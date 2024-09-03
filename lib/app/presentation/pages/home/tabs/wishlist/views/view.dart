@@ -1,13 +1,16 @@
 import 'package:aissam_store_v2/app/buisness/wishlist/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/widgets/error_card.dart';
 import 'package:aissam_store_v2/app/presentation/core/widgets/pagination_loader.dart';
 import 'package:aissam_store_v2/app/presentation/core/widgets/scroll_notification_listener.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/providers/providers.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/providers/data.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/views/widgets/appbar.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/views/widgets/wishlist_card.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/views/widgets/selection_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../providers/selection.dart';
 
 // TODO: Add items count (app bar leading text)
 
@@ -58,8 +61,9 @@ class _Content extends ConsumerWidget {
     final selectionProvider = ref.watch(wishlistSelectionsProvider);
     final dataProvider = ref.watch(wishlistProvider);
 
-    return ScrollNotificationListener(
-      listener: ref.read(wishlistProvider.notifier).loadData,
+    return buildStateAwareChild(
+      asyncValue: dataProvider,
+      onRety: () => ref.refresh(wishlistProvider),
       child: CustomScrollView(
         slivers: [
           const WishlistAppbar(),
@@ -67,12 +71,12 @@ class _Content extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(
                 horizontal: ViewConsts.pagePadding, vertical: 10),
             sliver: SliverList.builder(
-              itemCount: buildPaginationListCount(dataProvider),
+              itemCount: calculatePaginationItemCount(dataProvider),
               itemBuilder: (context, index) {
-                return buildPaginationListItem(
+                return buildPaginatedListItem(
                   asyncValue: dataProvider,
                   index: index,
-                  onData: (data) => WishlistItemCard(
+                  onDataBuilder: (data) => WishlistItemCard(
                     index: data.id!,
                     doSelectOnTap: selectionProvider.selections.isNotEmpty,
                     state: selectionProvider.buildCardState(index),
@@ -80,10 +84,15 @@ class _Content extends ConsumerWidget {
                       selectionProvider.select(select, index);
                     },
                   ),
-                  onError: (err) {
-                    return Text(err.toString());
+                  loadData: ref.read(wishlistProvider.notifier).loadData,
+                  onErrorBuilder: (err) {
+                    return ErrorCard(
+                      error: err,
+                      height: 50,
+                      onRety: ref.read(wishlistProvider.notifier).loadData,
+                    );
                   },
-                  onLoading: (_) {
+                  onLoadingBuilder: (_) {
                     return const CircularProgressIndicator();
                   },
                 );

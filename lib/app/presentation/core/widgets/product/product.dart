@@ -4,7 +4,7 @@ import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 
-const double _regularWidth = 155;
+const double regularProductWidth = 155;
 const double regularProductHeight = 230;
 
 class ProductWidget extends StatelessWidget {
@@ -18,7 +18,7 @@ class ProductWidget extends StatelessWidget {
     return SizedBox(
 
       height: regularProductHeight,
-      width: expandWidth ? null : _regularWidth,
+      width: expandWidth ? null : regularProductWidth,
       child:  Card(
         child: Column(
           children: [

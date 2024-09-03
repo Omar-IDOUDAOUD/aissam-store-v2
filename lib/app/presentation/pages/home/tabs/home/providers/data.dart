@@ -8,6 +8,8 @@ import 'package:aissam_store_v2/app/buisness/products/domain/usecases/products_u
 import 'package:aissam_store_v2/app/core/data_pagination.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+//TODO: create a super class for all data providers contains shared functioanlities (loadData, reload on connection back...)
+
 final productsByPerformanceProvider = AsyncNotifierProviderFamily<
     _ProductsByPerformanceNotifier,
     List<ProductPreview>,
@@ -23,6 +25,11 @@ final categoriesProvider = AsyncNotifierProviderFamily<
     List<Category>,
     String?>(_CategoriesProviderNotifier.new);
 
+// final searchCategoriesProvider = AsyncNotifierProviderFamily<
+//     _SearchCategoriesProviderNotifier,
+//     List<Category>,
+//     String?>(_SearchCategoriesProviderNotifier.new);
+
 /////////////////////
 class _ProductsByPerformanceNotifier
     extends FamilyAsyncNotifier<List<ProductPreview>, ProductsPerformance> {
@@ -37,9 +44,8 @@ class _ProductsByPerformanceNotifier
   }
 
   Future<void> loadData() async {
-    if (state.isLoading && state.hasValue) 
-      return;
-    
+    if (state.isLoading && state.hasValue) return;
+
     if (!_dataPaginationParams.hasNextPage) return;
     state = const AsyncValue.loading();
     final res = await ProductsByPerformance().call(
@@ -70,12 +76,9 @@ class _ProductsByCategoriesNotifier
     return state.requireValue;
   }
 
- 
-    
   Future<void> loadData() async {
-        if (state.isLoading && state.hasValue) 
-      return;
-    
+    if (state.isLoading && state.hasValue) return;
+
     if (!_dataPaginationParams.hasNextPage) return;
     state = const AsyncValue.loading();
     final res = await ProductsByCategory().call(
@@ -97,7 +100,7 @@ class _ProductsByCategoriesNotifier
 /////
 class _CategoriesProviderNotifier
     extends FamilyAsyncNotifier<List<Category>, String?> {
-  late final String? _parentCategory;
+  String? _parentCategory;
   DataPaginationParams _dataPaginationParams = DataPaginationParams();
 
   @override
@@ -108,9 +111,8 @@ class _CategoriesProviderNotifier
   }
 
   Future<void> loadData() async {
-        if (state.isLoading && state.hasValue) 
-      return;
-    
+    if (state.isLoading && state.hasValue) return;
+
     if (!_dataPaginationParams.hasNextPage) return;
     state = const AsyncValue.loading();
     final res = await Categories().call(
@@ -127,3 +129,37 @@ class _CategoriesProviderNotifier
     });
   }
 }
+
+// class _SearchCategoriesProviderNotifier
+//     extends FamilyAsyncNotifier<List<Category>, String?>  {
+//   late final String? _searchKeywords;
+//   DataPaginationParams _dataPaginationParams = DataPaginationParams();
+
+//   @override
+//   Future<List<Category>> build(arg) async {
+//     _searchKeywords = arg;
+//     await loadData();
+//     return state.requireValue;
+//   }
+
+//   Future<void> loadData() async {
+//         if (state.isLoading && state.hasValue)
+//       return;
+
+//     if (!_dataPaginationParams.hasNextPage) return;
+//     state = const AsyncValue.loading();
+//     /// TODO: ADD A USECASE FOR CATEGORIES SEARCH
+//     final res = await Categories().call(
+//       GetCategoriesParams(
+//         paginationParams: _dataPaginationParams,
+//         parentCategory: _searchKeywords,
+//       ),
+//     );
+//     res.fold((err) {
+//       state = AsyncValue.error(err, StackTrace.empty);
+//     }, (res) {
+//       state = AsyncValue.data(((state.valueOrNull ?? [])..addAll(res.items)));
+//       _dataPaginationParams = res.params;
+//     });
+//   }
+// }

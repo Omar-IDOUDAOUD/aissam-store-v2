@@ -2,17 +2,20 @@ import 'package:aissam_store_v2/app/presentation/config/constants.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeNavBar extends StatefulWidget {
+import 'providers/back_action.dart';
+
+class HomeNavBar extends ConsumerStatefulWidget {
   const HomeNavBar({super.key, required this.tabController});
 
   final TabController tabController;
 
   @override
-  State<HomeNavBar> createState() => HomeNavBarState();
+  ConsumerState<HomeNavBar> createState() => HomeNavBarState();
 }
 
-class HomeNavBarState extends State<HomeNavBar>
+class HomeNavBarState extends ConsumerState<HomeNavBar>
     with SingleTickerProviderStateMixin {
   @override
   void initState() {
@@ -46,10 +49,18 @@ class HomeNavBarState extends State<HomeNavBar>
 
   @override
   Widget build(BuildContext context) {
+    final onBackEvent = ref.watch(backEventProvider).backEvent;
+ 
+
     return PopScope(
-      canPop: _currentPage == 0,
+      canPop: _currentPage == 0 && onBackEvent == null,
       onPopInvoked: (_) {
-        widget.tabController.animateTo(0);
+        print('NAV BAR POP RECEIVED: $_');
+
+        if (onBackEvent != null)
+          onBackEvent();
+        else
+          widget.tabController.animateTo(0);
       },
       child: SizedBox(
         height: context.theme.appBarTheme.toolbarHeight,
@@ -99,7 +110,7 @@ class HomeNavBarState extends State<HomeNavBar>
                   icon: FluentIcons.heart_24_filled,
                   unselectedIcon: FluentIcons.heart_24_regular,
                 ),
-                 _Tab(
+                _Tab(
                   label: 'Search',
                   isActive: _currentPage == 2,
                   icon: FluentIcons.search_24_filled,
@@ -113,11 +124,10 @@ class HomeNavBarState extends State<HomeNavBar>
                 ),
                 _Tab(
                   label: 'Profile',
-                  isActive: _currentPage ==4,
+                  isActive: _currentPage == 4,
                   icon: FluentIcons.person_24_filled,
                   unselectedIcon: FluentIcons.person_24_regular,
                 ),
-               
               ],
             ),
           ),

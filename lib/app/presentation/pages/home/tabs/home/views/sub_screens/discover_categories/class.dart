@@ -1,9 +1,16 @@
+
 class CategorySelection {
   final String? parentCategory;
+  // final String? searchFor;
   String? subCategoryName;
   int? subCategoryIndex;
 
-  CategorySelection({required this.parentCategory, this.subCategoryName, this.subCategoryIndex});
+  CategorySelection(
+      {
+        // this.searchFor,
+      required this.parentCategory,
+      this.subCategoryName,
+      this.subCategoryIndex});
 
   void setSubCategory({required String name, required int index}) {
     subCategoryName = name;
@@ -14,6 +21,5 @@ class CategorySelection {
     subCategoryName = subCategoryIndex = null;
   }
 
-
-  bool get hasSubCategory => subCategoryIndex != null; 
+  bool get hasSubCategory => subCategoryIndex != null;
 }

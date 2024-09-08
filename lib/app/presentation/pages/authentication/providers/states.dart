@@ -1,5 +1,4 @@
-import 'package:aissam_store_v2/app/buisness/authentication/core/error/exceptions.dart';
-import 'package:aissam_store_v2/app/buisness/authentication/core/error/failures.dart';
+import 'package:aissam_store_v2/app/buisness/authentication/core/failures.dart';
 import 'package:equatable/equatable.dart';
 
 class AuthState extends Equatable {
@@ -28,7 +27,7 @@ class AuthState extends Equatable {
   factory AuthState.sucess() => AuthState(isLoading: false);
   factory AuthState.error(AuthenticationFailure failure) => AuthState(
         isLoading: false,
-        errorFields: failure.errorFields,
+        errorFields: failure.causes,
         errorMessage: failure.message,
         errorCode: failure.code,
       );

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:aissam_store_v2/app/core/errors/failures.dart';
 import 'package:aissam_store_v2/core/service_lifecycle.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -9,11 +10,11 @@ class ConnectionChecker extends ServiceLifecycle {
 
   late bool _currentState;
   bool get currentState {
-
     return _currentState;
   }
 
-  StreamSubscription<bool> subscribeToChanges(Function(bool connectionState) handeData) {
+  StreamSubscription<bool> subscribeToChanges(
+      Function(bool connectionState) handeData) {
     return _changesListener.listen(handeData);
   }
 
@@ -27,6 +28,10 @@ class ConnectionChecker extends ServiceLifecycle {
       _currentState = conState;
     });
     return this;
+  }
+
+  void checkConnection() {
+    if (!currentState) throw const NetworkFailure();
   }
 
   @override

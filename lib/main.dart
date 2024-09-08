@@ -1,3 +1,6 @@
+import 'package:aissam_store_v2/app/buisness/authentication/core/params.dart';
+import 'package:aissam_store_v2/app/buisness/authentication/domain/usecases/usecases.dart';
+import 'package:aissam_store_v2/app/buisness/user/core/params.dart';
 import 'package:aissam_store_v2/app/presentation/config/theme.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/page.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/sub_screens/discover_products/route_params.dart';
@@ -6,11 +9,14 @@ import 'package:aissam_store_v2/app/presentation/pages/splash/splash.dart';
 import 'package:aissam_store_v2/config/routing/config.dart';
 import 'package:aissam_store_v2/service_locator.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sliver_tools/sliver_tools.dart';
+
+import 'app/buisness/user/domain/usecases/usecases.dart';
 
 // import 'package:flutter/scheduler.dart' show timeDilation;
 
@@ -39,199 +45,50 @@ class AissamStoreV2 extends StatelessWidget {
   }
 }
 
-class Xclass extends WidgetsBindingObserver{
-  
+class TestPage extends StatelessWidget {
+  TestPage({super.key});
+
+  var email = '';
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          TextField(
+            onChanged: (str) {
+              email = str;
+            },
+          ),
+          MaterialButton(
+            child: const Text('Sign Up'),
+            onPressed: () async {
+              final res = await SignUp().call(
+                SignUpParams(
+                    email: email, password: 'password', username: 'username'),
+              );
+              print(res);
+            },
+          ),
+          MaterialButton(
+            child: const Text('Update'),
+            onPressed: () async {
+              final res = await UpdateUser()
+                  .call(
+                    UpdateUserParams(
+                      currency: '5555',
+                      email: 'omar.idoudaoud1@gmail.com',
+                    ),
+                  )
+                  .then(
+                    (value) => value,
+                  );
+              print(res);
+            },
+          ),
+        ],
+      ),
+    );
+  }
 }
-
-// class _CustomPage extends StatelessWidget {
-//   const _CustomPage({super.key, required this.child});
-//   final Widget child;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         Expanded(
-//           child: child,
-//         ),
-//         Container(
-//           height: 50,
-//           width: 200,
-//           child: Center(child: Text('HEEEELLO')),
-//         )
-//       ],
-//     );
-//   }
-// }
-
-// class _HomePage extends StatelessWidget {
-//   const _HomePage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Home page'),
-//       ),
-//       body: Center(
-//         child: Column(
-//           children: [
-//             MaterialButton(
-//               child: const Text('Go Products page'),
-//               onPressed: () {
-//                 context.go('/products');
-//               },
-//             ),
-//             MaterialButton(
-//               child: const Text('Go Details page'),
-//               onPressed: () {
-//                 context.go('/products/details');
-//               },
-//             ),
-//             MaterialButton(
-//               child: const Text('Push Details page'),
-//               onPressed: () {
-//                 context.push('/products/details');
-//               },
-//             ),
-//             MaterialButton(
-//               child: const Text('Go Settings page'),
-//               onPressed: () {
-//                 context.push('/settings');
-//               },
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class _ProductsPage extends StatelessWidget {
-//   const _ProductsPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Products page'),
-//       ),
-//       body: Center(
-//         child: Column(
-//           children: [
-//             MaterialButton(
-//               child: const Text('Go Details page'),
-//               onPressed: () {
-//                 context.go('/products/details');
-//               },
-//             ),
-//             MaterialButton(
-//               child: const Text('Push Details page'),
-//               onPressed: () {
-//                 context.push('/products/details');
-//               },
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class _ProductsDetailsPage extends StatelessWidget {
-//   const _ProductsDetailsPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Products details page'),
-//       ),
-//       body: Center(
-//         child: Column(
-//           children: [
-//             MaterialButton(
-//               child: const Text('Pop'),
-//               onPressed: () {
-//                 context.pop();
-//               },
-//             ),
-//             MaterialButton(
-//               child: const Text('Go Home page'),
-//               onPressed: () {
-//                 context.go('/');
-//               },
-//             ),
-//             MaterialButton(
-//               child: const Text('Push Home page'),
-//               onPressed: () {
-//                 context.push('/');
-//               },
-//             ),
-//             MaterialButton(
-//               child: const Text('Go Products page'),
-//               onPressed: () {
-//                 context.go('/products');
-//               },
-//             ),
-//             MaterialButton(
-//               child: const Text('Push Products page'),
-//               onPressed: () {
-//                 context.push('/products');
-//               },
-//             ),
-//             MaterialButton(
-//               child: const Text('Push replacement Products page'),
-//               onPressed: () {
-//                 context.pushReplacement('/products');
-//               },
-//             ),
-//             MaterialButton(
-//               child: const Text('replace Products page'),
-//               onPressed: () {
-//                 context.replace('/products');
-//               },
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class _SettingsPage extends StatelessWidget {
-//   const _SettingsPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Settings page'),
-//       ),
-//       body: Center(
-//         child: Column(
-//           children: [
-//             MaterialButton(
-//               child: const Text('Go Home page'),
-//               onPressed: () {
-//                 context.go('/');
-//               },
-//             ),
-//             MaterialButton(
-//               child: const Text('Push Home page'),
-//               onPressed: () {
-//                 context.push('/');
-//               },
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
- 
- 
-
-
-
-

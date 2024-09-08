@@ -17,7 +17,7 @@ class CartRepositoryImpl implements CartRepository {
       await _cartDataSource.addItem(item);
       return const Right(unit);
     } catch (e) {
-      return Left(Failure.fromExceptionOrFailure(e));
+      return Left(Failure.fromExceptionOrFailure('E-9870',e));
     }
   }
 
@@ -35,7 +35,7 @@ class CartRepositoryImpl implements CartRepository {
         );
       return Right(res);
     } catch (e) {
-      return Left(Failure.fromExceptionOrFailure(e));
+      return Left(Failure.fromExceptionOrFailure('E-9871',e));
     }
   }
 
@@ -45,7 +45,7 @@ class CartRepositoryImpl implements CartRepository {
       await _cartDataSource.setQuantity(itemId, false);
       return const Right(unit);
     } catch (e) {
-      return Left(Failure.fromExceptionOrFailure(e));
+      return Left(Failure.fromExceptionOrFailure('E-9872',e));
     }
   }
 
@@ -55,7 +55,7 @@ class CartRepositoryImpl implements CartRepository {
       await _cartDataSource.setQuantity(itemId, true);
       return const Right(unit);
     } catch (e) {
-      return Left(Failure.fromExceptionOrFailure(e));
+      return Left(Failure.fromExceptionOrFailure('E-9873',e));
     }
   }
 
@@ -65,7 +65,7 @@ class CartRepositoryImpl implements CartRepository {
       await _cartDataSource.removeItem(itemsIds);
       return const Right(unit);
     } catch (e) {
-      return Left(Failure.fromExceptionOrFailure(e));
+      return Left(Failure.fromExceptionOrFailure('E-9874',e));
     }
   }
 
@@ -76,7 +76,7 @@ class CartRepositoryImpl implements CartRepository {
       await _cartDataSource.saveModifications(params);
       return const Right(unit);
     } catch (e) {
-      return Left(Failure.fromExceptionOrFailure(e));
+      return Left(Failure.fromExceptionOrFailure('E-9875',e));
     }
   }
 }

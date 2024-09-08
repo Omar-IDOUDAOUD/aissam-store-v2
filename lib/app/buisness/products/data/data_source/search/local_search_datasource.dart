@@ -1,5 +1,6 @@
 import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
 import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_preview.dart';
+import 'package:aissam_store_v2/app/core/errors/failures.dart';
 import 'package:aissam_store_v2/config/constants/global_consts.dart';
 import 'package:aissam_store_v2/core/exceptions.dart';
 import 'package:aissam_store_v2/databases/local_db.dart';
@@ -95,7 +96,7 @@ class SearchLocalDataSourceImpl extends SearchLocalDataSource {
   Future<List<PopularProductSearchType>> popularProducts() async {
     final res = await _cacheManager.getDocument(
         document: _popularProducts, path: _defPath);
-    if (res == null) throw NoCachedDataException();
+    if (res == null) throw NoCachedDataFailure();
     return List<PopularProductSearchType>.from(
         res.values.map<PopularProductSearchType>(
       (e) => (
@@ -109,7 +110,7 @@ class SearchLocalDataSourceImpl extends SearchLocalDataSource {
   Future<List<String>> popularSuggestions() async {
     final res = await _cacheManager.getDocument(
         document: _popularSuggestions, path: _defPath);
-    if (res == null) throw NoCachedDataException();
+    if (res == null) throw NoCachedDataFailure();
     return List<String>.from(res.values);
   }
 

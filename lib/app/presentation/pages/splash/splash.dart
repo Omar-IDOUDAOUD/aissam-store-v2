@@ -1,5 +1,6 @@
+import 'package:aissam_store_v2/app/buisness/authentication/domain/usecases/usecases.dart';
+import 'package:aissam_store_v2/app/core/errors/failures.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/page.dart';
-import 'package:aissam_store_v2/core/exceptions.dart';
 import 'package:aissam_store_v2/databases/local_db.dart';
 import 'package:aissam_store_v2/databases/mongo_db.dart' show MongoDb;
 import 'package:aissam_store_v2/service_locator.dart';
@@ -39,14 +40,19 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void init() async {
-    final firebaseInit = sl.getAsync<FirebaseApp>();
+    final firebaseInit = sl.getAsync<FirebaseApp>().then((value) async {
+      final res = await SetupAuthentication().call();
+      res.leftMap((err) {
+        throw err;
+      });
+    });
     final monogdbInit = sl.getAsync<MongoDb>();
     final localdbInit = sl.getAsync<LocalDb>();
 
     try {
       await Future.wait([firebaseInit, monogdbInit, localdbInit]);
       _loadingState = _SplashLoadingStates.finished;
-    } on NetworkException {
+    } on NetworkFailure {
       _loadingState = _SplashLoadingStates.finished;
     } catch (e, stack) {
       print(e);

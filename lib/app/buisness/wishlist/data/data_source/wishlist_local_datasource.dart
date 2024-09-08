@@ -3,6 +3,7 @@ import 'package:aissam_store_v2/app/buisness/products/data/models/product_previe
 import 'package:aissam_store_v2/app/buisness/wishlist/data/models/wishlist.dart';
 import 'package:aissam_store_v2/app/core/constants.dart';
 import 'package:aissam_store_v2/app/core/data_pagination.dart';
+import 'package:aissam_store_v2/app/core/errors/failures.dart';
 import 'package:aissam_store_v2/config/constants/global_consts.dart';
 import 'package:aissam_store_v2/core/exceptions.dart';
 import 'package:aissam_store_v2/core/types.dart';
@@ -60,7 +61,7 @@ class WishlistLocalDataSourceImpl extends WishlistLocalDataSource {
     )
         .then(
       (value) {
-        if (value == null) throw NoCachedDataException();
+        if (value == null) throw const NoCachedDataFailure();
         final values = value.values;
         return values
             .map(

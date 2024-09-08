@@ -1,38 +1,41 @@
 import 'package:aissam_store_v2/core/exceptions.dart';
 
-
-
-// TODO: for every failure class, add an error code property to show it to user when this error is happen
 class Failure {
-  final String message;
-  // this can be deleted in prodction
+  final String code;
+  final String? message;
   final Object? error;
+  StackTrace get stackTrace => StackTrace.current;
 
-  Failure(this.message, [this.error]);
+  const Failure(this.code, {this.message, this.error});
 
-  factory Failure.fromExceptionOrFailure(Object exception,
+  factory Failure.fromExceptionOrFailure(String code, Object error,
       [String? elseMessage]) {
-    if (exception is Failure) return exception;
-    if ([NetworkException, NoCachedDataException]
-        .contains(exception.runtimeType)) return NetworkFailure();
-    if (exception is Exception2) return Failure(exception.msg, exception.error);
-    return Failure(elseMessage ?? 'An unknown error has occurred', exception);
+    if (error is Failure) return error;
+    if ([NetworkFailure, NoCachedDataFailure].contains(error.runtimeType))
+      return const NetworkFailure();
+    return Failure(code,
+        message: elseMessage ?? 'An unknown error has occurred',
+        error: error.toString());
   }
-
-
-  
 
   @override
   String toString() {
-    return '$message, $error';
+    return 'code: $code, $message, $error';
   }
 }
 
 class NetworkFailure extends Failure {
-  NetworkFailure() : super("Intrernet connection is required this time");
+  const NetworkFailure()
+      : super('E-1001', message: "Intrernet connection is required this time");
 }
 
+class NoCachedDataFailure extends Failure {
+  const NoCachedDataFailure()
+      : super('E-1002', message: 'No cached data available');
+}
 
 class ProductNotFoundFailure extends Failure {
-  ProductNotFoundFailure() : super('This product is not found or not longer exists!');
+  const ProductNotFoundFailure()
+      : super('E-1003',
+            message: 'This product is not found or not longer exists!');
 }

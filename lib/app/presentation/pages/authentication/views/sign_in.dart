@@ -1,4 +1,4 @@
-import 'package:aissam_store_v2/app/buisness/authentication/core/error/exceptions.dart';
+import 'package:aissam_store_v2/app/buisness/authentication/core/failures.dart';
 import 'package:aissam_store_v2/app/buisness/authentication/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/presentation/pages/authentication/views/sign_up.dart';
 import 'package:flutter/material.dart';

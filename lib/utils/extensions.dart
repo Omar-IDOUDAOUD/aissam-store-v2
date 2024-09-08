@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:aissam_store_v2/app/core/errors/failures.dart';
 import 'package:aissam_store_v2/app/presentation/config/colors.dart';
 import 'package:aissam_store_v2/config/constants/global_consts.dart';
 import 'package:aissam_store_v2/core/exceptions.dart';
@@ -34,11 +35,11 @@ extension FirebaseFirestoreGet2<T> on Query<T> {
       try {
         res = await get().timeout(GlobalConstnts.requestTimeoutDuration);
       } on TimeoutException {
-        throw NetworkException();
+        throw const NetworkFailure();
       }
     } else {
       res = await get(const GetOptions(source: Source.cache));
-      if (res.size == 0) throw NoCachedDataException();
+      if (res.size == 0) throw const NoCachedDataFailure();
     }
     return res;
   }

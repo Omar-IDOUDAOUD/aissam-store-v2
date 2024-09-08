@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:aissam_store_v2/core/exceptions.dart';
+import 'package:aissam_store_v2/app/core/errors/failures.dart';
 import 'package:aissam_store_v2/config/constants/global_consts.dart';
 import 'package:aissam_store_v2/config/environment/environment.dart';
 import 'package:aissam_store_v2/core/service_lifecycle.dart';
@@ -31,7 +31,8 @@ class MongoDb extends ServiceLifecycle {
     } on TimeoutException {
       return this;
     } catch (e) {
-      throw Exception2(msg: 'Error while conneting to database', error: e);
+      throw Failure('E-5648',
+          message: 'Error while conneting to database', error: e);
     }
     return this;
   }
@@ -41,7 +42,7 @@ class MongoDb extends ServiceLifecycle {
   /// It Constructs the connection first if its not connected yet
   FutureOr<Db> get db async {
     final isConnected = _connectionChecker.currentState;
-    if (!isConnected) throw NetworkException();
+    if (!isConnected) throw const NetworkFailure();
     if (_db?.isConnected == true) return _db!;
     await init();
     return _db!;

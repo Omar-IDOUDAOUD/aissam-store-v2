@@ -1,32 +1,35 @@
- 
-import 'package:equatable/equatable.dart';
 
-class User extends Equatable {
+
+class User {
+  /// same as auth user id
   final String id;
-  final String email;
-  final String fullName;
-  final bool? emailIsVerified;
-  final String? phoneNumber; 
-  final String? photoUrl; 
-  final String? currency;
+  final String displayName; 
+  /// if null then the user is anonymous
+  final AuthInfo? authInfo;
+  final String? photoUrl;
+  final String? firstName;
+  final String? lastName;
   final String? language;
+  final String? currency;
 
   const User({
     required this.id,
-    required this.email,
-    required this.fullName,
-    this.emailIsVerified, 
+    required this.displayName, 
+    this.authInfo,
     this.photoUrl, 
-    this.phoneNumber, 
+    this.firstName,
+    this.lastName,
     this.currency,
     this.language,
   });
 
-  @override
-  List<Object?> get props =>
-      [id, email, fullName, phoneNumber , currency, language];
+ 
+  
+}
 
-  @override
-  String toString() =>
-      'User(id: $id, email: $email, fullName: $fullName, phoneNumber: $phoneNumber, currency: $currency, language: $language)';
+class AuthInfo {
+  final String? email;
+  final String? phoneNumber;
+
+  const AuthInfo({this.email, this.phoneNumber});
 }

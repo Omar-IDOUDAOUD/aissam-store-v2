@@ -1,25 +1,15 @@
 
-import 'package:aissam_store_v2/app/buisness/user/domain/entities/user.dart';
 
-class CreateUserParams {
-  late final User newUser;
 
-  CreateUserParams({required this.newUser});
-}
 
-class GetUserParams {
-  final String userId;
-  GetUserParams({required this.userId});
-}
 
-class UpdateUserParams {
-  late final User updatedUser;
-  
+class UpdateUserParams{
+  final String? email;
+  final String? phoneNumber;
+  final String? photoUrl;
+  final String? languageCode;
+  final String? currency;
 
-  UpdateUserParams({required this.updatedUser});
-}
-class DeleteUserParams {
-  final String userId;
-
-  DeleteUserParams({required this.userId});
+  UpdateUserParams(
+      {this.languageCode, this.email, this.phoneNumber, this.photoUrl, this.currency});
 }

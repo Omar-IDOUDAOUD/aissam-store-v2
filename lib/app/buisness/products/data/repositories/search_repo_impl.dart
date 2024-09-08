@@ -21,7 +21,7 @@ class SearchRepositoryImpl extends SearchRepository {
       final res = await _localDataSource.history();
       return Right(res);
     } catch (e) {
-      return Left(Failure.fromExceptionOrFailure(e));
+      return Left(Failure.fromExceptionOrFailure('E-1221',e));
     }
   }
 
@@ -36,7 +36,7 @@ class SearchRepositoryImpl extends SearchRepository {
         final res = await _localDataSource.popularSuggestions();
         return Right(res);
       } catch (e) {
-        return Left(Failure.fromExceptionOrFailure(e));
+        return Left(Failure.fromExceptionOrFailure('E-1222',e));
       }
     }
   }
@@ -54,7 +54,7 @@ class SearchRepositoryImpl extends SearchRepository {
         final res = await _localDataSource.popularProducts();
         return Right(res);
       } catch (e) {
-        return Left(Failure.fromExceptionOrFailure(e));
+        return Left(Failure.fromExceptionOrFailure('E-1223',e));
       }
     }
   }
@@ -66,7 +66,7 @@ class SearchRepositoryImpl extends SearchRepository {
       final res = await _remoteDataSource.searchProducts(params);
       return Right(res);
     } catch (e) {
-      return Left(Failure.fromExceptionOrFailure(e));
+      return Left(Failure.fromExceptionOrFailure('E-1224',e));
     }
   }
 
@@ -76,7 +76,7 @@ class SearchRepositoryImpl extends SearchRepository {
       final res = await _remoteDataSource.suggestions(terms);
       return right(res);
     } catch (e) {
-      return Left(Failure.fromExceptionOrFailure(e));
+      return Left(Failure.fromExceptionOrFailure('E-1225',e));
     }
   }
 
@@ -88,7 +88,7 @@ class SearchRepositoryImpl extends SearchRepository {
       _remoteDataSource.markFirstProductClick(id).catchError((_) => null);
       return Right(res);
     } catch (e) {
-      return Left(Failure.fromExceptionOrFailure(e));
+      return Left(Failure.fromExceptionOrFailure('E-1226',e));
     }
   }
 
@@ -98,7 +98,7 @@ class SearchRepositoryImpl extends SearchRepository {
       await _remoteDataSource.markSeachSuggestionClick(terms);
       return const Right(unit);
     } catch (e) {
-      return Left(Failure.fromExceptionOrFailure(e));
+      return Left(Failure.fromExceptionOrFailure('E-1227',e));
     }
   }
 
@@ -109,7 +109,7 @@ class SearchRepositoryImpl extends SearchRepository {
       await _localDataSource.saveHistory(params.filterParams);
       return const Right(unit);
     } catch (e) {
-      return Left(Failure.fromExceptionOrFailure(e));
+      return Left(Failure.fromExceptionOrFailure('E-1228',e));
     }
   }
 
@@ -119,7 +119,7 @@ class SearchRepositoryImpl extends SearchRepository {
       await _localDataSource.deleteHistoryItem(index);
       return const Right(unit);
     } catch (e) {
-      return Left(Failure.fromExceptionOrFailure(e));
+      return Left(Failure.fromExceptionOrFailure('E-1291',e));
     }
   }
 }

@@ -3,8 +3,7 @@ import 'package:aissam_store_v2/app/buisness/wishlist/data/data_source/wishlist_
 import 'package:aissam_store_v2/app/buisness/wishlist/data/models/wishlist.dart';
 import 'package:aissam_store_v2/app/buisness/wishlist/domain/entities/wishlist.dart';
 import 'package:aissam_store_v2/app/buisness/wishlist/domain/repositories/whishlist_repository.dart';
-import 'package:aissam_store_v2/app/core/data_pagination.dart';
-import 'package:aissam_store_v2/core/exceptions.dart';
+import 'package:aissam_store_v2/app/core/data_pagination.dart'; 
 import 'package:dartz/dartz.dart';
 import 'package:aissam_store_v2/app/core/errors/failures.dart';
 
@@ -20,7 +19,7 @@ class WishlistRepositoryImpl implements WishlistRepository {
       _wishlistDataSource.addItem(id);
       return const Right(unit);
     } catch (e) {
-      return Left(Failure.fromExceptionOrFailure(e));
+      return Left(Failure.fromExceptionOrFailure('E-9851', e));
     }
   }
 
@@ -30,7 +29,7 @@ class WishlistRepositoryImpl implements WishlistRepository {
       _wishlistDataSource.deleteItems(ids);
       return const Right(unit);
     } catch (e) {
-      return Left(Failure.fromExceptionOrFailure(e));
+      return Left(Failure.fromExceptionOrFailure('E-9852', e));
     }
   }
 
@@ -42,7 +41,7 @@ class WishlistRepositoryImpl implements WishlistRepository {
       _localWishlistDataSource.cacheWishList(
           params, res.items.map((e) => e.productPreviewModel!).toList());
       return Right(res);
-    } on NetworkException {
+    } on NetworkFailure {
       return await _localWishlistDataSource
           .wishList(params)
           .then<Either<Failure, DataPagination<WishlistItemModel>>>(
@@ -50,10 +49,10 @@ class WishlistRepositoryImpl implements WishlistRepository {
           )
           .catchError(
             (e, _) => Left<Failure, DataPagination<WishlistItemModel>>(
-                Failure.fromExceptionOrFailure(e)),
+                Failure.fromExceptionOrFailure('E-9853', e)),
           );
     } catch (e) {
-      return Left(Failure.fromExceptionOrFailure(e));
+      return Left(Failure.fromExceptionOrFailure('E-9854', e));
     }
   }
 }

@@ -16,7 +16,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
-import 'app/buisness/user/domain/usecases/usecases.dart';
+import 'app/buisness/user/domain/usecases/user.dart';
 
 // import 'package:flutter/scheduler.dart' show timeDilation;
 

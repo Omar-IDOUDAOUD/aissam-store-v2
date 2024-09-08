@@ -1,6 +1,5 @@
-import 'package:equatable/equatable.dart';
 
-class Address extends Equatable{
+class Address  {
   final String id;
   final String? address;
   final String? city;
@@ -18,7 +17,5 @@ class Address extends Equatable{
     this.createdAt,
     this.updatedAt,
   });
-  
-  @override
-  List<Object?> get props => [id, address, city, country, region, createdAt, updatedAt];
+   
 }

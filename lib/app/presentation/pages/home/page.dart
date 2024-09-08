@@ -16,6 +16,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'providers/back_action.dart';
+import 'tabs/profile/views/view.dart';
 import 'tabs/search/views/view.dart';
 
 // TODO: correct duration and curve for every animation

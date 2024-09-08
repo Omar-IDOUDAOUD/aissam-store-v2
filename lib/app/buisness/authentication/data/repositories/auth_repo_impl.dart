@@ -2,7 +2,7 @@ import 'package:aissam_store_v2/app/buisness/authentication/core/failures.dart';
 import 'package:aissam_store_v2/app/buisness/authentication/core/params.dart';
 import 'package:aissam_store_v2/app/buisness/authentication/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/buisness/user/core/failures.dart';
-import 'package:aissam_store_v2/app/buisness/user/domain/usecases/usecases.dart';
+import 'package:aissam_store_v2/app/buisness/user/domain/usecases/user.dart';
 import 'package:aissam_store_v2/app/core/errors/failures.dart';
 import 'package:dartz/dartz.dart';
 import 'package:aissam_store_v2/app/buisness/authentication/data/data_source/auth_datasource.dart';

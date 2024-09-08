@@ -11,10 +11,10 @@ import 'package:aissam_store_v2/app/buisness/products/data/repositories/search_r
 import 'package:aissam_store_v2/app/buisness/products/domain/repositories/products_repository.dart';
 
 import 'package:aissam_store_v2/app/buisness/products/domain/repositories/search_repository.dart';
-import 'package:aissam_store_v2/app/buisness/user/data/data_source/user_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/user/data/data_source/user/remote.dart';
 
-import 'package:aissam_store_v2/app/buisness/user/data/repositories/user_repo_impl.dart';
-import 'package:aissam_store_v2/app/buisness/user/domain/repositories/user_repository.dart';
+import 'package:aissam_store_v2/app/buisness/user/data/repositories/user_impl.dart';
+import 'package:aissam_store_v2/app/buisness/user/domain/repositories/user.dart';
 import 'package:aissam_store_v2/app/buisness/wishlist/data/data_source/wishlist_local_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/wishlist/data/data_source/wishlist_remote_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/wishlist/data/repositories/wishlist_repo_impl.dart';

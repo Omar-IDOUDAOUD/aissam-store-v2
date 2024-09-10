@@ -11,36 +11,45 @@ class Appbar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return  SliverAppBar.large(
+    return SliverAppBar.large(
       pinned: true,
       titleSpacing: 8,
-
-     title:  Row(
+      expandedHeight: ViewConsts.appBarExpandHeight,
+      title: Row(
         children: [
           const SizedBox(width: 50),
           const Spacer(),
           Text(
-            'Search',
+            'Profile & settings',
             style: context.theme.appBarTheme.titleTextStyle,
           ),
           const Spacer(),
           IconButton(
-            onPressed: () {
-              
-            },
+            onPressed: () {},
             icon: const Icon(FluentIcons.search_24_regular),
           ),
         ],
       ),
-      flexibleSpace:FlexibleSpaceBar(
-        centerTitle: true,
+      flexibleSpace: FlexibleSpaceBar(
+        // centerTitle: true,
         collapseMode: CollapseMode.pin,
-        background: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child:  MainInfoSection()
+        // title: Text('hello'),
+        background: Column(
+          children: [
+            SizedBox(
+              height: ViewConsts.toolbarHeight,
+              child: Center(
+                child: Text(
+                  'Profile & settings',
+                  style: context.theme.appBarTheme.titleTextStyle,
+                ),
+              ),
+            ),
+            Spacer(),
+            const MainInfoSection(),
+          ],
         ),
       ),
-      
     );
   }
 }

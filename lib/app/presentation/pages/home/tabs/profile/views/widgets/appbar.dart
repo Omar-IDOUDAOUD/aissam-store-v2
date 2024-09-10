@@ -14,20 +14,22 @@ class Appbar extends ConsumerWidget {
     return SliverAppBar.large(
       pinned: true,
       titleSpacing: 8,
-      expandedHeight: ViewConsts.appBarExpandHeight,
+      expandedHeight: ViewConsts.toolbarHeight+10 + 50,
       title: Row(
         children: [
-          const SizedBox(width: 50),
+          const SizedBox(width: 35),
           const Spacer(),
           Text(
             'Profile & settings',
             style: context.theme.appBarTheme.titleTextStyle,
           ),
           const Spacer(),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(FluentIcons.search_24_regular),
-          ),
+          CircleAvatar(
+            radius: 15, 
+            backgroundColor: Colors.red, 
+          )
+          , 
+          SizedBox(width: 5)
         ],
       ),
       flexibleSpace: FlexibleSpaceBar(
@@ -36,7 +38,8 @@ class Appbar extends ConsumerWidget {
         // title: Text('hello'),
         background: Column(
           children: [
-            SizedBox(
+            SafeArea(
+              child: SizedBox(
               height: ViewConsts.toolbarHeight,
               child: Center(
                 child: Text(
@@ -44,6 +47,7 @@ class Appbar extends ConsumerWidget {
                   style: context.theme.appBarTheme.titleTextStyle,
                 ),
               ),
+            ),
             ),
             Spacer(),
             const MainInfoSection(),

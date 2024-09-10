@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton(
-      {super.key, required this.child, this.onPressed, this.padding});
+      {super.key,
+      
+       required this.child, this.onPressed, this.padding});
   final VoidCallback? onPressed;
   final Widget child;
   final EdgeInsets? padding;

@@ -120,7 +120,7 @@ class AuthRepositoryImpl implements AuthRepository {
       _authDataSource.currentUser;
       await LoadUser().call();
       return const Right(unit);
-    } on NoUserLoggedInFailure catch (e) {
+    } on NoUserLoggedInFailure  {
       final res = await signInAsGuest();
       return res.fold((err) => Left(err), (_) => const Right(unit));
     }

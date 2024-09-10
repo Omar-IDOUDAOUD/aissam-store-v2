@@ -27,10 +27,10 @@ class ThemeBuilder {
     bodySmall: _textStyleBase.copyWith(fontSize: 10),
     bodyMedium: _textStyleBase.copyWith(fontSize: 12),
     bodyLarge: _textStyleBase.copyWith(fontSize: 16),
-    displaySmall: _textStyleBase.copyWith(fontSize: 20),
-    displayMedium: _textStyleBase.copyWith(fontSize: 23),
-    displayLarge: _textStyleBase.copyWith(fontSize: 27),
-    titleSmall: _textStyleBase.copyWith(fontSize: 32),
+    displaySmall: _textStyleBase.copyWith(fontSize: 18),
+    displayMedium: _textStyleBase.copyWith(fontSize: 21),
+    displayLarge: _textStyleBase.copyWith(fontSize: 26),
+    titleSmall: _textStyleBase.copyWith(fontSize: 30),
   );
   late final AppBarTheme appBarTheme = AppBarTheme(
     toolbarHeight: ViewConsts.toolbarHeight,

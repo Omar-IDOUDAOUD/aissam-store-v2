@@ -1,4 +1,3 @@
-import 'package:aissam_store_v2/app/buisness/user/domain/repositories/addresses.dart';
 import 'package:aissam_store_v2/app/buisness/user/domain/repositories/payment.dart';
 import 'package:aissam_store_v2/app/core/errors/failures.dart';
 import 'package:aissam_store_v2/app/core/interfaces/usecase.dart';
@@ -13,3 +12,4 @@ class CountPaymentCards implements FutureUseCase<int, NoParams> {
     return await _repo.countCards();
   }
 }
+

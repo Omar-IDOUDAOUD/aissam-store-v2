@@ -57,12 +57,15 @@ dependencies:
   # mongo_db_driver: ^0.1.0-1.2.dev
   # mongo_db_query: ^0.1.0-1.6.beta
   # bson: ^5.0.4
-  path_provider: ^2.1.3
+  # path_provider: ^2.1.3
   
   path: any
   mongo_dart: ^0.10.3
   animations: ^2.0.11
   sliver_tools: ^0.2.12
+  go_router: 14.2.6
+  back_button_interceptor: ^7.0.3
+  path_provider: ^2.1.3
 
   
 dev_dependencies:

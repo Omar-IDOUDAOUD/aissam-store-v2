@@ -5,6 +5,11 @@ import 'package:aissam_store_v2/databases/mongo_db.dart' show MongoDb;
 import 'package:aissam_store_v2/service_locator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+bool _appInitilized = false;
+
+bool get appInitilized => _appInitilized;
 
 enum _SplashLoadingStates {
   loading(message: 'Loading...'),
@@ -18,7 +23,9 @@ enum _SplashLoadingStates {
 }
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({super.key});
+  const SplashPage({super.key, this.redirectTo});
+
+  final String? redirectTo; 
 
   @override
   State<SplashPage> createState() => _SplashPageState();
@@ -32,7 +39,6 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void init() async {
-    
     final firebaseInit = sl.getAsync<FirebaseApp>();
     final monogdbInit = sl.getAsync<MongoDb>();
     final localdbInit = sl.getAsync<LocalDb>();
@@ -42,9 +48,9 @@ class _SplashPageState extends State<SplashPage> {
       _loadingState = _SplashLoadingStates.finished;
     } on NetworkException {
       _loadingState = _SplashLoadingStates.finished;
-    } catch (e) {
+    } catch (e, stack) {
       print(e);
-
+      print('Stack trace: $stack');
       _loadingState = _SplashLoadingStates.errored;
     }
 
@@ -53,8 +59,10 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void proceed() {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (_) => const HomePage()));
+    _appInitilized = true; 
+    context.go(widget.redirectTo ?? '/home');
+    // Navigator.pushReplacement(
+    //     context, MaterialPageRoute(builder: (_) => const HomePage()));
   }
 
   _SplashLoadingStates _loadingState = _SplashLoadingStates.loading;

@@ -1,6 +1,9 @@
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/providers/back_action.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/view.dart';
+import 'package:aissam_store_v2/config/routing/config.dart';
+import 'package:aissam_store_v2/utils/extentions/current_route.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,13 +23,31 @@ class SearchTab extends ConsumerStatefulWidget {
 }
 
 class _SearchTabState extends ConsumerState<SearchTab> {
-  Ref? _refForDispose;
+  @override
+  void initState() {
+    _rootRoute = rootNavigatorKey.currentContext!.currentRoute;
+    BackButtonInterceptor.add(
+      _backClickListener,
+      context: context,
+      ifNotYetIntercepted: true,
+    );
+    super.initState();
+  }
+
+  late final Route _rootRoute;    
+  bool _backClickListener(_, RouteInfo routeInfo) {
+    if (!_rootRoute.isCurrent || !routeInfo.routeWhenAdded!.isCurrent)
+      return false;
+    if (_whatToDoOnBackClick == null) return false;
+    _whatToDoOnBackClick!();
+    return true;
+  }
+
+  Function()? _whatToDoOnBackClick;
 
   @override
   void dispose() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _refForDispose?.read(backEventProvider.notifier).backEvent = null;
-    });
+    BackButtonInterceptor.remove(_backClickListener);
     super.dispose();
   }
 
@@ -36,19 +57,18 @@ class _SearchTabState extends ConsumerState<SearchTab> {
         (previous, next) async {
       if (!mounted) return;
       final delayDur = ViewConsts.animationDuration2 + Durations.short1;
-      final provider = ref.read(backEventProvider);
-      _refForDispose ??= provider.ref;
+
       if (next.isInitial && previous != null) {
         await Future.delayed(delayDur);
-        provider.backEvent = null;
+        _whatToDoOnBackClick = null;
       } else if ((next.isSearching || next.isSearching) && previous != null) {
         await Future.delayed(delayDur);
-        provider.backEvent = () {
+        _whatToDoOnBackClick = () {
           ref.read(viewProvider).clear();
         };
       } else if (next.isResults && previous != null) {
         await Future.delayed(delayDur);
-        provider.backEvent = () {
+        _whatToDoOnBackClick = () {
           ref.read(viewProvider).searchFocus();
         };
       }

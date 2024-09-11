@@ -1,4 +1,5 @@
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
+import 'package:aissam_store_v2/config/routing/config.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 
@@ -28,15 +29,20 @@ class _AddColorsButtonState extends State<AddColorsButton> {
       onTap: () async {
         final renderBox =
             _buttonKey.currentContext!.findRenderObject() as RenderBox;
-        final position = renderBox.localToGlobal(Offset.zero);
-        final size = renderBox.size;
-        final screenSize = MediaQuery.sizeOf(context);
-        final expandHeight = screenSize.height * 0.8;
+        final btnPosition = renderBox.localToGlobal(Offset.zero);
+        final btnSize = renderBox.size;
+        var screenSize = MediaQuery.sizeOf(context);
+        screenSize = Size(
+            screenSize.width, screenSize.height - ViewConsts.toolbarHeight);
+        final topPadding = MediaQuery.paddingOf(rootNavigatorKey.currentContext!).top; 
+        print(topPadding);
+        final expandHeight = screenSize.height - topPadding - 30*2;
 
         await showGeneralDialog(
-          transitionDuration: Duration(seconds: 2),
+          transitionDuration: const Duration(seconds: 2),
           context: context,
           barrierDismissible: true,
+          useRootNavigator: false,
           barrierLabel: 'filter-dialog-list',
           barrierColor: Colors.transparent,
           transitionBuilder: (context, animation, secondaryAnimation, child) {
@@ -47,20 +53,23 @@ class _AddColorsButtonState extends State<AddColorsButton> {
             );
             final heightAnimation = animation.drive(
               Tween(
-                begin: size.height,
+                begin: btnSize.height,
                 end: expandHeight,
               ),
             );
-            final topAnimation = animation.drive(Tween(
-                begin: position.dy,
-                end: screenSize.height / 2 - expandHeight / 2));
+            final topAnimation = animation.drive(
+              Tween(
+                begin: btnPosition.dy,
+                end: screenSize.height / 2 - expandHeight / 2 + topPadding / 2,
+              ),
+            );
 
             final widthAnimation = animation.drive(
-                Tween(begin: size.width, end: screenSize.width - 30 * 2));
+                Tween(begin: btnSize.width, end: screenSize.width - 30 * 2));
 
             final leftAnimation = animation.drive(
               Tween(
-                begin: position.dx,
+                begin: btnPosition.dx,
                 end: screenSize.width / 2 - (screenSize.width - 30 * 2) / 2,
               ),
             );

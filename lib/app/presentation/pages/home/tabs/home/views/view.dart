@@ -5,6 +5,7 @@ import 'package:aissam_store_v2/app/presentation/config/constants.dart';
 import 'package:aissam_store_v2/app/presentation/core/widgets/product/products_list.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/providers/data.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/sub_screens/discover_categories/view.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/sub_screens/discover_products/route_params.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/sub_screens/discover_products/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/widgets/categories_section.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/widgets/dialy_banner.dart';
@@ -12,10 +13,9 @@ import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/widg
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/widgets/section_title.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeTab extends ConsumerStatefulWidget {
   const HomeTab({super.key});
@@ -25,7 +25,7 @@ class HomeTab extends ConsumerStatefulWidget {
 }
 
 class _HomeTabState extends ConsumerState<HomeTab> {
-  ///TODO: use Navigator widget to handle sub-screens, see [Navigator];
+  /// TODO: use Navigator widget to handle sub-screens, see [Navigator];
 
   Widget Function()? _pushToScreen;
   bool _showPushScreen = false;
@@ -33,56 +33,24 @@ class _HomeTabState extends ConsumerState<HomeTab> {
   @override
   Widget build(BuildContext context) {
     final w = MediaQuery.sizeOf(context).width;
-    return Stack(
-      children: [
-        _HomeScreen(
-          pushSubScreenRequest: (screen) {
-            setState(() {
-              _pushToScreen = screen;
-              _showPushScreen = true;
-            });
-          },
-        ),
-        AnimatedPositioned(
-          duration: ViewConsts.animationDuration2,
-          curve: ViewConsts.animationCurve,
-          left: _showPushScreen ? 0 : w,
-          width: w,
-          top: 0,
-          bottom: 0,
-          onEnd: () {
-            if (_showPushScreen == false)
-              setState(() {
-                _pushToScreen = null;
-              });
-          },
-          child: _pushToScreen == null
-              ? const SizedBox.shrink()
-              : PopScope(
-                  canPop: false,
-                  onPopInvoked: (_) {
-                    setState(() {
-                      _showPushScreen = false;
-                    });
-                  },
-                  child: _pushToScreen!(),
-                ),
-        ),
-      ],
+    return _HomeScreen(
+      pushSubScreenRequest: (screen) {
+        context.go('/discover_all_products', extra: screen);
+      },
     );
   }
 }
 
 class _HomeScreen extends StatefulWidget {
   const _HomeScreen({super.key, required this.pushSubScreenRequest});
-  final Function(Widget Function() goToSubScreen) pushSubScreenRequest;
+  final Function(dynamic params) pushSubScreenRequest;
 
   @override
   State<_HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<_HomeScreen> {
-  String? _selectedCategory;   
+  String? _selectedCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -125,16 +93,17 @@ class _HomeScreenState extends State<_HomeScreen> {
                 () => const DiscoverCategoriesSubScreen(),
               ),
               onDiscoverAllproductsClick: () => widget.pushSubScreenRequest(
-                () => DiscoverProductsSubScreen(
-                  title: _selectedCategory!,
-                  description: 'Discover all $_selectedCategory products',
-                  state: (ref) => ref
-                      .watch(productsByCategoriesProvider(_selectedCategory!)),
-                  loadData: (ref) => ref
-                      .read(productsByCategoriesProvider(_selectedCategory!)
-                          .notifier)
-                      .loadData,
-                ),
+                DiscoverProductsSubScreenParams(
+                    title: _selectedCategory!,
+                    description: 'Discover all $_selectedCategory products',
+                    state: (ref) => ref.watch(
+                        productsByCategoriesProvider(_selectedCategory!)),
+                    loadData: (ref) => ref
+                        .read(productsByCategoriesProvider(_selectedCategory!)
+                            .notifier)
+                        .loadData,
+                  ),
+                
               ),
             ),
 
@@ -145,22 +114,24 @@ class _HomeScreenState extends State<_HomeScreen> {
             SectionTitle(
               title: 'Best seller',
               onDiscoverAllClick: () => widget.pushSubScreenRequest(
-                () => DiscoverProductsSubScreen(
-                  title: 'Best seller',
-                  description: 'Discover all best selled products',
-                  state: (ref) => ref.watch(
-                    productsByPerformanceProvider(
-                      ProductsPerformance.best_sellers,
+        
+                  DiscoverProductsSubScreenParams(
+                    title: 'Best seller',
+                    description: 'Discover all best selled products',
+                    state: (ref) => ref.watch(
+                      productsByPerformanceProvider(
+                        ProductsPerformance.best_sellers,
+                      ),
                     ),
+                    loadData: (ref) => ref
+                        .read(
+                          productsByPerformanceProvider(
+                            ProductsPerformance.best_sellers,
+                          ).notifier,
+                        )
+                        .loadData,
                   ),
-                  loadData: (ref) => ref
-                      .read(
-                        productsByPerformanceProvider(
-                          ProductsPerformance.best_sellers,
-                        ).notifier,
-                      )
-                      .loadData,
-                ),
+            
               ),
             ),
             const SizedBox(height: 12),
@@ -182,22 +153,23 @@ class _HomeScreenState extends State<_HomeScreen> {
             /// TRENDING <<<
             SectionTitle(
               onDiscoverAllClick: () => widget.pushSubScreenRequest(
-                () => DiscoverProductsSubScreen(
-                  title: 'Trending',
-                  description: 'Trending products',
-                  state: (ref) => ref.watch(
-                    productsByPerformanceProvider(
-                      ProductsPerformance.trending,
+                 DiscoverProductsSubScreenParams(
+                    title: 'Trending',
+                    description: 'Trending products',
+                    state: (ref) => ref.watch(
+                      productsByPerformanceProvider(
+                        ProductsPerformance.trending,
+                      ),
                     ),
+                    loadData: (ref) => ref
+                        .read(
+                          productsByPerformanceProvider(
+                            ProductsPerformance.trending,
+                          ).notifier,
+                        )
+                        .loadData,
                   ),
-                  loadData: (ref) => ref
-                      .read(
-                        productsByPerformanceProvider(
-                          ProductsPerformance.trending,
-                        ).notifier,
-                      )
-                      .loadData,
-                ),
+               
               ),
               title: 'Trending',
             ),
@@ -220,21 +192,22 @@ class _HomeScreenState extends State<_HomeScreen> {
             /// TOP RATED <<<
             SectionTitle(
               onDiscoverAllClick: () => widget.pushSubScreenRequest(
-                () => DiscoverProductsSubScreen(
-                  title: 'Top rated',
-                  description: 'Top rated products',
-                  state: (ref) => ref.watch(
-                    productsByPerformanceProvider(
-                      ProductsPerformance.top_rated,
+                DiscoverProductsSubScreenParams(
+                    title: 'Top rated',
+                    description: 'Top rated products',
+                    state: (ref) => ref.watch(
+                      productsByPerformanceProvider(
+                        ProductsPerformance.top_rated,
+                      ),
                     ),
-                  ),
-                  loadData: (ref) => ref
-                      .read(
-                        productsByPerformanceProvider(
-                          ProductsPerformance.top_rated,
-                        ).notifier,
-                      )
-                      .loadData,
+                    loadData: (ref) => ref
+                        .read(
+                          productsByPerformanceProvider(
+                            ProductsPerformance.top_rated,
+                          ).notifier,
+                        )
+                        .loadData,
+                
                 ),
               ),
               title: 'Top Rated',

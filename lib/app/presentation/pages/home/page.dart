@@ -1,10 +1,7 @@
-import 'package:aissam_store_v2/app/buisness/authentication/core/params.dart';
-import 'package:aissam_store_v2/app/buisness/authentication/domain/usecases/usecases.dart';
-import 'package:aissam_store_v2/app/core/errors/failures.dart';
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
 import 'package:aissam_store_v2/app/presentation/core/widgets/animated_scale_fade.dart';
-import 'package:aissam_store_v2/app/presentation/core/widgets/error_card.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/nav_bar.dart';
+import 'package:aissam_store_v2/app/presentation/pages/home/providers/tab_controller.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/providers/fab.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/providers/snackbar.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/views/view.dart';
@@ -14,12 +11,12 @@ import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'providers/back_action.dart';
 import 'tabs/search/views/view.dart';
 
 // TODO: correct duration and curve for every animation
 class HomePage extends ConsumerStatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required this.child});
+  final Widget child;
 
   @override
   ConsumerState<HomePage> createState() => _HomePageState();
@@ -35,7 +32,8 @@ class _HomePageState extends ConsumerState<HomePage>
     super.initState();
     _tabController = TabController(length: 5, vsync: this);
     _snackbarAnimationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 2));
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
+    ref.read(tabControllerProvider).tabController = _tabController;
   }
 
   @override
@@ -47,7 +45,6 @@ class _HomePageState extends ConsumerState<HomePage>
 
   @override
   Widget build(BuildContext context) {
- 
     ref.listen<SnackBarEvent?>(snackBarProvider, (previous, next) {
       if (next != null) {
         final state = ref.read(snackBarProvider)!;
@@ -74,18 +71,27 @@ class _HomePageState extends ConsumerState<HomePage>
     });
 
     return Scaffold(
-      body: TabBarView(
-        controller: _tabController,
-        children: const [
-          HomeTab(),
-          WishlistTab(),
-          SearchTab(),
-          CartTab(),
-          HomeTab(),
-        ],
-      ),
+      body: widget.child,
       bottomNavigationBar: HomeNavBar(tabController: _tabController),
       floatingActionButton: _Fab(),
+    );
+  }
+}
+
+class HomeBody extends ConsumerWidget {
+  const HomeBody({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return TabBarView(
+      controller: ref.read(tabControllerProvider).tabController,
+      children: const [
+        HomeTab(),
+        WishlistTab(),
+        SearchTab(),
+        CartTab(),
+        HomeTab(),
+      ],
     );
   }
 }
@@ -102,7 +108,6 @@ class _FabState extends ConsumerState<_Fab> {
 
   @override
   Widget build(BuildContext context) {
-   
     final icon = _previousIcon;
     final fabEvent = ref.watch(fabProvider).fabEvent;
     _previousIcon = fabEvent?.icon;

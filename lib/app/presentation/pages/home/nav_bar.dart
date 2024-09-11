@@ -50,18 +50,16 @@ class HomeNavBarState extends ConsumerState<HomeNavBar>
   @override
   Widget build(BuildContext context) {
     final onBackEvent = ref.watch(backEventProvider).backEvent;
- 
 
     return PopScope(
-      canPop: _currentPage == 0 && onBackEvent == null,
-      onPopInvoked: (_) {
-        print('NAV BAR POP RECEIVED: $_');
-
-        if (onBackEvent != null)
-          onBackEvent();
-        else
-          widget.tabController.animateTo(0);
-      },
+      // canPop: _currentPage == 0 && onBackEvent == null,
+      // onPopInvoked: (_) {
+      //   print('NAV BAR POP RECEIVED: $_');
+      //   if (onBackEvent != null)
+      //     onBackEvent();
+      //   else
+      //     widget.tabController.animateTo(0);
+      // },
       child: SizedBox(
         height: context.theme.appBarTheme.toolbarHeight,
         child: DecoratedBox(

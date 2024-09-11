@@ -6,20 +6,16 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'route_params.dart';
+
 class DiscoverProductsSubScreen extends StatelessWidget {
-  const DiscoverProductsSubScreen(
-      {super.key,
-      required this.state,
-      required this.loadData,
-      required this.title,
-      required this.description});
-  final AsyncValue<List<ProductPreview>> Function(WidgetRef ref) state;
-  final VoidCallback Function(WidgetRef) loadData;
-  final String title;
-  final String description;
+  const DiscoverProductsSubScreen({super.key, required this.routeParams});
+  final DiscoverProductsSubScreenParams routeParams;
 
   @override
-  Widget build(BuildContext context,  ) {
+  Widget build(
+    BuildContext context,
+  ) {
     return ColoredBox(
       color: context.theme.colors.b,
       child: CustomScrollView(
@@ -44,14 +40,14 @@ class DiscoverProductsSubScreen extends StatelessWidget {
               background: Align(
                 alignment: Alignment.bottomCenter,
                 child: Text(
-                  description,
+                  routeParams.description,
                   style: context.textTheme.bodyMedium!.copyWith(
                     color: context.theme.colors.s,
                   ),
                 ),
               ),
               title: Text(
-                title,
+                routeParams.title,
                 style: context.theme.appBarTheme.titleTextStyle,
               ),
             ),
@@ -77,8 +73,8 @@ class DiscoverProductsSubScreen extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(ViewConsts.pagePadding, 0,
                 ViewConsts.pagePadding, ViewConsts.pagePadding),
             sliver: ProductsGride(
-              state: state,
-              loadData:(ref) =>  loadData(ref),
+              state: routeParams.state,
+              loadData: (ref) => routeParams.loadData(ref),
             ),
           ),
         ],

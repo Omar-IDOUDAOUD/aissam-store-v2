@@ -78,8 +78,8 @@ class _HomePageState extends ConsumerState<HomePage>
   }
 }
 
-class HomeBody extends ConsumerWidget {
-  const HomeBody({super.key});
+class HomeMainBody extends ConsumerWidget {
+  const HomeMainBody({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

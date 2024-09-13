@@ -23,7 +23,9 @@ enum _SplashLoadingStates {
 }
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({super.key});
+  const SplashPage({super.key, this.redirectTo});
+
+  final String? redirectTo; 
 
   @override
   State<SplashPage> createState() => _SplashPageState();
@@ -56,7 +58,8 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void proceed() {
-    context.go('/home');  
+    _appInitilized = true; 
+    context.go(widget.redirectTo ?? '/home');
     // Navigator.pushReplacement(
     //     context, MaterialPageRoute(builder: (_) => const HomePage()));
   }

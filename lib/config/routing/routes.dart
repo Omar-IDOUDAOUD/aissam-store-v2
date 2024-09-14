@@ -25,4 +25,6 @@ abstract class AppRoutes {
       home.buildChild('discover_products', 'discover products');
   static final AppRoute homeDiscoverCategories =
       home.buildChild('discover_categories', 'discover categories');
+        static final AppRoute homeSearchFilterDialog =
+      home.buildChild('filter_dialog', 'filter dialog');
 }

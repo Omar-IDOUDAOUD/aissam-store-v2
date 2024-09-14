@@ -21,6 +21,7 @@ void main() async {
   // timeDilation = 2.5;
   //
   initServiceLocator();
+  
   runApp(const ProviderScope(child: AissamStoreV2()));
 }
 

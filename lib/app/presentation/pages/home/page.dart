@@ -8,6 +8,7 @@ import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/views/view
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/views/view.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -33,11 +34,14 @@ class _HomePageState extends ConsumerState<HomePage>
     _tabController = TabController(length: 5, vsync: this);
     _snackbarAnimationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 2));
-    ref.read(tabControllerProvider).tabController = _tabController;
+    ref.read(tabControllerProvider).tabController ??= _tabController;
+
+    // ref.listen(back, listener)
   }
 
   @override
   void dispose() {
+    BackButtonInterceptor.removeAll();
     _tabController.dispose();
     _snackbarAnimationController.dispose();
     super.dispose();
@@ -78,20 +82,48 @@ class _HomePageState extends ConsumerState<HomePage>
   }
 }
 
-class HomeMainBody extends ConsumerWidget {
+class HomeMainBody extends ConsumerStatefulWidget {
   const HomeMainBody({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return TabBarView(
-      controller: ref.read(tabControllerProvider).tabController,
-      children: const [
-        HomeTab(),
-        WishlistTab(),
-        SearchTab(),
-        CartTab(),
-        HomeTab(),
-      ],
+  ConsumerState<HomeMainBody> createState() => _HomeMainBodyState();
+}
+
+class _HomeMainBodyState extends ConsumerState<HomeMainBody> {
+  TabController get _tabController =>
+      ref.read(tabControllerProvider).tabController!;
+
+  @override
+  void initState() {
+    super.initState();
+    BackButtonInterceptor.add(
+      (stopDefaultButtonEvent, routeInfo) {
+        if (routeInfo.ifRouteChanged(context)) return false;
+        if (_tabController.index != 0) {
+          _tabController.animateTo(0);
+          return true;
+        } else
+          return false;
+      },
+      ifNotYetIntercepted: true,
+      context: context,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: context.theme.colors.b,
+      child: TabBarView(
+        controller: _tabController,
+        children: const [
+          HomeTab(),
+          WishlistTab(),
+          SearchTab(),
+          CartTab(),
+          HomeTab(),
+        ],
+      ),
     );
   }
 }

@@ -6,9 +6,11 @@ import 'package:aissam_store_v2/app/presentation/core/widgets/buttons/primary_bu
 import 'package:aissam_store_v2/app/presentation/core/widgets/buttons/secondary_button.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/view.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import 'discover_categories_page/view.dart';
 import 'widgets/add_color_btn.dart';
@@ -29,6 +31,31 @@ class FilterDialog extends StatefulWidget {
 
 class _FilterDialogState extends State<FilterDialog> {
   late final SearchProductFilterParams _newFilters = widget.filters;
+
+  // @override
+  // void initState() {
+  //   BackButtonInterceptor.add(
+  //     _backClickListener,
+  //     context: context,
+  //     ifNotYetIntercepted: true,
+  //   );
+  //   super.initState();
+  // }
+
+  // bool _backClickListener(_,RouteInfo routeInfo) {
+  //   if (routeInfo.ifRouteChanged(context)) return false;
+  //   if (_whatToDoOnBackClick == null) return false;
+  //   _whatToDoOnBackClick!();
+  //   return true;
+  // }
+
+  // Function()? _whatToDoOnBackClick;
+
+  // @override
+  // void dispose() {
+  //   BackButtonInterceptor.remove(_backClickListener);
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

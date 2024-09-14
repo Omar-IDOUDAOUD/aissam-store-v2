@@ -2,10 +2,12 @@ import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/views/sub_views/filter_dialog/view.dart';
+import 'package:aissam_store_v2/config/routing/routes.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class SearchTextField extends ConsumerStatefulWidget {
   const SearchTextField({super.key});

@@ -7,10 +7,14 @@ import 'package:aissam_store_v2/app/presentation/pages/home/providers/snackbar.d
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/views/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/views/view.dart';
+import 'package:aissam_store_v2/config/routing/config.dart';
+import 'package:aissam_store_v2/config/routing/routes.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/utils/extentions/current_route.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import 'tabs/search/views/view.dart';
 
@@ -41,7 +45,6 @@ class _HomePageState extends ConsumerState<HomePage>
 
   @override
   void dispose() {
-    BackButtonInterceptor.removeAll();
     _tabController.dispose();
     _snackbarAnimationController.dispose();
     super.dispose();
@@ -89,25 +92,38 @@ class HomeMainBody extends ConsumerStatefulWidget {
   ConsumerState<HomeMainBody> createState() => _HomeMainBodyState();
 }
 
-class _HomeMainBodyState extends ConsumerState<HomeMainBody> {
+class _HomeMainBodyState extends ConsumerState<HomeMainBody> {  
   TabController get _tabController =>
       ref.read(tabControllerProvider).tabController!;
 
   @override
   void initState() {
     super.initState();
+    _rootRoute = rootNavigatorKey.currentContext!.currentRoute;
     BackButtonInterceptor.add(
-      (stopDefaultButtonEvent, routeInfo) {
-        if (routeInfo.ifRouteChanged(context)) return false;
-        if (_tabController.index != 0) {
-          _tabController.animateTo(0);
-          return true;
-        } else
-          return false;
-      },
-      ifNotYetIntercepted: true,
+      _backClickListener,
       context: context,
+      ifNotYetIntercepted: true,
     );
+  }
+
+  late final Route _rootRoute;
+
+  bool _backClickListener(_,RouteInfo routeInfo) {
+    if (!_rootRoute.isCurrent || !routeInfo.routeWhenAdded!.isCurrent)
+      return false;
+
+    if (_tabController.index != 0) {
+      _tabController.animateTo(0);
+      return true;
+    } else
+      return false;
+  }
+
+  @override
+  void dispose() {
+    BackButtonInterceptor.remove(_backClickListener);
+    super.dispose();
   }
 
   @override
@@ -116,12 +132,57 @@ class _HomeMainBodyState extends ConsumerState<HomeMainBody> {
       color: context.theme.colors.b,
       child: TabBarView(
         controller: _tabController,
-        children: const [
-          HomeTab(),
-          WishlistTab(),
-          SearchTab(),
-          CartTab(),
-          HomeTab(),
+        children: [
+          const HomeTab(),
+          const WishlistTab(),
+          const SearchTab(),
+          const CartTab(),
+          // HomeTab(),
+          Center(
+            child: Column(
+              children: [
+                MaterialButton(
+                  onPressed: () {
+                    showGeneralDialog(
+                      useRootNavigator: false,
+                      context: context,
+                      pageBuilder: (_, __, ___) {
+                        return Center(
+                          child: MaterialButton(
+                            onPressed: () {
+                              context.pop();
+                            },
+                            child: Text('back'),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: const Text('Click me'),
+                ),
+                MaterialButton(
+                  onPressed: () {
+                    showGeneralDialog(
+                      useRootNavigator: true,
+                      context: rootNavigatorKey.currentContext!,
+                      routeSettings: RouteSettings(name: 'sssss'),
+                      pageBuilder: (_, __, ___) {
+                        return Center(
+                          child: MaterialButton(
+                            onPressed: () {
+                              context.pop();
+                            },
+                            child: Text('back'),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: const Text('Click me'),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );

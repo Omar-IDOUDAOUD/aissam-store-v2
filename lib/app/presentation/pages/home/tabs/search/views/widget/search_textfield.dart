@@ -2,6 +2,7 @@ import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/views/sub_views/filter_dialog/view.dart';
+import 'package:aissam_store_v2/config/routing/config.dart';
 import 'package:aissam_store_v2/config/routing/routes.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
@@ -22,7 +23,6 @@ class _SearchTextFieldState extends ConsumerState<SearchTextField> {
   @override
   Widget build(BuildContext context) {
     final provider = ref.read(viewProvider);
-
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(
@@ -96,7 +96,7 @@ class _SearchTextFieldState extends ConsumerState<SearchTextField> {
     final newFilters = await showGeneralDialog<SearchProductFilterParams>(
       transitionDuration: ViewConsts.animationDuration2,
       context: context,
-      barrierDismissible: true,
+      barrierDismissible: true, 
       barrierLabel: 'filter-dialog',
       barrierColor: Colors.black26,
       transitionBuilder: (context, animation, secondaryAnimation, child) {

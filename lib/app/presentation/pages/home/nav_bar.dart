@@ -1,7 +1,10 @@
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
+import 'package:aissam_store_v2/config/routing/config.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/utils/extentions/current_route.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+
 
 class HomeNavBar extends StatefulWidget {
   const HomeNavBar({super.key, required this.tabController});
@@ -18,6 +21,7 @@ class HomeNavBarState extends State<HomeNavBar>
   void initState() {
     super.initState();
     widget.tabController.animation?.addListener(_listener);
+    _originalRoute = homeNestedNavigatorKey.currentContext!.currentRoute;
   }
 
   @override
@@ -44,6 +48,17 @@ class HomeNavBarState extends State<HomeNavBar>
       });
   }
 
+  late final Route _originalRoute;
+
+  void _onTabClick(int index) {
+    if (_originalRoute.isCurrent == false) {
+      // homeNestedNavigatorKey.currentContext!.go(AppRoutes.home.path);
+      Navigator.popUntil(homeNestedNavigatorKey.currentContext!, (route) {
+        return route == _originalRoute;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -62,14 +77,14 @@ class HomeNavBarState extends State<HomeNavBar>
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: TabBar(
+            onTap: _onTabClick,
             controller: widget.tabController,
             indicatorPadding: EdgeInsets.only(
                 bottom: context.theme.appBarTheme.toolbarHeight! - 2),
             indicatorSize: TabBarIndicatorSize.tab,
             indicator: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: context.theme.colors.d,
-            ),
+                borderRadius: BorderRadius.circular(5),
+                color: context.theme.colors.d),
             indicatorWeight: 5,
             unselectedLabelStyle: context.textTheme.bodyMedium,
             labelStyle: context.textTheme.bodyMedium!.copyWith(

@@ -32,30 +32,6 @@ class FilterDialog extends StatefulWidget {
 class _FilterDialogState extends State<FilterDialog> {
   late final SearchProductFilterParams _newFilters = widget.filters;
 
-  // @override
-  // void initState() {
-  //   BackButtonInterceptor.add(
-  //     _backClickListener,
-  //     context: context,
-  //     ifNotYetIntercepted: true,
-  //   );
-  //   super.initState();
-  // }
-
-  // bool _backClickListener(_,RouteInfo routeInfo) {
-  //   if (routeInfo.ifRouteChanged(context)) return false;
-  //   if (_whatToDoOnBackClick == null) return false;
-  //   _whatToDoOnBackClick!();
-  //   return true;
-  // }
-
-  // Function()? _whatToDoOnBackClick;
-
-  // @override
-  // void dispose() {
-  //   BackButtonInterceptor.remove(_backClickListener);
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {

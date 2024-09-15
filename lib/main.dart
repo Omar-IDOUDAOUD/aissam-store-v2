@@ -39,6 +39,10 @@ class AissamStoreV2 extends StatelessWidget {
   }
 }
 
+class Xclass extends WidgetsBindingObserver{
+  
+}
+
 // class _CustomPage extends StatelessWidget {
 //   const _CustomPage({super.key, required this.child});
 //   final Widget child;

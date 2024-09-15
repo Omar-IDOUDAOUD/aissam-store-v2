@@ -1,6 +1,8 @@
 import 'package:aissam_store_v2/app/presentation/config/constants.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/providers/back_action.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/view.dart';
+import 'package:aissam_store_v2/config/routing/config.dart';
+import 'package:aissam_store_v2/utils/extentions/current_route.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -23,6 +25,7 @@ class SearchTab extends ConsumerStatefulWidget {
 class _SearchTabState extends ConsumerState<SearchTab> {
   @override
   void initState() {
+    _rootRoute = rootNavigatorKey.currentContext!.currentRoute;
     BackButtonInterceptor.add(
       _backClickListener,
       context: context,
@@ -31,8 +34,10 @@ class _SearchTabState extends ConsumerState<SearchTab> {
     super.initState();
   }
 
-  bool _backClickListener(_,RouteInfo routeInfo) {
-    if (routeInfo.ifRouteChanged(context)) return false;
+  late final Route _rootRoute;    
+  bool _backClickListener(_, RouteInfo routeInfo) {
+    if (!_rootRoute.isCurrent || !routeInfo.routeWhenAdded!.isCurrent)
+      return false;
     if (_whatToDoOnBackClick == null) return false;
     _whatToDoOnBackClick!();
     return true;

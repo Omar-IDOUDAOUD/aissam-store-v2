@@ -48,8 +48,9 @@ class _SplashPageState extends State<SplashPage> {
       _loadingState = _SplashLoadingStates.finished;
     } on NetworkException {
       _loadingState = _SplashLoadingStates.finished;
-    } catch (e) {
+    } catch (e, stack) {
       print(e);
+      print('Stack trace: $stack');
       _loadingState = _SplashLoadingStates.errored;
     }
 

@@ -15,39 +15,23 @@ import 'package:go_router/go_router.dart';
 
 /// adb -s emulator-5554 shell am start -W -a android.intent.action.VIEW -d "aissamstore://aissame.store.com"
 
+final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> homeNestedNavigatorKey =
+    GlobalKey<NavigatorState>();
+
 abstract class AppRoutingConfig {
-  static Page buildPageWithDefaultTransition<T>(Widget child) {
-    return CupertinoPage(child: child);
+  static Page buildPageWithDefaultTransition<T>(
+      Widget child, GoRouterState state) {
+    return CupertinoPage(
+      child: child,
+      name: state.name,
+      key: state.pageKey,
+    );
   }
 
-  // static Page buildDialogWithDefaultTransition<T>(Widget child) {
-  //   return DialogPage(builder: );
-
-  //   return CustomTransitionPage(
-  //     child: child,
-  //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-  //       final an = CurvedAnimation(
-  //         parent: animation,
-  //         curve: ViewConsts.animationCurve,
-  //         reverseCurve: ViewConsts.animationCurve.flipped,
-  //       );
-  //       final scaleAn = an.drive(Tween(begin: 0.95, end: 1.0));
-  //       return Padding(
-  //         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 80),
-  //         child: FadeTransition(
-  //           opacity: an,
-  //           child: ScaleTransition(
-  //             scale: scaleAn,
-  //             child: child,
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
   static final GoRouter router = GoRouter(
-    // initialLocation: '/tfooooooooooo',
+    observers: [],
+    navigatorKey: rootNavigatorKey,
     routes: [
       GoRoute(
         path: AppRoutes.splash.subPath,
@@ -55,26 +39,29 @@ abstract class AppRoutingConfig {
         pageBuilder: (context, state) {
           final redirect = state.uri.queryParameters['redirect'];
           return buildPageWithDefaultTransition(
-              SplashPage(redirectTo: redirect));
+              SplashPage(redirectTo: redirect), state);
         },
       ),
       ShellRoute(
+        navigatorKey: homeNestedNavigatorKey,
         pageBuilder: (context, state, child) {
-          return buildPageWithDefaultTransition(HomePage(child: child));
+          return buildPageWithDefaultTransition(HomePage(child: child), state);
         },
         routes: [
           GoRoute(
             path: AppRoutes.home.subPath,
             name: AppRoutes.home.name,
-            pageBuilder: (context, state) =>
-                buildPageWithDefaultTransition(const HomeMainBody()),
+            pageBuilder: (context, state) => buildPageWithDefaultTransition(
+              const HomeMainBody(),
+              state,
+            ),
             routes: [
               GoRoute(
                 path: AppRoutes.homeDiscoverCategories.subPath,
                 name: AppRoutes.homeDiscoverCategories.name,
                 pageBuilder: (_, state) {
                   return buildPageWithDefaultTransition(
-                      const DiscoverCategoriesSubScreen());
+                      const DiscoverCategoriesSubScreen(), state);
                 },
               ),
               GoRoute(
@@ -83,53 +70,13 @@ abstract class AppRoutingConfig {
                 pageBuilder: (_, state) {
                   final params = state.extra as DiscoverProductsSubScreenParams;
                   return buildPageWithDefaultTransition(
-                      DiscoverProductsSubScreen(routeParams: params));
+                      DiscoverProductsSubScreen(routeParams: params), state);
                 },
               ),
-              // GoRoute(
-              //   path: AppRoutes.homeSearchFilterDialog.subPath,
-              //   name: AppRoutes.homeSearchFilterDialog.name,
-              //   pageBuilder: (_, state) {
-              //     final params = state.extra as SearchProductFilterParams;
-              //     return buildDialogWithDefaultTransition(
-              //       FilterDialog(filters: params),
-              //     );
-              //   },
-              // ),
             ],
           ),
         ],
       ),
-      // GoRoute(
-      //   path: '/tfooooooooooo',
-      //   pageBuilder: (_, state) {
-      //     return MaterialPage(
-      //       child: Scaffold(
-      //         appBar: AppBar(
-      //           title: Text('Title'),
-      //         ),
-      //         body: MaterialButton(  
-      //           child: Text('show dialog'),
-      //           onPressed: () {
-      //             showGeneralDialog( 
-      //               context: _,      
-      //               pageBuilder: (_, __, ___) {
-      //                 return Dialog( 
-      //                   child: InkWell(
-      //                     child: const Text('GOOO BACK'), 
-      //                     onTap: (){ 
-      //                       _.pop(); 
-      //                     },
-      //                   ),
-      //                 );
-      //               },
-      //             );
-      //           },
-      //         ),
-      //       ),
-      //     );
-      //   },
-      // ),
     ],
     redirect: (_, state) async {
       print('REDIRECTION----------<<');
@@ -151,3 +98,32 @@ abstract class AppRoutingConfig {
     },
   );
 }
+// GoRoute(
+//   path: '/tfooooooo',
+//   pageBuilder: (context, state) {
+//     return MaterialPage(
+//       child: Scaffold(
+//         appBar: AppBar(
+//           title: const Text('Title'),
+//         ),
+//         body: MaterialButton(
+//           child: const Text('back'),
+//           onPressed: () {
+//             context.pop();
+//           },
+//         ),
+//       ),
+//     );
+//   },
+// ),
+
+// class XClass extends NavigatorObserver {
+  
+  
+  
+//   @override
+//   void didPop(Route route, Route? previousRoute) {
+    
+//     super.didPop(route, previousRoute);
+//   }
+// }

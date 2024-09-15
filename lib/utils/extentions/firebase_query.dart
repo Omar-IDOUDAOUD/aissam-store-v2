@@ -18,6 +18,7 @@ extension FirebaseFirestoreGet2<T> on Query<T> {
         res = await get().timeout(GlobalConstnts.requestTimeoutDuration);
       } on TimeoutException {
         throw NetworkException();
+        
       }
     } else {
       res = await get(const GetOptions(source: Source.cache));

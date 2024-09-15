@@ -5,9 +5,11 @@ import 'package:aissam_store_v2/app/presentation/core/widgets/buttons/content.da
 import 'package:aissam_store_v2/app/presentation/core/widgets/buttons/primary_button.dart';
 import 'package:aissam_store_v2/app/presentation/core/widgets/buttons/secondary_button.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/view.dart';
+import 'package:aissam_store_v2/config/routing/config.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -36,7 +38,7 @@ class _FilterDialogState extends State<FilterDialog> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: context.theme.colors.b,
+      color: context.theme.colors.a ,
       elevation: 20,
       shadowColor: Colors.black12,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -59,7 +61,7 @@ class _FilterDialogState extends State<FilterDialog> {
           ),
           _Action(
             onSave: () {
-              Navigator.pop(context, _newFilters);
+              context.pop(_newFilters);
             },
           ),
         ],
@@ -76,6 +78,7 @@ class _Appbar extends ConsumerWidget {
     return SliverAppBar(
       primary: false,
       pinned: true,
+      backgroundColor: context.theme.colors.a ,
       title: Text(
         'Filter search',
         style: context.textTheme.displaySmall,
@@ -279,8 +282,8 @@ class _BodyState extends State<_Body> {
             icon: FluentIcons.add_24_regular,
             onTap: () async {
               await Navigator.push(
-                context,
-                MaterialPageRoute(
+                homeNestedNavigatorKey.currentContext!,
+                CupertinoPageRoute(
                   builder: (context) => SelectCategoriesPage(
                     selectedCategories: widget.filters.categories,
                   ),

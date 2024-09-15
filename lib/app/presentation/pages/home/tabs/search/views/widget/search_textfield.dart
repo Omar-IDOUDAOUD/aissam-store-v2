@@ -95,10 +95,11 @@ class _SearchTextFieldState extends ConsumerState<SearchTextField> {
   void _showFilterDialog() async {
     final newFilters = await showGeneralDialog<SearchProductFilterParams>(
       transitionDuration: ViewConsts.animationDuration2,
-      context: context,
-      barrierDismissible: true, 
+      context: homeNestedNavigatorKey.currentContext!,
+      useRootNavigator: false,
+      barrierDismissible: true,
       barrierLabel: 'filter-dialog',
-      barrierColor: Colors.black26,
+      barrierColor: Colors.black.withOpacity(.1),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         final an = CurvedAnimation(
           parent: animation,
@@ -106,13 +107,16 @@ class _SearchTextFieldState extends ConsumerState<SearchTextField> {
           reverseCurve: ViewConsts.animationCurve.flipped,
         );
         final scaleAn = an.drive(Tween(begin: 0.95, end: 1.0));
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 80),
-          child: FadeTransition(
-            opacity: an,
-            child: ScaleTransition(
-              scale: scaleAn,
-              child: child,
+        return SafeArea(
+          maintainBottomViewPadding: false,
+          child: Padding(
+            padding: const EdgeInsets.all(30),
+            child: FadeTransition(
+              opacity: an,
+              child: ScaleTransition(
+                scale: scaleAn,
+                child: child,
+              ),
             ),
           ),
         );

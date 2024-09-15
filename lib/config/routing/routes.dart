@@ -3,7 +3,7 @@ class AppRoute {
   final String name;
 
   AppRoute(String path, this.name) : path = '/$path';
-  AppRoute.withouPrefix(this. path, this.name)  ;
+  AppRoute.withouPrefix(this.path, this.name);
 
   String get subPath {
     final slashesCount = path.split('/').length - 1;
@@ -25,6 +25,8 @@ abstract class AppRoutes {
       home.buildChild('discover_products', 'discover products');
   static final AppRoute homeDiscoverCategories =
       home.buildChild('discover_categories', 'discover categories');
-        static final AppRoute homeSearchFilterDialog =
-      home.buildChild('filter_dialog', 'filter dialog');
+  // static final AppRoute homeSearchFilterDialog =
+  //     home.buildChild('filter_dialog', 'filter dialog');
+  // static final AppRoute homeSearchFilterDialog =
+  //     home.buildChild('filter_dialog', 'filter dialog');
 }

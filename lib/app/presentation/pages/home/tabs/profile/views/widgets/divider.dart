@@ -7,7 +7,7 @@
 
 
 
-import 'package:aissam_store_v2/app/presentation/config/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/constants.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:flutter/material.dart';
 

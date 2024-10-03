@@ -1,5 +1,5 @@
-import 'package:aissam_store_v2/app/presentation/config/constants.dart';
-import 'package:aissam_store_v2/app/presentation/core/widgets/animated_scale_fade.dart';
+import 'package:aissam_store_v2/app/presentation/core/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/animated_scale_fade.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/nav_bar.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/providers/tab_controller.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/providers/fab.dart';
@@ -94,7 +94,7 @@ class HomeMainBody extends ConsumerStatefulWidget {
   ConsumerState<HomeMainBody> createState() => _HomeMainBodyState();
 }
 
-class _HomeMainBodyState extends ConsumerState<HomeMainBody> {  
+class _HomeMainBodyState extends ConsumerState<HomeMainBody> {
   TabController get _tabController =>
       ref.read(tabControllerProvider).tabController!;
 
@@ -111,7 +111,7 @@ class _HomeMainBodyState extends ConsumerState<HomeMainBody> {
 
   late final Route _rootRoute;
 
-  bool _backClickListener(_,RouteInfo routeInfo) {
+  bool _backClickListener(_, RouteInfo routeInfo) {
     if (!_rootRoute.isCurrent || !routeInfo.routeWhenAdded!.isCurrent)
       return false;
 
@@ -131,60 +131,15 @@ class _HomeMainBodyState extends ConsumerState<HomeMainBody> {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: context.theme.colors.b,
+      color: context.theme.scaffoldBackgroundColor,
       child: TabBarView(
         controller: _tabController,
-        children: [
-          const HomeTab(),
-          const WishlistTab(),
-          const SearchTab(),
-          const CartTab(),
-          // HomeTab(),
-          Center(
-            child: Column(
-              children: [
-                MaterialButton(
-                  onPressed: () {
-                    showGeneralDialog(
-                      useRootNavigator: false,
-                      context: context,
-                      pageBuilder: (_, __, ___) {
-                        return Center(
-                          child: MaterialButton(
-                            onPressed: () {
-                              context.pop();
-                            },
-                            child: Text('back'),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  child: const Text('Click me'),
-                ),
-                MaterialButton(
-                  onPressed: () {
-                    showGeneralDialog(
-                      useRootNavigator: true,
-                      context: rootNavigatorKey.currentContext!,
-                      routeSettings: RouteSettings(name: 'sssss'),
-                      pageBuilder: (_, __, ___) {
-                        return Center(
-                          child: MaterialButton(
-                            onPressed: () {
-                              context.pop();
-                            },
-                            child: Text('back'),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  child: const Text('Click me'),
-                ),
-              ],
-            ),
-          )
+        children: const [
+          HomeTab(),
+          WishlistTab(),
+          SearchTab(),
+          CartTab(),
+          ProfileTab(),
         ],
       ),
     );

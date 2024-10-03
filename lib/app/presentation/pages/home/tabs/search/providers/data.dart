@@ -1,7 +1,7 @@
-import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
-import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_preview.dart';
-import 'package:aissam_store_v2/app/buisness/products/domain/usecases/search_usecases.dart';
-import 'package:aissam_store_v2/app/core/data_pagination.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/core/params.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/domain/entities/product_preview.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/domain/usecases/search_usecases.dart';
+import 'package:aissam_store_v2/app/buisness/core/data_pagination.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final popularSearchedProductsProvider =

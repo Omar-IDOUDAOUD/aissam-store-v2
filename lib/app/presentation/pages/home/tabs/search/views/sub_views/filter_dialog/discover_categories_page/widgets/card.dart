@@ -1,6 +1,6 @@
-import 'package:aissam_store_v2/app/buisness/products/domain/entities/category.dart';
-import 'package:aissam_store_v2/app/presentation/config/constants.dart';
-import 'package:aissam_store_v2/app/presentation/core/widgets/checkbox.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/domain/entities/category.dart';
+import 'package:aissam_store_v2/app/presentation/core/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/checkbox.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 

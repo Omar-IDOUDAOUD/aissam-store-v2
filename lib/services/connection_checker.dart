@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:aissam_store_v2/app/core/errors/failures.dart';
+import 'package:aissam_store_v2/core/failure.dart';
 import 'package:aissam_store_v2/core/service_lifecycle.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 

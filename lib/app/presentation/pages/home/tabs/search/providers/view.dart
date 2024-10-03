@@ -1,6 +1,6 @@
-import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
-import 'package:aissam_store_v2/app/buisness/products/domain/usecases/search_usecases.dart';
-import 'package:aissam_store_v2/app/presentation/config/constants.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/core/params.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/domain/usecases/search_usecases.dart';
+import 'package:aissam_store_v2/app/presentation/core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

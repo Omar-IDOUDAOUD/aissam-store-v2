@@ -1,5 +1,6 @@
 import 'package:aissam_store_v2/app/presentation/config/colors.dart';
-import 'package:aissam_store_v2/app/presentation/config/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/textfield/input_border.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -34,16 +35,16 @@ class ThemeBuilder {
   );
   late final AppBarTheme appBarTheme = AppBarTheme(
     toolbarHeight: ViewConsts.toolbarHeight,
-    scrolledUnderElevation: 10,
+    scrolledUnderElevation: 5,
     elevation: 0,
-    shadowColor: shadowColor,
+    shadowColor: Colors.black.withOpacity(.4),
     centerTitle: true,
     iconTheme: iconTheme.copyWith(size: 30),
     titleTextStyle: textTheme.displayMedium,
     backgroundColor: WidgetStateColor.resolveWith((states) {
       return states.lastOrNull == WidgetState.scrolledUnder
           ? colors.a
-          : colors.b;
+          : colors.a;
     }),
     surfaceTintColor: Colors.transparent,
   );
@@ -53,64 +54,12 @@ class ThemeBuilder {
     color: colors.p,
   );
 
-  late final ButtonThemeData buttonStyle = ButtonThemeData(
-    minWidth: ViewConsts.buttonHeight,
-    height: ViewConsts.buttonHeight,
-    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-    shape: RoundedRectangleBorder(
-      borderRadius: borderRadius,
-    ),
-  );
   late final TooltipThemeData tooltipTheme = TooltipThemeData(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(20),
       color: colors.d.withOpacity(.8),
     ),
     textStyle: textTheme.bodyMedium!.copyWith(color: Colors.white),
-  );
-
-  late final CheckboxThemeData checkboxTheme = CheckboxThemeData(
-    fillColor: WidgetStateColor.resolveWith(
-      (states) => states.lastOrNull == WidgetState.selected
-          ? colors.d
-          : Colors.transparent,
-    ),
-    // materialTapTargetSize: MaterialTapTargetSize.padded,
-    visualDensity: const VisualDensity(
-        horizontal: VisualDensity.minimumDensity,
-        vertical: VisualDensity.minimumDensity),
-
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(4),
-    ),
-    side: WidgetStateBorderSide.resolveWith(
-      (states) => states.lastOrNull == WidgetState.selected
-          ? BorderSide.none
-          : BorderSide(
-              color: colors.t,
-              width: 2,
-            ),
-    ),
-    checkColor: WidgetStateColor.resolveWith(
-      (states) => states.lastOrNull == WidgetState.selected
-          ? colors.a
-          : Colors.transparent,
-    ),
-  );
-
-  late final DialogTheme dialogTheme = DialogTheme(
-      shape: RoundedRectangleBorder(borderRadius: borderRadius),
-      backgroundColor: colors.b,
-      elevation: 20,
-      shadowColor: Colors.black87,
-      insetPadding: const EdgeInsets.all(20),
-      titleTextStyle: textTheme.bodySmall);
-  late final CardTheme cardTheme = CardTheme(
-    shape: RoundedRectangleBorder(borderRadius: borderRadius),
-    elevation: 7,
-    shadowColor: shadowColor,
-    color: colors.a,
-    margin: EdgeInsets.zero,
   );
 
   late final InputDecorationTheme inputDecorationTheme = InputDecorationTheme(
@@ -126,17 +75,36 @@ class ThemeBuilder {
     ),
     hintStyle: textTheme.bodyLarge!
         .copyWith(color: colors.s, fontWeight: FontWeight.w400),
-    border: OutlineInputBorder(
-      borderRadius: borderRadius,
-      borderSide: BorderSide.none,
+    border: TextFieldInputBorder(
+      backgroundColor: colors.a,
+      borderSide:
+          BorderSide(width: ViewConsts.borderSideWidth, color: colors.t),
+      radius: ViewConsts.radius,
+      elevation: 4,
+      shadowColor: Colors.black.withOpacity(.2),
     ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: borderRadius,
-      borderSide: borderSide.copyWith(color: colors.d),
+    enabledBorder: TextFieldInputBorder(
+      backgroundColor: colors.a,
+      borderSide:
+          BorderSide(width: ViewConsts.borderSideWidth, color: colors.t),
+      radius: ViewConsts.radius,
+      elevation: 4,
+      shadowColor: Colors.black.withOpacity(.2),
     ),
-    errorBorder: OutlineInputBorder(
-      borderRadius: borderRadius,
-      borderSide: borderSide.copyWith(color: Colors.pink),
+    focusedBorder: TextFieldInputBorder(
+      backgroundColor: colors.a,
+      borderSide: BorderSide(width: 2, color: colors.d),
+      radius: ViewConsts.radius,
+    ),
+    errorBorder: TextFieldInputBorder(
+      backgroundColor: colors.a,
+      borderSide: const BorderSide(width: 2, color: Colors.redAccent),
+      radius: ViewConsts.radius,
+    ),
+    focusedErrorBorder: TextFieldInputBorder(
+      backgroundColor: colors.a,
+      borderSide: const BorderSide(width: 2, color: Colors.redAccent),
+      radius: ViewConsts.radius,
     ),
   );
   late final SnackBarThemeData snackbarTheme = const SnackBarThemeData(
@@ -144,22 +112,17 @@ class ThemeBuilder {
   );
 
   late final ThemeData buildThemeData = ThemeData(
+    useMaterial3: true,
     colorSchemeSeed: colors.d,
     textTheme: textTheme,
-    useMaterial3: true,
-    cardTheme: cardTheme,
-    cardColor: colors.b,
     focusColor: Color.lerp(colors.d, colors.a, 0.85),
     indicatorColor: colors.d,
-    dialogBackgroundColor: colors.b,
+    scaffoldBackgroundColor: colors.a,
+    dialogBackgroundColor: colors.a,
     snackBarTheme: snackbarTheme,
-    scaffoldBackgroundColor: colors.b,
     appBarTheme: appBarTheme,
-    dialogTheme: dialogTheme,
     iconTheme: iconTheme,
     inputDecorationTheme: inputDecorationTheme,
-    buttonTheme: buttonStyle,
-    checkboxTheme: checkboxTheme,
     tooltipTheme: tooltipTheme,
     extensions: [
       if (brightness == Brightness.dark) AppColorsDark(),

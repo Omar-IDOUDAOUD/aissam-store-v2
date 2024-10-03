@@ -1,10 +1,12 @@
-import 'package:aissam_store_v2/app/buisness/authentication/core/failures.dart';
-import 'package:aissam_store_v2/app/buisness/authentication/domain/usecases/usecases.dart';
+import 'package:aissam_store_v2/app/buisness/features/authentication/core/failures.dart';
+import 'package:aissam_store_v2/app/buisness/features/authentication/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/presentation/pages/authentication/views/sign_up.dart';
+import 'package:aissam_store_v2/config/routing/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:aissam_store_v2/app/presentation/pages/authentication/providers/providers.dart';
 import 'package:aissam_store_v2/app/presentation/pages/authentication/views/widgets/textfield.dart';
+import 'package:go_router/go_router.dart';
 
 class SignInPage extends ConsumerStatefulWidget {
   const SignInPage({super.key});
@@ -34,13 +36,16 @@ class _SignUpPageState extends ConsumerState<SignInPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(authProvider);
-    // ref.listen(
-    //   authProvider,
-    //   (_, as) => as.success
-    //       ? Navigator.pushReplacement(
-    //           context, MaterialPageRoute(builder: (_) => const TestPage()))
-    //       : null,
-    // );
+  
+    ref.listen(
+      authProvider,
+      (_, as) {
+        print(as.success);
+        as.success
+          ? context.go(AppRoutes.test.fullPath())
+          : null;
+      },
+    );
     final emailError = state.checkFieldErrored(AuthErrorSources.emailField);
     final passwordError =
         state.checkFieldErrored(AuthErrorSources.passwordField);
@@ -58,6 +63,7 @@ class _SignUpPageState extends ConsumerState<SignInPage> {
               error: emailError != null,
               errorText: emailError?.errorMessage,
             ),
+            SizedBox(height: 25),
             TextFieldWidget(
               controller: _passwordController,
               hint: 'Password',
@@ -84,15 +90,18 @@ class _SignUpPageState extends ConsumerState<SignInPage> {
               color: Colors.blueAccent,
               child: const Text('Sing Up'),
               onPressed: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (_) => const SignUpPage()));
+                context.go(AppRoutes.authSignUp.fullPath());
               },
             ),
             MaterialButton(
               color: Colors.blueAccent,
               child: const Text('Sing with google'),
-              onPressed: () {
-                SignInGoogle().call();
+              onPressed: () async {
+                final res = await SignInGoogle().call();
+                print('result');
+                res.fold((fail) => print(fail), (res) {
+                  context.go(AppRoutes.test.fullPath());
+                });
               },
             ),
           ],

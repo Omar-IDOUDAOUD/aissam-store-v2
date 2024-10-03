@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:aissam_store_v2/app/buisness/products/core/constants.dart';
-import 'package:aissam_store_v2/app/presentation/config/constants.dart';
-import 'package:aissam_store_v2/app/presentation/core/widgets/product/products_list.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/core/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/product/products_list.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/providers/data.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/sub_screens/discover_categories/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/sub_screens/discover_products/route_params.dart';
@@ -28,11 +28,12 @@ class HomeTab extends ConsumerStatefulWidget {
 class _HomeTabState extends ConsumerState<HomeTab> {
 
   void _pushToCategoriesSubScreen() {
-    context.go(AppRoutes.homeDiscoverCategories.path);
+    context.go(AppRoutes.homeDiscoverCategories.fullPath());
   }
 
   void _pushToProductsSubScreen(DiscoverProductsSubScreenParams routeParams) {
-    context.go(AppRoutes.homeDiscoverProducts.path, extra: routeParams);
+      
+    context.go(AppRoutes.homeDiscoverProducts.fullPath(), extra: routeParams);
   }
 
   String? _selectedCategory;

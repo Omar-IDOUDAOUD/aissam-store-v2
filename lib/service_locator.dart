@@ -1,24 +1,24 @@
-import 'package:aissam_store_v2/app/buisness/cart/data/data_source/cart_data_source.dart';
-import 'package:aissam_store_v2/app/buisness/cart/data/repositories/cart_repo_impl.dart';
-import 'package:aissam_store_v2/app/buisness/cart/domain/repositories/cart_repository.dart';
-import 'package:aissam_store_v2/app/buisness/products/data/data_source/products/product_remote_datasource.dart';
-import 'package:aissam_store_v2/app/buisness/products/data/data_source/products/products_local_datasource.dart';
-import 'package:aissam_store_v2/app/buisness/products/data/data_source/search/local_search_datasource.dart';
-import 'package:aissam_store_v2/app/buisness/products/data/data_source/search/remote_search_datasource.dart';
-import 'package:aissam_store_v2/app/buisness/products/data/repositories/products_repo_impl.dart';
+import 'package:aissam_store_v2/app/buisness/features/cart/data/data_source/cart_data_source.dart';
+import 'package:aissam_store_v2/app/buisness/features/cart/data/repositories/cart_repo_impl.dart';
+import 'package:aissam_store_v2/app/buisness/features/cart/domain/repositories/cart_repository.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/data/data_source/products/product_remote_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/data/data_source/products/products_local_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/data/data_source/search/local_search_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/data/data_source/search/remote_search_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/data/repositories/products_repo_impl.dart';
 
-import 'package:aissam_store_v2/app/buisness/products/data/repositories/search_repo_impl.dart';
-import 'package:aissam_store_v2/app/buisness/products/domain/repositories/products_repository.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/data/repositories/search_repo_impl.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/domain/repositories/products_repository.dart';
 
-import 'package:aissam_store_v2/app/buisness/products/domain/repositories/search_repository.dart';
-import 'package:aissam_store_v2/app/buisness/user/data/data_source/user/remote.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/domain/repositories/search_repository.dart';
+import 'package:aissam_store_v2/app/buisness/features/user/data/data_source/user/remote.dart';
 
-import 'package:aissam_store_v2/app/buisness/user/data/repositories/user_impl.dart';
-import 'package:aissam_store_v2/app/buisness/user/domain/repositories/user.dart';
-import 'package:aissam_store_v2/app/buisness/wishlist/data/data_source/wishlist_local_datasource.dart';
-import 'package:aissam_store_v2/app/buisness/wishlist/data/data_source/wishlist_remote_datasource.dart';
-import 'package:aissam_store_v2/app/buisness/wishlist/data/repositories/wishlist_repo_impl.dart';
-import 'package:aissam_store_v2/app/buisness/wishlist/domain/repositories/whishlist_repository.dart';
+import 'package:aissam_store_v2/app/buisness/features/user/data/repositories/user_impl.dart';
+import 'package:aissam_store_v2/app/buisness/features/user/domain/repositories/user.dart';
+import 'package:aissam_store_v2/app/buisness/features/wishlist/data/data_source/wishlist_local_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/features/wishlist/data/data_source/wishlist_remote_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/features/wishlist/data/repositories/wishlist_repo_impl.dart';
+import 'package:aissam_store_v2/app/buisness/features/wishlist/domain/repositories/whishlist_repository.dart';
 
 import 'package:aissam_store_v2/databases/local_db.dart';
 import 'package:aissam_store_v2/databases/mongo_db.dart';
@@ -30,9 +30,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
-import 'package:aissam_store_v2/app/buisness/authentication/data/data_source/auth_datasource.dart';
-import 'package:aissam_store_v2/app/buisness/authentication/data/repositories/auth_repo_impl.dart';
-import 'package:aissam_store_v2/app/buisness/authentication/domain/repositories/auth_repo.dart';
+import 'package:aissam_store_v2/app/buisness/features/authentication/data/data_source/auth_datasource.dart';
+import 'package:aissam_store_v2/app/buisness/features/authentication/data/repositories/auth_repo_impl.dart';
+import 'package:aissam_store_v2/app/buisness/features/authentication/domain/repositories/auth_repo.dart';
 import 'package:aissam_store_v2/config/environment/firebase_options.dart';
 
 final sl = GetIt.I;
@@ -40,7 +40,7 @@ final sl = GetIt.I;
 void initServiceLocator() {
   _initServices();
   _initDataSources();
-  _initRepositories();
+  _initRepositories(); 
 }
 
 void _initServices() {
@@ -116,7 +116,10 @@ void _initDataSources() {
 void _initRepositories() {
   print('INIT REPOSITORIES');
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
-  sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(sl()));
+  sl.registerLazySingleton<UserRepository>(
+    () => UserRepositoryImpl(sl()).init(),
+    dispose: (param) => (param as UserRepositoryImpl).dispose(),
+  );
   sl.registerLazySingleton<ProductsRepository>(
       () => ProductsRepositoryImpl(sl(), sl()));
   sl.registerLazySingleton<SearchRepository>(

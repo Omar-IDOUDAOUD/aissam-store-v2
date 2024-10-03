@@ -10,18 +10,11 @@ class TextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const errorBorder = UnderlineInputBorder(
-            borderSide: BorderSide(
-          color: Colors.redAccent,
-          width: 2,
-        )); 
     return TextField(
       controller: controller,
       decoration: InputDecoration(
         hintText: hint,
         error: errorText != null ? Text(errorText!) : null,
-        enabledBorder: error ?  errorBorder : null,
-        errorBorder: errorBorder, 
       ),
     );
   }

@@ -1,4 +1,4 @@
-import 'package:aissam_store_v2/app/presentation/config/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/constants.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
@@ -24,12 +24,12 @@ class Appbar extends ConsumerWidget {
             style: context.theme.appBarTheme.titleTextStyle,
           ),
           const Spacer(),
-          CircleAvatar(
+          const CircleAvatar(
             radius: 15, 
             backgroundColor: Colors.red, 
           )
           , 
-          SizedBox(width: 5)
+          const SizedBox(width: 5)
         ],
       ),
       flexibleSpace: FlexibleSpaceBar(
@@ -49,7 +49,7 @@ class Appbar extends ConsumerWidget {
               ),
             ),
             ),
-            Spacer(),
+            const Spacer(),
             const MainInfoSection(),
           ],
         ),

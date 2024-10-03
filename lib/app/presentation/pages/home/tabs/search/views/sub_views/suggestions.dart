@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
-import 'package:aissam_store_v2/app/presentation/config/constants.dart';
-import 'package:aissam_store_v2/app/presentation/core/widgets/error_card.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/core/params.dart';
+import 'package:aissam_store_v2/app/presentation/core/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/error_card.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/providers/back_action.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/data.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/view.dart';

@@ -3,9 +3,9 @@
 
 import 'dart:async';
 
-import 'package:aissam_store_v2/app/buisness/cart/domain/entities/cart_item.dart';
-import 'package:aissam_store_v2/app/buisness/cart/domain/usecases/usecases.dart';
-import 'package:aissam_store_v2/app/core/data_pagination.dart';
+import 'package:aissam_store_v2/app/buisness/features/cart/domain/entities/cart_item.dart';
+import 'package:aissam_store_v2/app/buisness/features/cart/domain/usecases/usecases.dart';
+import 'package:aissam_store_v2/app/buisness/core/data_pagination.dart';
 import 'package:aissam_store_v2/app/presentation/core/card_states.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/providers/snackbar.dart'; 
 import 'package:flutter/material.dart';

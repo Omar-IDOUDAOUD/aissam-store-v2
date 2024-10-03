@@ -1,7 +1,7 @@
-import 'package:aissam_store_v2/app/presentation/config/constants.dart';
-import 'package:aissam_store_v2/app/presentation/core/widgets/error_card.dart';
-import 'package:aissam_store_v2/app/presentation/core/widgets/pagination_loader.dart';
-import 'package:aissam_store_v2/app/presentation/core/widgets/scroll_notification_listener.dart';
+import 'package:aissam_store_v2/app/presentation/core/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/error_card.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/pagination_loader.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/scroll_notification_listener.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/providers/data.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/views/widgets/appbar.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/views/widgets/cart_card.dart';

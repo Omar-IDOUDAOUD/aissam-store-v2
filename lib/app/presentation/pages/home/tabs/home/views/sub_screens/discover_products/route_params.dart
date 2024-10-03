@@ -1,4 +1,4 @@
-import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_preview.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/domain/entities/product_preview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DiscoverProductsSubScreenParams {

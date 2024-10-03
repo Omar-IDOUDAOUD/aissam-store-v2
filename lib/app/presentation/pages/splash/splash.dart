@@ -1,8 +1,9 @@
-import 'package:aissam_store_v2/app/buisness/authentication/domain/usecases/usecases.dart';
-import 'package:aissam_store_v2/app/core/errors/failures.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/page.dart';
+import 'package:aissam_store_v2/app/buisness/features/authentication/domain/usecases/usecases.dart';
+import 'package:aissam_store_v2/core/failure.dart';
+import 'package:aissam_store_v2/config/routing/routes.dart';
 import 'package:aissam_store_v2/databases/local_db.dart';
 import 'package:aissam_store_v2/databases/mongo_db.dart' show MongoDb;
+import 'package:aissam_store_v2/main.dart';
 import 'package:aissam_store_v2/service_locator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -66,9 +67,7 @@ class _SplashPageState extends State<SplashPage> {
 
   void proceed() {
     _appInitilized = true; 
-    context.go(widget.redirectTo ?? '/home');
-    // Navigator.pushReplacement(
-    //     context, MaterialPageRoute(builder: (_) => const HomePage()));
+    context.go(widget.redirectTo ?? AppRoutes.home.fullPath());
   }
 
   _SplashLoadingStates _loadingState = _SplashLoadingStates.loading;

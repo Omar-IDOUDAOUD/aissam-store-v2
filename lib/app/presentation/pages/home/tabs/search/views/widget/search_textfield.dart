@@ -1,5 +1,6 @@
-import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
-import 'package:aissam_store_v2/app/presentation/config/constants.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/core/params.dart';
+import 'package:aissam_store_v2/app/presentation/core/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/dialog/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/views/sub_views/filter_dialog/view.dart';
 import 'package:aissam_store_v2/config/routing/config.dart';
@@ -93,42 +94,13 @@ class _SearchTextFieldState extends ConsumerState<SearchTextField> {
   }
 
   void _showFilterDialog() async {
-    final newFilters = await showGeneralDialog<SearchProductFilterParams>(
-      transitionDuration: ViewConsts.animationDuration2,
+    final newFilters = await showDialog2(
       context: homeNestedNavigatorKey.currentContext!,
-      useRootNavigator: false,
-      barrierDismissible: true,
-      barrierLabel: 'filter-dialog',
-      barrierColor: Colors.black.withOpacity(.1),
-      transitionBuilder: (context, animation, secondaryAnimation, child) {
-        final an = CurvedAnimation(
-          parent: animation,
-          curve: ViewConsts.animationCurve,
-          reverseCurve: ViewConsts.animationCurve.flipped,
-        );
-        final scaleAn = an.drive(Tween(begin: 0.95, end: 1.0));
-        return SafeArea(
-          maintainBottomViewPadding: false,
-          child: Padding(
-            padding: const EdgeInsets.all(30),
-            child: FadeTransition(
-              opacity: an,
-              child: ScaleTransition(
-                scale: scaleAn,
-                child: child,
-              ),
-            ),
-          ),
-        );
-      },
-      pageBuilder: (context, an1, an2) {
-        return FilterDialog(
-          filters: ref.read(viewProvider).searchFilters.copyWith(),
-        );
-      },
+      body: FilterDialog(
+        filters: ref.read(viewProvider).searchFilters.copyWith(),
+      ),
     );
     if (newFilters != null) {
-      print('seteee');
       ref.read(viewProvider).searchFilters = newFilters;
     }
   }

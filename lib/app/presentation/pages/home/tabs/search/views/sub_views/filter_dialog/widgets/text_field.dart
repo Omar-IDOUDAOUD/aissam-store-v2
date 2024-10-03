@@ -1,4 +1,4 @@
-import 'package:aissam_store_v2/app/presentation/config/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/constants.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
@@ -7,13 +7,13 @@ class TextField2 extends StatelessWidget {
     super.key,
     required this.hint,
     required this.onChange,
-    required this.controller,
-    required this.onSubmitted,
+    this.controller,
+     this.onSubmitted,
   });
   final String hint;
   final Function(String value) onChange;
-  final TextEditingController controller;
-  final VoidCallback onSubmitted;
+  final TextEditingController? controller;
+  final VoidCallback? onSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class TextField2 extends StatelessWidget {
       keyboardType: TextInputType.number,
       style: context.textTheme.bodyMedium,
       onChanged: onChange,
-      onSubmitted: (_) => onSubmitted(),
+      onSubmitted: (_) => onSubmitted?.call(),
       decoration: InputDecoration(
         hintStyle: context.textTheme.bodyMedium!
             .copyWith(color: context.theme.colors.s),

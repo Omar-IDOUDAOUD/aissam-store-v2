@@ -1,10 +1,10 @@
-import 'package:aissam_store_v2/app/presentation/config/constants.dart';
-import 'package:aissam_store_v2/app/presentation/core/widgets/error_card.dart';
-import 'package:aissam_store_v2/app/presentation/core/widgets/product/products_list.dart';
+import 'package:aissam_store_v2/app/presentation/core/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/error_card.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/product/products_list.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/providers/data.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/widgets/section_title.dart';
-import 'package:aissam_store_v2/app/presentation/core/widgets/scroll_notification_listener.dart';
-import 'package:aissam_store_v2/app/presentation/core/widgets/tabs.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/scroll_notification_listener.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/tabs.dart';
 import 'package:aissam_store_v2/utils/extentions/theme.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
@@ -61,8 +61,8 @@ class _CategoriesSectionState extends ConsumerState<CategoriesSection> {
                 },
               );
             },
-            labels: (watch.valueOrNull?.map((e) => e.name).toList()
-                  ?..insert(0, 'All')) ??
+            labels: (watch.valueOrNull?.map((e) => TabLabel(text: e.name)).toList()
+                  ?..insert(0, TabLabel(text: 'All'))) ??
                 [],
             extraLabels: watch.isLoading
                 ? const [

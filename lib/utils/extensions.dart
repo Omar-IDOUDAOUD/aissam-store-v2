@@ -1,9 +1,8 @@
 import 'dart:async';
 
-import 'package:aissam_store_v2/app/core/errors/failures.dart';
+import 'package:aissam_store_v2/core/failure.dart';
 import 'package:aissam_store_v2/app/presentation/config/colors.dart';
-import 'package:aissam_store_v2/config/constants/global_consts.dart';
-import 'package:aissam_store_v2/core/exceptions.dart';
+import 'package:aissam_store_v2/core/global_consts.dart';
 import 'package:aissam_store_v2/service_locator.dart';
 import 'package:aissam_store_v2/services/connection_checker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

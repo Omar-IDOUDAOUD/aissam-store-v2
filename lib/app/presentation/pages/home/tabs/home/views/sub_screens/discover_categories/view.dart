@@ -1,4 +1,4 @@
-import 'package:aissam_store_v2/app/presentation/config/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/constants.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/providers/data.dart';
 
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/sub_screens/discover_categories/widgets/categories_list.dart';
@@ -97,7 +97,7 @@ class _DiscoverCategoriesSubScreenState
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: context.theme.colors.b,
+      color: context.theme.scaffoldBackgroundColor,
       child: CustomScrollView(
         controller: _scrollController,
         slivers: [

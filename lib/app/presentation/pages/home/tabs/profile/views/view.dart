@@ -1,3 +1,4 @@
+import 'package:aissam_store_v2/app/buisness/features/authentication/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/profile/views/widgets/main_info.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/profile/views/widgets/product_provider_btn.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/profile/views/widgets/sections/shopping.dart';
@@ -11,6 +12,9 @@ class ProfileTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // Logout().call(); 
+    
     return const CustomScrollView(
       slivers: [
         Appbar(),

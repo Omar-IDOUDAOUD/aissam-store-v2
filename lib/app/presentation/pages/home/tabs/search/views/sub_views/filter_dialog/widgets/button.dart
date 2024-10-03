@@ -1,4 +1,4 @@
-import 'package:aissam_store_v2/app/presentation/core/widgets/buttons/tertiary_button.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/buttons/tertiary.dart';
 import 'package:aissam_store_v2/utils/extentions/theme.dart';
 import 'package:flutter/material.dart';
 

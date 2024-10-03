@@ -1,9 +1,9 @@
-import 'package:aissam_store_v2/app/buisness/products/core/params.dart';
-import 'package:aissam_store_v2/app/buisness/products/domain/entities/category.dart';
-import 'package:aissam_store_v2/app/presentation/config/constants.dart';
-import 'package:aissam_store_v2/app/presentation/core/widgets/buttons/content.dart';
-import 'package:aissam_store_v2/app/presentation/core/widgets/buttons/primary_button.dart';
-import 'package:aissam_store_v2/app/presentation/core/widgets/buttons/secondary_button.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/core/params.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/domain/entities/category.dart';
+import 'package:aissam_store_v2/app/presentation/core/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/buttons/formats.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/buttons/primary.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/buttons/secondary.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/view.dart';
 import 'package:aissam_store_v2/config/routing/config.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
@@ -38,11 +38,11 @@ class _FilterDialogState extends State<FilterDialog> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: context.theme.colors.a ,
-      elevation: 20,
-      shadowColor: Colors.black12,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      clipBehavior: Clip.hardEdge,
+        color: context.theme.colors.a ,
+        elevation: 10,
+        shadowColor: Colors.black.withOpacity(.2),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        clipBehavior: Clip.hardEdge,
       child: Column(
         children: [
           Expanded(

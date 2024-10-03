@@ -1,4 +1,4 @@
-import 'package:aissam_store_v2/app/presentation/config/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/constants.dart';
 import 'package:aissam_store_v2/config/routing/config.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:aissam_store_v2/utils/extentions/current_route.dart';
@@ -65,12 +65,12 @@ class HomeNavBarState extends State<HomeNavBar>
       height: context.theme.appBarTheme.toolbarHeight,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: context.theme.colors.a,
-          boxShadow: const [
+          color: context.theme.scaffoldBackgroundColor,
+          boxShadow: [
             BoxShadow(
-              offset: Offset(0, -1),
-              blurRadius: 20,
-              color: Colors.black12,
+              offset: Offset.zero,
+              blurRadius: 15,
+              color: Colors.black.withOpacity(.2),
             ),
           ],
         ),

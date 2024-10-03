@@ -1,8 +1,8 @@
-import 'package:aissam_store_v2/app/presentation/config/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/constants.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/providers/data.dart';
-import 'package:aissam_store_v2/app/presentation/core/widgets/product/products_grid.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/product/products_grid.dart';
 
-import 'package:aissam_store_v2/app/presentation/core/widgets/product/products_list.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/product/products_list.dart';
 import 'package:flutter/material.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 

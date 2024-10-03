@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:aissam_store_v2/app/buisness/wishlist/domain/entities/wishlist.dart';
-import 'package:aissam_store_v2/app/buisness/wishlist/domain/usecases/usecases.dart';
-import 'package:aissam_store_v2/app/core/data_pagination.dart';
+import 'package:aissam_store_v2/app/buisness/features/wishlist/domain/entities/wishlist.dart';
+import 'package:aissam_store_v2/app/buisness/features/wishlist/domain/usecases/usecases.dart';
+import 'package:aissam_store_v2/app/buisness/core/data_pagination.dart';
 import 'package:aissam_store_v2/app/presentation/core/card_states.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/providers/snackbar.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,4 @@
-import 'package:aissam_store_v2/app/buisness/authentication/core/failures.dart';
+import 'package:aissam_store_v2/app/buisness/features/authentication/core/failures.dart';
 import 'package:equatable/equatable.dart';
 
 class AuthState extends Equatable {
@@ -14,7 +14,7 @@ class AuthState extends Equatable {
       this.errorCode})
       : errorFields = errorFields ?? [];
 
-  bool get success => errorMessage != null && !isLoading;
+  bool get success => errorMessage == null && !isLoading;
 
   AuthErrorCause? checkFieldErrored(AuthErrorSources field) {
     return errorFields

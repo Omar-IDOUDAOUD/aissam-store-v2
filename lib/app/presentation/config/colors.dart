@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+ 
 import 'package:flutter/material.dart';
 
 abstract class AppColors extends ThemeExtension<AppColors> {
@@ -17,10 +16,10 @@ abstract class AppColors extends ThemeExtension<AppColors> {
   /// secondary grey color
   Color get t;
 
-  /// backround color
+  /// tertiary grey color
   Color get b;
 
-  /// nav bar color
+  /// backround color
   Color get a;
 }
 
@@ -38,7 +37,7 @@ class AppColorsLight extends AppColors {
   Color get t => const Color.fromARGB(255, 224, 224, 224);
 
   @override
-  Color get b => const Color.fromARGB(255, 240, 240, 240);
+  Color get b => const Color.fromARGB(255, 245, 245, 245);
 
   @override
   Color get a => const Color.fromARGB(255, 255, 255, 255);

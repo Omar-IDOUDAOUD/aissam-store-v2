@@ -1,6 +1,6 @@
-import 'package:aissam_store_v2/app/buisness/products/domain/entities/product_preview.dart';
-import 'package:aissam_store_v2/app/presentation/config/constants.dart';
-import 'package:aissam_store_v2/app/presentation/core/widgets/product/products_grid.dart';
+import 'package:aissam_store_v2/app/buisness/features/products/domain/entities/product_preview.dart';
+import 'package:aissam_store_v2/app/presentation/core/constants.dart';
+import 'package:aissam_store_v2/app/presentation/core/views/product/products_grid.dart';
 import 'package:aissam_store_v2/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,7 @@ class DiscoverProductsSubScreen extends StatelessWidget {
     BuildContext context,
   ) {
     return ColoredBox(
-      color: context.theme.colors.b,
+      color: context.theme.scaffoldBackgroundColor,
       child: CustomScrollView(
         slivers: [
           SliverAppBar.large(

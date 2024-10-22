@@ -1,5 +1,5 @@
 import 'package:aissam_store_v2/app/presentation/core/constants.dart';
-import 'package:aissam_store_v2/config/routing/config.dart';
+import 'package:aissam_store_v2/app/presentation/config/routing/config.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 

@@ -1,8 +1,8 @@
 import 'package:aissam_store_v2/app/buisness/features/authentication/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/buisness/features/user/data/models/payment_card.dart';
 import 'package:aissam_store_v2/core/failure.dart';
-import 'package:aissam_store_v2/core/global_consts.dart';
-import 'package:aissam_store_v2/utils/extentions/firebase_query.dart';
+import 'package:aissam_store_v2/core/constants.dart';
+import 'package:aissam_store_v2/core/utils/extentions/firebase_query.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract interface class PaymentRemoteDatasource {

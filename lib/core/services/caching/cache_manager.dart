@@ -2,9 +2,9 @@
 
 import 'dart:async';
 
-import 'package:aissam_store_v2/core/global_consts.dart';
+import 'package:aissam_store_v2/core/constants.dart';
 import 'package:aissam_store_v2/core/service_lifecycle.dart';
-import 'package:aissam_store_v2/databases/local_db.dart';
+import 'package:aissam_store_v2/core/databases/local_db.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 const int _possibleInsertCountPerDocument = 4;

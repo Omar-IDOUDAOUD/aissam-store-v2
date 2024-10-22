@@ -1,5 +1,5 @@
 import 'package:aissam_store_v2/app/presentation/core/views/buttons/tertiary.dart';
-import 'package:aissam_store_v2/utils/extentions/theme.dart';
+import 'package:aissam_store_v2/core/utils/extentions/theme.dart';
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {

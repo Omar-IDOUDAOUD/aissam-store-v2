@@ -1,5 +1,5 @@
 import 'package:aissam_store_v2/app/presentation/core/constants.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
 
@@ -39,7 +39,7 @@ class SecondaryRoundedButton extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min, 
         children: [
-          if (prefix != null) ...[prefix!,SizedBox(width: 5)], 
+          if (prefix != null) ...[prefix!,const SizedBox(width: 5)], 
           Text(label)
         ]
       ),
@@ -49,8 +49,7 @@ class SecondaryRoundedButton extends StatelessWidget {
 
 class _RawButton extends StatelessWidget {
   const _RawButton(
-      {super.key,
-      required this.isRoundedButton,
+      {required this.isRoundedButton,
       required this.child,
       this.onPressed,
       this.padding});

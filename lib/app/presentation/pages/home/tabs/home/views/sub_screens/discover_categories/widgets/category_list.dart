@@ -3,7 +3,6 @@ import 'package:aissam_store_v2/app/presentation/core/views/error_card.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/providers/data.dart';
 import 'package:aissam_store_v2/app/presentation/core/views/pagination_loader.dart';
 
-import 'package:aissam_store_v2/app/presentation/core/views/scroll_notification_listener.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -1,7 +1,7 @@
 import 'package:aissam_store_v2/app/presentation/core/constants.dart';
-import 'package:aissam_store_v2/config/routing/config.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
-import 'package:aissam_store_v2/utils/extentions/current_route.dart';
+import 'package:aissam_store_v2/app/presentation/config/routing/config.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
+import 'package:aissam_store_v2/core/utils/extentions/current_route.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 
@@ -137,7 +137,6 @@ class HomeNavBarState extends State<HomeNavBar>
 
 class _Tab extends StatefulWidget {
   const _Tab({
-    super.key,
     required this.isActive,
     required this.icon,
     required this.unselectedIcon,

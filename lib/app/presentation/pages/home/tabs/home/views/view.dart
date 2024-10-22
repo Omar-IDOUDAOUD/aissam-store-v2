@@ -1,18 +1,15 @@
-import 'dart:ui';
 
 import 'package:aissam_store_v2/app/buisness/features/products/core/constants.dart';
 import 'package:aissam_store_v2/app/presentation/core/constants.dart';
 import 'package:aissam_store_v2/app/presentation/core/views/product/products_list.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/providers/data.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/sub_screens/discover_categories/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/sub_screens/discover_products/route_params.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/sub_screens/discover_products/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/widgets/categories_section.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/widgets/dialy_banner.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/widgets/header_greeting.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/widgets/section_title.dart';
-import 'package:aissam_store_v2/config/routing/routes.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/app/presentation/config/routing/routes.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

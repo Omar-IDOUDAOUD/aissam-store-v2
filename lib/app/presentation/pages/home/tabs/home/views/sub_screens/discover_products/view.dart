@@ -1,10 +1,8 @@
-import 'package:aissam_store_v2/app/buisness/features/products/domain/entities/product_preview.dart';
 import 'package:aissam_store_v2/app/presentation/core/constants.dart';
 import 'package:aissam_store_v2/app/presentation/core/views/product/products_grid.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'route_params.dart';
 

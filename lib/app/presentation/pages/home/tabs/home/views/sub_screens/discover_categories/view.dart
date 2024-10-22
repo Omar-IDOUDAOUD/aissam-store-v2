@@ -2,7 +2,7 @@ import 'package:aissam_store_v2/app/presentation/core/constants.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/providers/data.dart';
 
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/sub_screens/discover_categories/widgets/categories_list.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

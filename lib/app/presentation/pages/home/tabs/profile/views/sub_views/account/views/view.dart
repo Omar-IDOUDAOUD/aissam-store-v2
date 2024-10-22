@@ -1,15 +1,15 @@
+import 'package:aissam_store_v2/app/buisness/core/langs_and_currencies.dart';
 import 'package:aissam_store_v2/app/buisness/features/user/domain/entities/user.dart';
 import 'package:aissam_store_v2/app/buisness/features/user/domain/usecases/user.dart';
 import 'package:aissam_store_v2/app/buisness/core/entities/currency.dart';
 import 'package:aissam_store_v2/core/failure.dart';
-import 'package:aissam_store_v2/app/buisness/core/constants/constants.dart';
 import 'package:aissam_store_v2/app/presentation/core/constants.dart';
 import 'package:aissam_store_v2/app/presentation/core/views/bottomsheet/view.dart';
 import 'package:aissam_store_v2/app/presentation/core/views/error_card.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/profile/views/sub_views/account/views/widgets/link_with_provider.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/profile/views/sub_views/account/views/widgets/modify_email_bottomsheet.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/profile/views/sub_views/account/views/widgets/sign_in_banner.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

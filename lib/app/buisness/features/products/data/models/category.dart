@@ -1,5 +1,5 @@
 import 'package:aissam_store_v2/app/buisness/features/products/domain/entities/category.dart';
-import 'package:aissam_store_v2/databases/mongo_db.dart' show ObjectId;
+import 'package:aissam_store_v2/core/databases/mongo_db.dart' show ObjectId;
 
 class CategoryModel extends Category {
   CategoryModel(

@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:aissam_store_v2/app/presentation/core/constants.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
 class TabLabel {
@@ -81,8 +81,7 @@ class _TabsState extends State<Tabs> {
 
 class _Tab extends StatelessWidget {
   const _Tab(
-      {super.key,
-      required this.label,
+      {required this.label,
       required this.onTap,
       required this.selected});
   final TabLabel label;

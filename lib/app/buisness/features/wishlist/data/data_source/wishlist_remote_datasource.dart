@@ -1,11 +1,10 @@
 import 'package:aissam_store_v2/app/buisness/features/authentication/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/buisness/features/products/data/models/product_preview.dart';
 import 'package:aissam_store_v2/app/buisness/features/wishlist/data/models/wishlist.dart';
-import 'package:aissam_store_v2/app/buisness/core/constants/constants.dart';
 import 'package:aissam_store_v2/app/buisness/core/data_pagination.dart';
-import 'package:aissam_store_v2/core/global_consts.dart';
-import 'package:aissam_store_v2/databases/mongo_db.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/core/constants.dart';
+import 'package:aissam_store_v2/core/databases/mongo_db.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class WishlistRemoteDataSource {

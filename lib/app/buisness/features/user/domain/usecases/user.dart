@@ -1,4 +1,3 @@
-import 'package:aissam_store_v2/app/buisness/features/authentication/core/params.dart';
 import 'package:aissam_store_v2/app/buisness/features/user/core/params.dart';
 import 'package:aissam_store_v2/app/buisness/features/user/domain/entities/user.dart';
 import 'package:aissam_store_v2/app/buisness/features/user/domain/repositories/user.dart';
@@ -6,7 +5,6 @@ import 'package:aissam_store_v2/service_locator.dart';
 import 'package:dartz/dartz.dart';
 import 'package:aissam_store_v2/core/failure.dart';
 import 'package:aissam_store_v2/app/buisness/core/interfaces/usecase.dart';
-import 'package:firebase_auth/firebase_auth.dart' as fb show User;
 
 class LoadUser implements FutureUseCase<Unit, NoParams> {
   final UserRepository _userRepository = sl();

@@ -1,12 +1,12 @@
 import 'package:aissam_store_v2/app/presentation/core/constants.dart';
 import 'package:aissam_store_v2/app/presentation/core/card_states.dart';
 import 'package:aissam_store_v2/app/presentation/core/views/checkbox.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-final double _height = 115;
+const double _height = 115;
 
 class CartCard extends StatefulWidget {
   const CartCard({

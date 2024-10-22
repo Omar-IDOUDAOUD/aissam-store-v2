@@ -20,12 +20,12 @@ import 'package:aissam_store_v2/app/buisness/features/wishlist/data/data_source/
 import 'package:aissam_store_v2/app/buisness/features/wishlist/data/repositories/wishlist_repo_impl.dart';
 import 'package:aissam_store_v2/app/buisness/features/wishlist/domain/repositories/whishlist_repository.dart';
 
-import 'package:aissam_store_v2/databases/local_db.dart';
-import 'package:aissam_store_v2/databases/mongo_db.dart';
-import 'package:aissam_store_v2/config/environment/environment.dart';
-import 'package:aissam_store_v2/services/caching/cache_manager.dart';
+import 'package:aissam_store_v2/core/databases/local_db.dart';
+import 'package:aissam_store_v2/core/databases/mongo_db.dart';
+import 'package:aissam_store_v2/environment/environment.dart';
+import 'package:aissam_store_v2/core/services/caching/cache_manager.dart';
 
-import 'package:aissam_store_v2/services/connection_checker.dart';
+import 'package:aissam_store_v2/core/services/connection_checker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -33,7 +33,7 @@ import 'package:get_it/get_it.dart';
 import 'package:aissam_store_v2/app/buisness/features/authentication/data/data_source/auth_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/features/authentication/data/repositories/auth_repo_impl.dart';
 import 'package:aissam_store_v2/app/buisness/features/authentication/domain/repositories/auth_repo.dart';
-import 'package:aissam_store_v2/config/environment/firebase_options.dart';
+import 'package:aissam_store_v2/environment/firebase_options.dart';
 
 final sl = GetIt.I;
 

@@ -1,24 +1,19 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:aissam_store_v2/app/buisness/features/authentication/core/failures.dart';
-import 'package:aissam_store_v2/app/buisness/features/authentication/core/params.dart';
+import 'package:aissam_store_v2/app/buisness/core/langs_and_currencies.dart';
 import 'package:aissam_store_v2/app/buisness/features/authentication/domain/usecases/usecases.dart';
-import 'package:aissam_store_v2/app/buisness/features/user/core/failures.dart';
 import 'package:aissam_store_v2/app/buisness/features/user/core/params.dart';
 import 'package:aissam_store_v2/app/buisness/features/user/data/data_source/user/remote.dart';
 import 'package:aissam_store_v2/app/buisness/features/user/data/models/user.dart';
 import 'package:aissam_store_v2/app/buisness/features/user/domain/entities/user.dart';
 import 'package:aissam_store_v2/app/buisness/features/user/domain/repositories/user.dart';
 import 'package:aissam_store_v2/core/failure.dart';
-import 'package:aissam_store_v2/app/buisness/core/constants/constants.dart';
 import 'package:aissam_store_v2/core/service_lifecycle.dart';
-import 'package:aissam_store_v2/services/connection_checker.dart';
-import 'package:aissam_store_v2/utils/extentions/string.dart';
-import 'package:aissam_store_v2/utils/tools.dart';
+import 'package:aissam_store_v2/core/services/connection_checker.dart';
+import 'package:aissam_store_v2/core/utils/tools.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb show User;
-import 'package:flutter/material.dart';
 
 class UserRepositoryImpl extends ServiceLifecycle implements UserRepository {
   final UserDataSource _userDataSource;

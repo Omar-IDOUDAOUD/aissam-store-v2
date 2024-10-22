@@ -1,5 +1,5 @@
 import 'package:aissam_store_v2/app/presentation/core/constants.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
 class DialyBanner extends StatefulWidget {
@@ -91,7 +91,7 @@ class _DialyBannerState extends State<DialyBanner> {
 }
 
 class _Card extends StatelessWidget {
-  const _Card({super.key, required this.color});
+  const _Card({required this.color});
   final MaterialColor color;
 
   @override

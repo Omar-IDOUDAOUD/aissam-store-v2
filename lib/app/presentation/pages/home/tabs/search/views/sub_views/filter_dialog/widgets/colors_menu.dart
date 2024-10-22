@@ -1,6 +1,6 @@
 import 'package:aissam_store_v2/app/presentation/core/constants.dart';
 import 'package:aissam_store_v2/app/presentation/core/views/animated_scale_fade.dart';
-import 'package:aissam_store_v2/utils/extentions/theme.dart';
+import 'package:aissam_store_v2/core/utils/extentions/theme.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 
@@ -59,8 +59,7 @@ class _ColorsMenuState extends State<ColorsMenu> {
 
 class _ListTile extends StatelessWidget {
   const _ListTile(
-      {super.key,
-      required this.title,
+      {required this.title,
       required this.color,
       required this.selected,
       required this.onTap});

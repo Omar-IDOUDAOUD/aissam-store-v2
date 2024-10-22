@@ -1,7 +1,6 @@
 import 'package:aissam_store_v2/app/buisness/features/products/core/constants.dart';
 import 'package:aissam_store_v2/app/buisness/features/products/domain/entities/category.dart';
 import 'package:aissam_store_v2/app/buisness/core/data_pagination.dart';
-import 'package:equatable/equatable.dart';
 
 abstract class _DataPaginationParamsProperty {
   final DataPaginationParams paginationParams;

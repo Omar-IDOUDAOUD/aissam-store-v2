@@ -10,7 +10,7 @@ import 'package:aissam_store_v2/app/presentation/core/views/buttons/primary.dart
 import 'package:aissam_store_v2/app/presentation/core/views/buttons/secondary.dart';
 import 'package:aissam_store_v2/app/presentation/core/views/dialog/view.dart';
 import 'package:aissam_store_v2/app/presentation/core/views/error_card.dart';
-import 'package:aissam_store_v2/utils/extentions/theme.dart';
+import 'package:aissam_store_v2/core/utils/extentions/theme.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/string_extensions.dart';
@@ -257,7 +257,7 @@ class _ModifyEmaillBottomSheetContentState
 }
 
 class _ResultDialog extends StatelessWidget {
-  const _ResultDialog({super.key, this.failure});
+  const _ResultDialog({this.failure});
   final Failure? failure;
 
   @override

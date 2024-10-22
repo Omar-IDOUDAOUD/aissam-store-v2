@@ -1,5 +1,5 @@
 import 'package:aissam_store_v2/app/presentation/core/constants.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +29,7 @@ Future<T?> showBottomSheet2<T>({
 }
 
 class _DragHandler extends StatelessWidget {
-  const _DragHandler({super.key});
+  const _DragHandler();
 
   @override
   Widget build(BuildContext context) {

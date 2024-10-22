@@ -1,10 +1,10 @@
 import 'package:aissam_store_v2/app/buisness/features/products/core/params.dart';
 import 'package:aissam_store_v2/app/buisness/features/products/data/models/product_preview.dart';
 import 'package:aissam_store_v2/app/buisness/features/products/domain/entities/product_preview.dart';
-import 'package:aissam_store_v2/app/buisness/core/constants/constants.dart';
+import 'package:aissam_store_v2/app/buisness/core/constants.dart';
 import 'package:aissam_store_v2/app/buisness/core/data_pagination.dart';
-import 'package:aissam_store_v2/databases/mongo_db.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/core/databases/mongo_db.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 
 const int _limitPopularProducts = 4;
 const int _limitPopularSuggestions = 4;
@@ -68,12 +68,12 @@ class SearchRemoteDataSourceImpl extends SearchRemoteDataSource {
         .fields(ProductPreviewModel.fields);
     final filters = params.filterParams;
     query.eq(r'$text', {r'$search': filters.keywords});
-    if (filters.categories != null && filters.categories!.isNotEmpty)
-      query.oneFrom('categories', filters.categories!);
-    if (filters.sizes != null && filters.sizes!.isNotEmpty)
-      query.oneFrom('sizes', filters.sizes!);
-    if (filters.colorNames != null && filters.colorNames!.isNotEmpty)
-      query.oneFrom('available_colors', filters.colorNames!);
+    if (filters.categories.isNotEmpty)
+      query.oneFrom('categories', filters.categories);
+    if (filters.sizes.isNotEmpty)
+      query.oneFrom('sizes', filters.sizes);
+    if (filters.colorNames.isNotEmpty)
+      query.oneFrom('available_colors', filters.colorNames);
     query.inRange(
         'price', filters.minPrice ?? 0, filters.maxPrice ?? double.infinity);
 

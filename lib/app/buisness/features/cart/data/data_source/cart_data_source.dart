@@ -5,11 +5,11 @@ import 'package:aissam_store_v2/app/buisness/features/products/core/failures.dar
 import 'package:aissam_store_v2/app/buisness/features/products/core/params.dart';
 import 'package:aissam_store_v2/app/buisness/features/products/domain/entities/product_details.dart';
 import 'package:aissam_store_v2/app/buisness/features/products/domain/usecases/products_usecases.dart';
-import 'package:aissam_store_v2/app/buisness/core/constants/constants.dart';
+import 'package:aissam_store_v2/app/buisness/core/constants.dart';
 import 'package:aissam_store_v2/app/buisness/core/data_pagination.dart';
 import 'package:aissam_store_v2/core/failure.dart';
-import 'package:aissam_store_v2/core/global_consts.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/core/constants.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class CartDataSource {
@@ -59,7 +59,7 @@ class CartDataSourceImpl implements CartDataSource {
           }, (res) => res.firstOrNull),
         );
 
-    if (product == null) throw ProductNotFoundFailure();
+    if (product == null) throw const ProductNotFoundFailure();
 
     await _userCollection.add(
       CartItemModel(

@@ -1,5 +1,3 @@
-import 'package:aissam_store_v2/app/buisness/features/products/core/params.dart';
-import 'package:aissam_store_v2/app/presentation/core/constants.dart';
 import 'package:aissam_store_v2/app/presentation/pages/authentication/views/sign_in.dart';
 import 'package:aissam_store_v2/app/presentation/pages/authentication/views/sign_up.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/page.dart';
@@ -7,14 +5,10 @@ import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/sub_
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/sub_screens/discover_products/route_params.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/sub_screens/discover_products/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/profile/views/sub_views/account/views/view.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/views/sub_views/filter_dialog/view.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/views/widget/app_bar.dart';
 import 'package:aissam_store_v2/app/presentation/pages/splash/splash.dart';
 import 'package:aissam_store_v2/app/presentation/pages/test/page.dart';
-import 'package:aissam_store_v2/config/routing/routes.dart';
-import 'package:aissam_store_v2/main.dart';
+import 'package:aissam_store_v2/app/presentation/config/routing/routes.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 /// adb -s emulator-5554 shell am start -W -a android.intent.action.VIEW -d "aissamstore://aissame.store.com"
@@ -32,7 +26,7 @@ abstract class AppRoutingConfig {
       key: state.pageKey,
     );
   }
- sdfsdf
+  
   static final GoRouter router = GoRouter(
     navigatorKey: rootNavigatorKey,
     routes: [

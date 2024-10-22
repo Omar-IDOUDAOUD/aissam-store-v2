@@ -5,7 +5,7 @@ import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/providers/
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/widgets/section_title.dart';
 import 'package:aissam_store_v2/app/presentation/core/views/scroll_notification_listener.dart';
 import 'package:aissam_store_v2/app/presentation/core/views/tabs.dart';
-import 'package:aissam_store_v2/utils/extentions/theme.dart';
+import 'package:aissam_store_v2/core/utils/extentions/theme.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -119,7 +119,7 @@ class _CategoriesSectionState extends ConsumerState<CategoriesSection> {
 }
 
 class _SeeAllCategoriesTab extends StatelessWidget {
-  const _SeeAllCategoriesTab({super.key, required this.onTap});
+  const _SeeAllCategoriesTab({required this.onTap});
   final VoidCallback onTap;
 
   @override

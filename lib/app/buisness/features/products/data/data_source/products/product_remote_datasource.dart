@@ -9,8 +9,8 @@ import 'package:aissam_store_v2/app/buisness/features/products/core/params.dart'
 import 'package:aissam_store_v2/app/buisness/core/data_pagination.dart';
 import 'package:aissam_store_v2/core/failure.dart';
 import 'package:aissam_store_v2/core/types.dart';
-import 'package:aissam_store_v2/databases/mongo_db.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/core/databases/mongo_db.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 
 abstract class ProductsRemoteDatasource {
   Future<DataPagination<CategoryModel>> categories(GetCategoriesParams params);
@@ -122,7 +122,7 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
       query: where..id2(id),
       update: modify.inc('views', 1),
     );
-    if (res == null) throw ProductNotFoundFailure();
+    if (res == null) throw const ProductNotFoundFailure();
     return ProductDetailsModel.fromJson(res);
   }
 

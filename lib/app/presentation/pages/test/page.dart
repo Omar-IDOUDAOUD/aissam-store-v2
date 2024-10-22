@@ -1,7 +1,7 @@
 import 'package:aissam_store_v2/app/buisness/features/authentication/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/buisness/features/user/domain/usecases/user.dart';
 import 'package:aissam_store_v2/app/presentation/core/views/buttons/primary.dart';
-import 'package:aissam_store_v2/config/routing/routes.dart';
+import 'package:aissam_store_v2/app/presentation/config/routing/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -28,7 +28,7 @@ class TestPage extends StatelessWidget {
                 });
               });
             },
-            icon: Icon(Icons.logout_rounded),
+            icon: const Icon(Icons.logout_rounded),
           ),
         ],
       ),

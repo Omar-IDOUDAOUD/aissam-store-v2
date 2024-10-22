@@ -1,6 +1,6 @@
 import 'package:aissam_store_v2/app/buisness/features/products/domain/entities/product_preview.dart';
 import 'package:aissam_store_v2/app/presentation/core/constants.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 
@@ -46,7 +46,7 @@ class ProductWidget extends StatelessWidget {
 }
 
 class _Info extends StatelessWidget {
-  const _Info({super.key, required this.data});
+  const _Info({required this.data});
   final ProductPreview data;
 
   @override
@@ -127,7 +127,7 @@ class ImagePreview extends StatelessWidget {
 }
 
 class _ReviewsBadge extends StatelessWidget {
-  const _ReviewsBadge({super.key});
+  const _ReviewsBadge();
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +161,7 @@ class _ReviewsBadge extends StatelessWidget {
 }
 
 class _FavoriteButton extends StatelessWidget {
-  const _FavoriteButton({super.key});
+  const _FavoriteButton();
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +178,7 @@ class _FavoriteButton extends StatelessWidget {
 }
 
 class _NewBadge extends StatelessWidget {
-  const _NewBadge({super.key});
+  const _NewBadge();
 
   @override
   Widget build(BuildContext context) {

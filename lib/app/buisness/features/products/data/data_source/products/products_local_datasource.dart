@@ -5,7 +5,7 @@ import 'package:aissam_store_v2/app/buisness/features/products/data/models/produ
 import 'package:aissam_store_v2/app/buisness/features/products/domain/usecases/products_usecases.dart';
 import 'package:aissam_store_v2/app/buisness/core/data_pagination.dart';
 import 'package:aissam_store_v2/core/failure.dart';
-import 'package:aissam_store_v2/services/caching/cache_manager.dart';
+import 'package:aissam_store_v2/core/services/caching/cache_manager.dart';
 import 'package:aissam_store_v2/core/types.dart';
 
 abstract class ProductsLocalDatasource {
@@ -107,7 +107,7 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
       document: params.paginationParams.page.toString(),
       path: _defPath..addAll(_categories(params.parentCategory)),
     );
-    if (res == null) throw NoCachedDataFailure();
+    if (res == null) throw const NoCachedDataFailure();
     return _buildPagination(List.from(res.values.map((e) => Map2.from(e))),
         CategoryModel.fromCache, params.paginationParams);
   }
@@ -119,7 +119,7 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
       path: _defPath..add(_productDetails),
       key: 0,
     );
-    if (res == null) throw NoCachedDataFailure();
+    if (res == null) throw const NoCachedDataFailure();
     return ProductDetailsModel.fromCache(Map2.from(res as Map));
   }
 
@@ -130,7 +130,7 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
       document: params.page.toString(),
       path: _defPath..add(_productByCategory),
     );
-    if (res == null) throw NoCachedDataFailure();
+    if (res == null) throw const NoCachedDataFailure();
     return _buildPagination(List.from(res.values.map((e) => Map2.from(e))),
         ProductPreviewModel.fromCache, params);
   }
@@ -143,7 +143,7 @@ class ProductsLocalDatasourceImpl extends ProductsLocalDatasource {
       path: _defPath..add(_productByPerformance),
     );
 
-    if (res == null) throw NoCachedDataFailure();
+    if (res == null) throw const NoCachedDataFailure();
     return _buildPagination(List.from(res.values.map((e) => Map2.from(e))),
         ProductPreviewModel.fromCache, params);
   }

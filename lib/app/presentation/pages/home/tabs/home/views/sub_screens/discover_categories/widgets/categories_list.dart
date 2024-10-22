@@ -54,7 +54,7 @@ class _CategoriesListState extends State<CategoriesList> {
                     duration: const Duration(seconds: 2),
                   );
                   _selections.removeAt(i);
-                  await Future.delayed(Duration(seconds: 2));
+                  await Future.delayed(const Duration(seconds: 2));
                 }
                 if (select) {
                   print('SELECTE');

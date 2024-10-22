@@ -1,14 +1,9 @@
+import 'package:aissam_store_v2/app/buisness/core/langs_and_currencies.dart';
 import 'package:aissam_store_v2/app/buisness/core/entities/currency.dart';
-import 'package:aissam_store_v2/app/buisness/core/constants/constants.dart';
 import 'package:aissam_store_v2/app/presentation/core/constants.dart';
 import 'package:aissam_store_v2/app/presentation/core/views/animated_scale_fade.dart';
-import 'package:aissam_store_v2/app/presentation/core/views/buttons/formats.dart';
-import 'package:aissam_store_v2/app/presentation/core/views/buttons/primary.dart';
-import 'package:aissam_store_v2/app/presentation/core/views/buttons/secondary.dart';
 import 'package:aissam_store_v2/app/presentation/core/views/buttons/tertiary.dart';
-import 'package:aissam_store_v2/app/presentation/core/views/tabs.dart';
-import 'package:aissam_store_v2/config/routing/config.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

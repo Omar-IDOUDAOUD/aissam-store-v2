@@ -1,6 +1,6 @@
 
 
-import 'package:aissam_store_v2/app/buisness/core/constants/consts.dart';
+import 'package:aissam_store_v2/app/buisness/core/constants.dart';
 
 class DataPagination<T> {
   final List<T> items;

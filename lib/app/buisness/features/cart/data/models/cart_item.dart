@@ -1,10 +1,10 @@
 import 'package:aissam_store_v2/app/buisness/features/cart/domain/entities/cart_item.dart';
-import 'package:aissam_store_v2/app/buisness/core/constants/con.dart';
+import 'package:aissam_store_v2/app/buisness/core/constants.dart';
 import 'package:aissam_store_v2/core/types.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class CartItemModel extends CartItem {juii
-  CartItemModel( uihuihui
+class CartItemModel extends CartItem { 
+  CartItemModel(  
       {super.id,
       required super.productId,
       required super.quantity,
@@ -14,7 +14,7 @@ class CartItemModel extends CartItem {juii
       required super.discountExpirationDate,
       required super.productTitle,
       required super.productPrice,
-      required super.createdAt, jjkjjk
+      required super.createdAt,  
       required super.modifiedAt,
       required super.lastDataUpdate});
 

@@ -1,7 +1,7 @@
 import 'package:aissam_store_v2/core/failure.dart';
 import 'package:aissam_store_v2/app/presentation/core/constants.dart';
 import 'package:aissam_store_v2/app/presentation/core/views/buttons/tertiary.dart';
-import 'package:aissam_store_v2/utils/extentions/theme.dart';
+import 'package:aissam_store_v2/core/utils/extentions/theme.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +50,6 @@ class ErrorCard extends StatelessWidget {
 
 class _UnknownErrorCard extends StatelessWidget {
   const _UnknownErrorCard({
-    super.key,
     required this.error,
     required this.onRety,
     this.showDescription = true,
@@ -85,7 +84,6 @@ class _UnknownErrorCard extends StatelessWidget {
 
 class _NoInternetConnErrorCard extends StatelessWidget {
   const _NoInternetConnErrorCard({
-    super.key,
     required this.onRety,
     this.showDescription = true,
   });
@@ -119,8 +117,7 @@ class _NoInternetConnErrorCard extends StatelessWidget {
 
 class _HorizontalLayoutCard extends StatelessWidget {
   const _HorizontalLayoutCard(
-      {super.key,
-      required this.icon,
+      {required this.icon,
       required this.iconColor,
       required this.title,
       this.description,
@@ -183,8 +180,7 @@ class _HorizontalLayoutCard extends StatelessWidget {
 
 class _VerticalLayoutCard extends StatelessWidget {
   const _VerticalLayoutCard(
-      {super.key,
-      required this.icon,
+      {required this.icon,
       required this.iconColor,
       required this.title,
       this.description,

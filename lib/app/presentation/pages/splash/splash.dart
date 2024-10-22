@@ -1,9 +1,8 @@
 import 'package:aissam_store_v2/app/buisness/features/authentication/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/core/failure.dart';
-import 'package:aissam_store_v2/config/routing/routes.dart';
-import 'package:aissam_store_v2/databases/local_db.dart';
-import 'package:aissam_store_v2/databases/mongo_db.dart' show MongoDb;
-import 'package:aissam_store_v2/main.dart';
+import 'package:aissam_store_v2/app/presentation/config/routing/routes.dart';
+import 'package:aissam_store_v2/core/databases/local_db.dart';
+import 'package:aissam_store_v2/core/databases/mongo_db.dart' show MongoDb;
 import 'package:aissam_store_v2/service_locator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

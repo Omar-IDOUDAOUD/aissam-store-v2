@@ -5,8 +5,8 @@ import 'package:aissam_store_v2/app/presentation/core/views/buttons/formats.dart
 import 'package:aissam_store_v2/app/presentation/core/views/buttons/primary.dart';
 import 'package:aissam_store_v2/app/presentation/core/views/buttons/secondary.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/view.dart';
-import 'package:aissam_store_v2/config/routing/config.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/app/presentation/config/routing/config.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/cupertino.dart';
@@ -71,7 +71,7 @@ class _FilterDialogState extends State<FilterDialog> {
 }
 
 class _Appbar extends ConsumerWidget {
-  const _Appbar({super.key});
+  const _Appbar();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -105,7 +105,7 @@ class _Appbar extends ConsumerWidget {
 }
 
 class _Action extends StatelessWidget {
-  const _Action({super.key, required this.onSave});
+  const _Action({required this.onSave});
 
   final VoidCallback onSave;
 
@@ -137,7 +137,7 @@ class _Action extends StatelessWidget {
 }
 
 class _Body extends StatefulWidget {
-  const _Body({super.key, required this.filters});
+  const _Body({required this.filters});
 
   final SearchProductFilterParams filters;
 

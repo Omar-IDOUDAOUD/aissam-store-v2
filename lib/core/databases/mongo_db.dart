@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:aissam_store_v2/core/failure.dart';
-import 'package:aissam_store_v2/core/global_consts.dart';
-import 'package:aissam_store_v2/config/environment/environment.dart';
+import 'package:aissam_store_v2/core/constants.dart';
+import 'package:aissam_store_v2/environment/environment.dart';
 import 'package:aissam_store_v2/core/service_lifecycle.dart';
-import 'package:aissam_store_v2/services/connection_checker.dart';
+import 'package:aissam_store_v2/core/services/connection_checker.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 export 'package:mongo_dart/mongo_dart.dart';
 

@@ -1,11 +1,9 @@
 import 'package:aissam_store_v2/app/presentation/core/constants.dart';
-import 'package:aissam_store_v2/app/presentation/pages/home/providers/back_action.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/view.dart';
-import 'package:aissam_store_v2/config/routing/config.dart';
-import 'package:aissam_store_v2/utils/extentions/current_route.dart';
+import 'package:aissam_store_v2/app/presentation/config/routing/config.dart';
+import 'package:aissam_store_v2/core/utils/extentions/current_route.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 

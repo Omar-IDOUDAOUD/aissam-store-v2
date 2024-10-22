@@ -1,5 +1,4 @@
-import 'package:aissam_store_v2/utils/extensions.dart';
-import 'package:flutter/foundation.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 import 'package:flutter/widgets.dart';
 
 class ButtonFormat1 extends StatelessWidget {

@@ -8,7 +8,7 @@ import 'package:aissam_store_v2/app/presentation/pages/home/providers/fab.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/providers/data.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/data.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/view.dart';
-import 'package:aissam_store_v2/utils/extentions/list_map.dart';
+import 'package:aissam_store_v2/core/utils/extentions/list_map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -93,7 +93,7 @@ class _ResultsViewState extends ConsumerState<ResultsView> {
 }
 
 class _Tabs extends ConsumerWidget {
-  const _Tabs({super.key, required this.onSelectTab, required this.initialTab});
+  const _Tabs({required this.onSelectTab, required this.initialTab});
   final int initialTab;
   final Function(ProductsPerformance? performanceType) onSelectTab;
 

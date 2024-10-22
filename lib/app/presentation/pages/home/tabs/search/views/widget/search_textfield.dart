@@ -3,9 +3,9 @@ import 'package:aissam_store_v2/app/presentation/core/constants.dart';
 import 'package:aissam_store_v2/app/presentation/core/views/dialog/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/views/sub_views/filter_dialog/view.dart';
-import 'package:aissam_store_v2/config/routing/config.dart';
-import 'package:aissam_store_v2/config/routing/routes.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/app/presentation/config/routing/config.dart';
+import 'package:aissam_store_v2/app/presentation/config/routing/routes.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,7 +19,7 @@ class SearchTextField extends ConsumerStatefulWidget {
 }
 
 class _SearchTextFieldState extends ConsumerState<SearchTextField> {
-  bool _showBackIcon = false;
+  final bool _showBackIcon = false;
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,4 @@
-import 'package:aissam_store_v2/utils/extentions/theme.dart';
+import 'package:aissam_store_v2/core/utils/extentions/theme.dart';
 import 'package:flutter/material.dart';
 
 class Title2 extends StatelessWidget {

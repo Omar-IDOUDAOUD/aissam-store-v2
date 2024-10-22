@@ -1,7 +1,7 @@
 import 'package:aissam_store_v2/app/buisness/features/authentication/core/failures.dart';
 import 'package:aissam_store_v2/app/buisness/features/authentication/core/params.dart';
 import 'package:aissam_store_v2/core/failure.dart';
-import 'package:aissam_store_v2/services/connection_checker.dart';
+import 'package:aissam_store_v2/core/services/connection_checker.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

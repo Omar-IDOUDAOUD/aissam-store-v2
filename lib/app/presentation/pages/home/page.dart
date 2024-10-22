@@ -7,10 +7,10 @@ import 'package:aissam_store_v2/app/presentation/pages/home/providers/snackbar.d
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/cart/views/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/home/views/view.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/wishlist/views/view.dart';
-import 'package:aissam_store_v2/config/routing/config.dart';
-import 'package:aissam_store_v2/config/routing/routes.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
-import 'package:aissam_store_v2/utils/extentions/current_route.dart';
+import 'package:aissam_store_v2/app/presentation/config/routing/config.dart';
+import 'package:aissam_store_v2/app/presentation/config/routing/routes.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
+import 'package:aissam_store_v2/core/utils/extentions/current_route.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -147,7 +147,7 @@ class _HomeMainBodyState extends ConsumerState<HomeMainBody> {
 }
 
 class _Fab extends ConsumerStatefulWidget {
-  _Fab({super.key});
+  const _Fab();
 
   @override
   ConsumerState<_Fab> createState() => _FabState();

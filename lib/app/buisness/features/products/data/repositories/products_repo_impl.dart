@@ -1,7 +1,6 @@
 import 'package:aissam_store_v2/app/buisness/features/products/data/data_source/products/products_local_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/features/products/data/data_source/products/product_remote_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/features/products/data/models/product_details.dart';
-import 'package:aissam_store_v2/app/buisness/features/products/data/models/product_preview.dart';
 import 'package:aissam_store_v2/app/buisness/features/products/domain/entities/category.dart';
 import 'package:aissam_store_v2/app/buisness/features/products/domain/entities/product_details.dart';
 import 'package:aissam_store_v2/app/buisness/features/products/domain/entities/product_preview.dart';

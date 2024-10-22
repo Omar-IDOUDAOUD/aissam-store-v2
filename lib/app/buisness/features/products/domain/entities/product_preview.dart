@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 
 class ProductPreview {
   final String id;

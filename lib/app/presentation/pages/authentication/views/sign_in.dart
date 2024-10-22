@@ -1,7 +1,7 @@
 import 'package:aissam_store_v2/app/buisness/features/authentication/core/failures.dart';
 import 'package:aissam_store_v2/app/buisness/features/authentication/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/presentation/pages/authentication/views/sign_up.dart';
-import 'package:aissam_store_v2/config/routing/routes.dart';
+import 'package:aissam_store_v2/app/presentation/config/routing/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:aissam_store_v2/app/presentation/pages/authentication/providers/providers.dart';
@@ -63,7 +63,7 @@ class _SignUpPageState extends ConsumerState<SignInPage> {
               error: emailError != null,
               errorText: emailError?.errorMessage,
             ),
-            SizedBox(height: 25),
+            const SizedBox(height: 25),
             TextFieldWidget(
               controller: _passwordController,
               hint: 'Password',

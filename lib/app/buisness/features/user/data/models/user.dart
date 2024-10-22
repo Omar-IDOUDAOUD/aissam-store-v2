@@ -1,7 +1,7 @@
+import 'package:aissam_store_v2/app/buisness/core/langs_and_currencies.dart';
 import 'package:aissam_store_v2/app/buisness/features/user/domain/entities/user.dart';
 import 'package:aissam_store_v2/app/buisness/core/entities/currency.dart';
 import 'package:aissam_store_v2/app/buisness/core/entities/language.dart';
-import 'package:aissam_store_v2/app/buisness/core/constants/constants.dart';
 
 class UserModel extends User {
   const UserModel({

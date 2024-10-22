@@ -8,7 +8,7 @@ import 'package:aissam_store_v2/app/presentation/core/views/error_card.dart';
 import 'package:aissam_store_v2/app/presentation/core/views/product/product.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/data.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/view.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,7 +44,7 @@ class _HistoryViewState extends State<HistoryView> {
 }
 
 class _Divider extends StatelessWidget {
-  const _Divider({super.key});
+  const _Divider();
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class _Divider extends StatelessWidget {
 }
 
 class _PopularSearchedProducts extends ConsumerWidget {
-  const _PopularSearchedProducts({super.key});
+  const _PopularSearchedProducts();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -94,7 +94,7 @@ class _PopularSearchedProducts extends ConsumerWidget {
 }
 
 class _PopularSearchedProductCard extends ConsumerWidget {
-  const _PopularSearchedProductCard({super.key, required this.data});
+  const _PopularSearchedProductCard({required this.data});
   final PopularProductSearchType data;
 
   @override
@@ -131,7 +131,7 @@ class _PopularSearchedProductCard extends ConsumerWidget {
 }
 
 class _History extends ConsumerStatefulWidget {
-  const _History({super.key});
+  const _History();
 
   @override
   ConsumerState<_History> createState() => _HistoryState();
@@ -189,7 +189,7 @@ class _HistoryState extends ConsumerState<_History> {
 }
 
 class _LoadMoreHistory extends StatelessWidget {
-  const _LoadMoreHistory({super.key, required this.onClick});
+  const _LoadMoreHistory({required this.onClick});
   final VoidCallback onClick;
 
   @override
@@ -208,7 +208,7 @@ class _LoadMoreHistory extends StatelessWidget {
 }
 
 class _TrendingKeywords extends ConsumerWidget {
-  const _TrendingKeywords({super.key});
+  const _TrendingKeywords();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

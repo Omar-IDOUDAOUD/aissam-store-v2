@@ -1,11 +1,10 @@
 import 'package:aissam_store_v2/app/buisness/features/authentication/core/failures.dart';
 import 'package:aissam_store_v2/app/buisness/features/authentication/core/params.dart';
-import 'package:aissam_store_v2/app/buisness/features/authentication/domain/usecases/usecases.dart';
 import 'package:aissam_store_v2/app/buisness/features/user/core/failures.dart';
 import 'package:aissam_store_v2/app/buisness/features/user/core/params.dart';
 import 'package:aissam_store_v2/app/buisness/features/user/domain/usecases/user.dart';
 import 'package:aissam_store_v2/core/failure.dart';
-import 'package:aissam_store_v2/services/connection_checker.dart';
+import 'package:aissam_store_v2/core/services/connection_checker.dart';
 import 'package:dartz/dartz.dart';
 import 'package:aissam_store_v2/app/buisness/features/authentication/data/data_source/auth_datasource.dart';
 import 'package:aissam_store_v2/app/buisness/features/authentication/domain/repositories/auth_repo.dart';

@@ -6,7 +6,7 @@ import 'package:aissam_store_v2/app/presentation/core/views/error_card.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/providers/back_action.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/data.dart';
 import 'package:aissam_store_v2/app/presentation/pages/home/tabs/search/providers/view.dart';
-import 'package:aissam_store_v2/utils/extensions.dart';
+import 'package:aissam_store_v2/core/utils/extensions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -108,8 +108,7 @@ class _SuggestionsViewState extends ConsumerState<SuggestionsView> {
 
 class _Tile extends StatelessWidget {
   const _Tile(
-      {super.key,
-      required this.insertedText,
+      {required this.insertedText,
       required this.suggestionText,
       required this.onPressed});
   final String insertedText;

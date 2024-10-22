@@ -1,6 +1,6 @@
-import '../entities/country.dart';
-import '../entities/currency.dart';
-import '../entities/language.dart';
+import 'entities/country.dart';
+import 'entities/currency.dart';
+import 'entities/language.dart';
 
 
 
